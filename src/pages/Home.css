@@ -26,8 +26,17 @@
     color: #fff;
     line-height: 1.2;
     max-width: 900px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    text-align: center;
     margin-bottom: 40px;
-    animation: fadeInUp 1s ease-out;
+    line-height: 1.6;
 }
 
 @keyframes fadeInUp {
@@ -51,7 +60,18 @@
 .hero-buttons {
     display: flex;
     gap: 20px;
-    animation: fadeInUp 1s ease-out 0.3s backwards;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-arrow {
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.btn-accent:hover .btn-arrow {
+    transform: translateX(5px);
 }
 
 .btn-secondary {
