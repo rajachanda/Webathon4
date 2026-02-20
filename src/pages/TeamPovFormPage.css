@@ -113,3 +113,42 @@
 .tpov-field input:focus, .tpov-field textarea:focus {
     border-color: rgba(0,255,136,0.35);
 }
+
+.tpov-field select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+.tpov-field select option {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.tpov-required {
+    color: rgba(255,80,80,0.8);
+    margin-left: 2px;
+}
+
+.tpov-generating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 0 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+}

@@ -63,15 +63,47 @@
 
 .persona-llm-note {
     margin-top: 16px;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px dashed rgba(255,255,255,0.1);
-    border-radius: 8px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
 }
 
-.todo-note { font-style: italic; }
+.btn-gemini {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px 18px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(168,85,247,0.25));
+    border: 1px solid rgba(168,85,247,0.45);
+    border-radius: 8px;
+    color: rgba(220,200,255,0.95);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+.btn-gemini:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(99,102,241,0.4), rgba(168,85,247,0.4));
+    border-color: rgba(168,85,247,0.75);
+}
+.btn-gemini:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gemini-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(168,85,247,0.4);
+    border-top-color: rgba(168,85,247,1);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+.gemini-hint {
+    margin: 6px 0 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+}
 
 .persona-team-subtitle {
     font-size: 12px;

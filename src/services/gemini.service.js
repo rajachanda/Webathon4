@@ -4,34 +4,43 @@
  */
 
 const KEYS = [
-  'AIzaSyDsGBprFeMi30R_mt-WxGMmr_jV3W5Rf88',
-  'AIzaSyC8bSA4X3ed474nr457xT2mqRxiJrRrAD8',
-  'AIzaSyBaIsOG3rNMmSlD_PC5JpixtQAd2tZG2vk',
-  'AIzaSyDV3eQwzrFc_OVh-sSZeX9JRpUfpjMe98E',
+  'AIzaSyD3FRdf4bg8s7W5h3hkZXEbXNI4GTQO1vI',
 ];
 
-const MODEL = 'gemini-1.5-flash';
+const MODEL = 'gemini-2.0-flash';
 const BASE  = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 let keyIndex = 0;
 
 async function callGemini(prompt, retries = 0) {
+  const MAX_RETRIES = KEYS.length * 2;
   const key = KEYS[keyIndex % KEYS.length];
   const url = `${BASE}?key=${key}`;
 
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.7, maxOutputTokens: 1500 },
-    }),
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 1500 },
+      }),
+    });
+  } catch (networkErr) {
+    // Network-level errors (ERR_NETWORK_CHANGED, Failed to fetch, etc.)
+    if (retries < MAX_RETRIES) {
+      await new Promise(r => setTimeout(r, 1000 * (retries + 1)));
+      return callGemini(prompt, retries + 1);
+    }
+    throw new Error('Network error while reaching Gemini API. Please check your connection and try again.');
+  }
 
   if (res.status === 429 || res.status === 503) {
-    // Quota exceeded — rotate key and retry
+    // Quota exceeded — rotate key, wait, then retry
     keyIndex = (keyIndex + 1) % KEYS.length;
-    if (retries < KEYS.length) {
+    if (retries < MAX_RETRIES) {
+      await new Promise(r => setTimeout(r, 1500 * (retries + 1))); // 1.5s, 3s, 4.5s …
       return callGemini(prompt, retries + 1);
     }
     throw new Error('All Gemini API keys are rate-limited. Please try again shortly.');
