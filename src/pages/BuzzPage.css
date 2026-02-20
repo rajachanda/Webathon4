@@ -73,6 +73,18 @@
 
 .buzz-input:focus { border-color: rgba(0,255,136,0.35); }
 
+.buzz-metric-value {
+    width: 80px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    text-align: right;
+    font-family: 'Courier New', monospace;
+}
+
 .buzz-preview {
     font-size: 13px;
     color: rgba(255,255,255,0.6);
@@ -114,4 +126,34 @@
 .bht-score {
     font-weight: 700;
     color: #00ff88;
+}
+
+/* Auto-Search Button */
+.auto-search-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 200, 255, 0.15));
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    border-radius: 8px;
+    color: #00ff88;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.auto-search-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 200, 255, 0.2));
+    border-color: rgba(0, 255, 136, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+}
+
+.auto-search-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
