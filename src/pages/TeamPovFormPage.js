@@ -2,62 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '../components/Card';
 import { projectService } from '../services/api.service';
-import { generateTeamFormQuestions } from '../services/gemini.service';
+import { getQuestionsForRole, getRoleLabel } from '../config/teamRoleQuestions';
 import './TeamPovFormPage.css';
 
-const DEFAULT_QUESTIONS = [
-  { id: 'tone_description',     label: 'How would you describe the tone?',   type: 'text',     placeholder: 'e.g. Raw and emotional, light-hearted…' },
-  { id: 'themes_perceived',     label: 'Main themes you see in this film?',  type: 'text',     placeholder: 'e.g. love, revenge, social justice' },
-  { id: 'perceived_strengths',  label: 'Biggest strengths?',                 type: 'textarea', placeholder: 'What stands out positively?' },
-  { id: 'perceived_weaknesses', label: 'Biggest risks / weaknesses?',        type: 'textarea', placeholder: 'What could be a challenge?' },
-  { id: 'likely_audience',      label: 'Who is the likely audience?',        type: 'text',     placeholder: 'e.g. Urban youth 18–28, multiplex crowd' },
-  { id: 'reference_films',      label: '2–3 reference films',                type: 'text',     placeholder: 'e.g. Arjun Reddy, Rangasthalam' },
-];
+
 
 const TeamPovFormPage = () => {
   const { token } = useParams();
   const [linkValid,       setLinkValid]       = useState(false);
   const [loadingPage,     setLoadingPage]     = useState(true);
-  const [loadingQ,        setLoadingQ]        = useState(false);
-  const [questions,       setQuestions]       = useState(DEFAULT_QUESTIONS);
+  const [questions,       setQuestions]       = useState([]);
   const [fileMeta,        setFileMeta]        = useState(null);
   const [answers,         setAnswers]         = useState({});
-  const [respondentRole,  setRespondentRole]  = useState('');
+  const [roleFromInvite,  setRoleFromInvite]  = useState('');
+  const [roleName,        setRoleName]        = useState('');
   const [submitted,       setSubmitted]       = useState(false);
   const [submitting,      setSubmitting]      = useState(false);
   const [error,           setError]           = useState('');
 
-  // ── On mount: validate token + fetch metadata + generate questions ─────────
+  // ── On mount: validate token + load role-specific questions ─────────
   useEffect(() => {
     const load = async () => {
       try {
-        // Validate token
-        await projectService.getTeamInvite(token);
+        // Validate token and get invite with role
+        const invite = await projectService.getTeamInvite(token);
         setLinkValid(true);
+        
+        const role = invite.role_hint || 'director';
+        setRoleFromInvite(role);
+        setRoleName(getRoleLabel(role));
+        
+        // Load role-specific questions
+        const roleQuestions = getQuestionsForRole(role);
+        setQuestions(roleQuestions);
 
-        // Fetch project metadata (public read via token join)
-        let meta = null;
+        // Fetch project metadata for display
         try {
-          meta = await projectService.getProjectMetadataByToken(token);
+          const meta = await projectService.getProjectMetadataByToken(token);
           setFileMeta(meta);
         } catch (metaErr) {
           console.warn('Could not fetch project metadata:', metaErr.message);
-        }
-
-        // Generate Gemini questions if we have metadata
-        if (meta) {
-          setLoadingQ(true);
-          try {
-            const generated = await generateTeamFormQuestions(meta);
-            if (generated && generated.length > 0) {
-              setQuestions(generated);
-            }
-          } catch (gErr) {
-            console.warn('Gemini question generation failed, using defaults:', gErr.message);
-            // Leave DEFAULT_QUESTIONS in place
-          } finally {
-            setLoadingQ(false);
-          }
         }
       } catch (e) {
         console.error(e);
@@ -72,28 +56,20 @@ const TeamPovFormPage = () => {
   const handleAnswer = (id, value) => setAnswers(prev => ({ ...prev, [id]: value }));
 
   const handleSubmit = async () => {
-    if (!respondentRole.trim()) { setError('Please enter your role.'); return; }
     setSubmitting(true);
     setError('');
     try {
-      // Build payload — keep standard field names for known question IDs,
-      // store the rest in dynamic_answers for LLM processing
-      const standardFields  = {};
-      const dynamicAnswers  = [];
+      // Build payload with dynamic answers based on role-specific questions
+      const dynamicAnswers = [];
       questions.forEach(q => {
         const val = answers[q.id] || '';
-        const standardKeys = ['tone_description','themes_perceived','perceived_strengths',
-                               'perceived_weaknesses','likely_audience','reference_films','notes'];
-        if (standardKeys.includes(q.id)) {
-          standardFields[q.id] = val;
-        } else {
+        if (val.trim()) {
           dynamicAnswers.push({ question: q.label, answer: val });
         }
       });
 
       await projectService.submitTeamResponse(token, {
-        respondent_role: respondentRole,
-        ...standardFields,
+        respondent_role: roleName,
         dynamic_answers: dynamicAnswers.length > 0 ? dynamicAnswers : undefined,
       });
       setSubmitted(true);
@@ -134,6 +110,7 @@ const TeamPovFormPage = () => {
         <p className="team-pov-tagline">
           {fileMeta?.title ? `Share your perspective on "${fileMeta.title}"` : 'Help shape this film\'s persona'}
         </p>
+        {roleName && <p className="team-pov-role-badge">Role: {roleName}</p>}
       </div>
       <div className="team-pov-body">
 
@@ -145,27 +122,11 @@ const TeamPovFormPage = () => {
           </Card>
         ) : (
           <Card className="team-pov-card">
-            <h2 className="team-pov-form-title">Share your perspective</h2>
-            <p className="team-pov-form-subtitle">Answer these quick questions — no login needed.</p>
+            <h2 className="team-pov-form-title">Share your perspective as {roleName}</h2>
+            <p className="team-pov-form-subtitle">Answer these questions tailored to your role.</p>
 
-            {/* Role — always first */}
-            <div className="tpov-field">
-              <label>Your role <span className="tpov-required">*</span></label>
-              <input
-                placeholder="Director, Writer, Co-Producer…"
-                value={respondentRole}
-                onChange={e => setRespondentRole(e.target.value)}
-              />
-            </div>
-
-            {/* Dynamic / Gemini-generated questions */}
-            {loadingQ ? (
-              <div className="tpov-generating">
-                <div className="loading-spinner" style={{ width: 20, height: 20 }} />
-                <span>Generating personalised questions for this film…</span>
-              </div>
-            ) : (
-              questions.map(q => (
+            {/* Role-specific questions */}
+            {questions.map(q => (
                 <div className="tpov-field" key={q.id}>
                   <label>{q.label}</label>
                   {q.type === 'textarea' ? (
@@ -194,13 +155,13 @@ const TeamPovFormPage = () => {
                   )}
                 </div>
               ))
-            )}
+            }
 
             {error && <p className="tpov-error">{error}</p>}
             <button
               className="btn-primary-green"
               onClick={handleSubmit}
-              disabled={submitting || loadingQ}
+              disabled={submitting}
             >
               {submitting ? 'Submitting…' : 'Submit'}
             </button>
