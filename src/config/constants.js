@@ -8,18 +8,17 @@ export const APP_CONFIG = {
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
+  DASHBOARD: '/dashboard',
+  NEW_PROJECT: '/projects/new',
   PROFILE: '/profile',
   SETTINGS: '/settings',
   HELP: '/help',
 };
 
 export const NAVIGATION_ITEMS = [
-  { id: 'home', label: 'Home', href: '#home', requiresAuth: false },
-  { id: 'product', label: 'Product', href: '#product', requiresAuth: false },
-  { id: 'partners', label: 'Partners', href: '#partners', requiresAuth: false },
-  { id: 'creator', label: 'Creator', href: '#creator', requiresAuth: false },
-  { id: 'blogs', label: 'Blogs', href: '#blogs', requiresAuth: false },
-  { id: 'team', label: 'Team', href: '#team', requiresAuth: false },
+  { id: 'home',         label: 'Home',           route: '/',           requiresAuth: false },
+  { id: 'dashboard',    label: 'Dashboard',      route: '/dashboard',  requiresAuth: true  },
+  { id: 'new-project',  label: 'New Film +',     route: '/projects/new', requiresAuth: true },
 ];
 
 export const PROFILE_MENU_ITEMS = [

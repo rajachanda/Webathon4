@@ -1,0 +1,121 @@
+.dashboard-page {
+    min-height: 100vh;
+    background: #0a0a0f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-body {
+    padding: 40px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-hero {
+    margin-bottom: 48px;
+}
+
+.dashboard-greeting {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboard-tagline {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 24px;
+}
+
+.dashboard-cta {
+    font-size: 15px;
+    padding: 12px 28px;
+}
+
+.dashboard-section {
+    margin-bottom: 40px;
+}
+
+.project-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+}
+
+.project-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.project-card-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+}
+
+.project-card-meta {
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.project-card-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.pcard-link {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.pcard-link:hover {
+    background: rgba(0,255,136,0.08);
+    border-color: rgba(0,255,136,0.25);
+    color: #00ff88;
+}
+
+.dashboard-empty, .dashboard-empty-state {
+    color: rgba(255,255,255,0.35);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}

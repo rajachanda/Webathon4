@@ -1,0 +1,69 @@
+.release-page { display: flex; flex-direction: column; }
+
+.release-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+    .release-grid { grid-template-columns: 1fr; }
+}
+
+.release-left, .release-right { display: flex; flex-direction: column; }
+
+.release-summary { display: flex; flex-direction: column; gap: 10px; }
+.rs-title { font-size: 16px; font-weight: 600; color: #fff; }
+.rs-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.rs-detail { font-size: 12px; color: rgba(255,255,255,0.4); }
+.rs-detail span { color: rgba(255,255,255,0.7); }
+
+.release-inputs { display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px; }
+
+.release-field { display: flex; flex-direction: column; gap: 6px; }
+
+.release-field label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+}
+
+.release-field input[type="date"] {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    color-scheme: dark;
+    transition: border-color 0.2s;
+}
+
+.release-field input[type="date"]:focus { border-color: rgba(0,255,136,0.35); }
+
+.release-field--checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+}
+
+.release-field--checkbox input[type="checkbox"] {
+    accent-color: #00ff88;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.release-todo-note {
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+    line-height: 1.4;
+}

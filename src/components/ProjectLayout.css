@@ -1,0 +1,196 @@
+.project-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #0a0a0f;
+    color: #fff;
+}
+
+.project-layout__body {
+    display: flex;
+    flex: 1;
+}
+
+/* Sidebar */
+.project-sidenav {
+    width: 200px;
+    min-width: 200px;
+    background: rgba(255,255,255,0.03);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidenav-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin: 0 0 8px 8px;
+}
+
+.sidenav-item {
+    background: none;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.sidenav-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.9);
+}
+
+.sidenav-item--active {
+    background: rgba(0,255,136,0.1);
+    color: #00ff88;
+    font-weight: 600;
+}
+
+.sidenav-back {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    padding: 9px 12px;
+    margin-top: auto;
+    transition: color 0.2s;
+}
+
+.sidenav-back:hover {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Main */
+.project-main {
+    flex: 1;
+    padding: 32px 40px;
+    overflow-y: auto;
+}
+
+/* Global utility classes used across pages */
+.page-title {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #00ff88 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 6px;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 28px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 14px;
+}
+
+.btn-primary-green {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+}
+
+.btn-primary-green:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.btn-ghost {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.btn-ghost:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge--draft        { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+.status-badge--persona_locked { background: rgba(80,160,255,0.15); color: #50a0ff; }
+.status-badge--analysis_ready { background: rgba(0,255,136,0.15); color: #00ff88; }
+
+.loading-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0f;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: #00ff88;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: #00ff88;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 9999;
+    pointer-events: none;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

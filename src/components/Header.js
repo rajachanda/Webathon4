@@ -70,10 +70,15 @@ const Header = () => {
         <p className="tagline">{APP_CONFIG.tagline}</p>
       </div>
       <nav className="navbar">
-        {NAVIGATION_ITEMS.map((item) => (
-          <a key={item.id} href={item.href}>{item.label}</a>
+        {NAVIGATION_ITEMS.filter(item => !item.requiresAuth || user).map((item) => (
+          <button
+            key={item.id}
+            className="navbar-link"
+            onClick={() => navigate(item.route)}
+          >
+            {item.label}
+          </button>
         ))}
-        <a href="#pricing" className="btn-outline">Pricing</a>
         {user ? (
           <div className="profile-container" ref={dropdownRef}>
             <button 

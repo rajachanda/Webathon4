@@ -1,0 +1,67 @@
+.tag-chip {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.tag-chip--md  { font-size: 12px; padding: 4px 12px; }
+.tag-chip--sm  { font-size: 11px; padding: 3px 9px; }
+.tag-chip--lg  { font-size: 14px; padding: 6px 16px; }
+
+.tag-chip--green {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: rgba(0, 255, 136, 0.25);
+    color: #00ff88;
+}
+.tag-chip--green.tag-chip--active {
+    background: rgba(0, 255, 136, 0.25);
+    border-color: #00ff88;
+}
+
+.tag-chip--blue {
+    background: rgba(80, 160, 255, 0.1);
+    border-color: rgba(80, 160, 255, 0.25);
+    color: #50a0ff;
+}
+.tag-chip--blue.tag-chip--active {
+    background: rgba(80, 160, 255, 0.25);
+    border-color: #50a0ff;
+}
+
+.tag-chip--orange {
+    background: rgba(255, 160, 40, 0.1);
+    border-color: rgba(255, 160, 40, 0.25);
+    color: #ffa028;
+}
+.tag-chip--orange.tag-chip--active {
+    background: rgba(255, 160, 40, 0.25);
+    border-color: #ffa028;
+}
+
+.tag-chip--red {
+    background: rgba(255, 80, 80, 0.1);
+    border-color: rgba(255, 80, 80, 0.25);
+    color: #ff5050;
+}
+.tag-chip--red.tag-chip--active {
+    background: rgba(255, 80, 80, 0.25);
+    border-color: #ff5050;
+}
+
+.tag-chip--gray {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.tag-chip--clickable {
+    cursor: pointer;
+}
+.tag-chip--clickable:hover {
+    filter: brightness(1.2);
+}

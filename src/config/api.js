@@ -27,7 +27,15 @@ export const TABLES = {
   USERS: 'users',
   PROFILES: 'profiles',
   SETTINGS: 'user_settings',
-  // Add new tables here
-  // MOVIES: 'movies',
-  // PROMOTIONS: 'promotions',
+  // CinYstore project tables
+  PROJECTS: 'projects',
+  PROJECT_METADATA: 'project_metadata',
+  TEAM_INVITES: 'team_invites',
+  TEAM_RESPONSES: 'team_responses',
+  PERSONAS: 'personas',
+  AUDIENCE_SEGMENTS_MASTER: 'audience_segments_master',
+  COMPETITION_CALENDAR: 'competition_calendar',
+  RELEASE_WINDOWS: 'release_windows',
+  BUZZ_SNAPSHOTS: 'buzz_snapshots',
+  CAMPAIGN_BLUEPRINTS: 'campaign_blueprints',
 };

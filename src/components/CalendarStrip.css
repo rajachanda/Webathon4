@@ -1,0 +1,45 @@
+.calendar-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calendar-row {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.calendar-label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.calendar-dates {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 6px;
+}
+
+.calendar-detail {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.cal-pros { color: #00ff88; }
+.cal-cons { color: #ff5050; }
+
+.calendar-explanation {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    margin: 4px 0 0;
+}
+
+.calendar-empty {
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+}

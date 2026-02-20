@@ -1,0 +1,115 @@
+.team-pov-page {
+    min-height: 100vh;
+    background: #0a0a0f;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-pov-header {
+    width: 100%;
+    padding: 20px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+    text-align: center;
+}
+
+.team-pov-brand {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 4px;
+}
+
+.team-pov-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin: 0;
+}
+
+.team-pov-body {
+    width: 100%;
+    max-width: 560px;
+    padding: 40px 24px;
+}
+
+.team-pov-error, .tpov-error {
+    background: rgba(255,80,80,0.1);
+    border: 1px solid rgba(255,80,80,0.25);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #ff5050;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.team-pov-thanks {
+    text-align: center;
+    padding: 48px 32px;
+}
+
+.thanks-icon { font-size: 48px; margin-bottom: 16px; }
+
+.team-pov-thanks h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #00ff88;
+    margin: 0 0 12px;
+}
+
+.team-pov-thanks p {
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.team-pov-card { display: flex; flex-direction: column; gap: 0; }
+
+.team-pov-form-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 6px;
+}
+
+.team-pov-form-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 24px;
+}
+
+.tpov-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.tpov-field label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+}
+
+.tpov-field input, .tpov-field textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.tpov-field input:focus, .tpov-field textarea:focus {
+    border-color: rgba(0,255,136,0.35);
+}
