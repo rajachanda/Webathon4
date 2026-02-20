@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './RoleSelection.css';
 
 const RoleSelection = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, hasCompletedOnboarding, refreshUserProfile } = useAuth();
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState('');
   const [saving, setSaving] = useState(false);
-  const [hasRole, setHasRole] = useState(false);
-  const [checkingRole, setCheckingRole] = useState(true);
 
   const roles = [
     'Producer',
@@ -32,41 +30,7 @@ const RoleSelection = () => {
     'Casting Director'
   ];
 
-  useEffect(() => {
-    const checkUserRole = async () => {
-      if (!user) {
-        setCheckingRole(false);
-        return;
-      }
-
-      console.log('Checking if user already has a role...', user.id);
-
-      try {
-        const { data, error } = await supabase
-          .from('user_profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
-
-        if (error) {
-          console.log('No existing role found in database (new user):', error.message);
-        } else if (data && data.role) {
-          console.log('User already has role:', data.role);
-          setHasRole(true);
-        } else {
-          console.log('User profile exists but no role assigned');
-        }
-      } catch (err) {
-        console.log('Error checking role (likely new user):', err.message);
-      } finally {
-        setCheckingRole(false);
-      }
-    };
-
-    checkUserRole();
-  }, [user]);
-
-  if (loading || checkingRole) {
+  if (loading) {
     return (
       <div className="role-selection-page">
         <div className="role-selection-container">
@@ -82,12 +46,17 @@ const RoleSelection = () => {
   }
 
   if (!user) {
+    console.log('🚫 No user in RoleSelection - redirecting to /login');
     return <Navigate to="/login" />;
   }
 
-  if (hasRole) {
-    return <Navigate to="/home" />;
+  // If user already has a role, redirect to dashboard
+  if (hasCompletedOnboarding) {
+    console.log('✅ User already has role - redirecting to /dashboard');
+    return <Navigate to="/dashboard" />;
   }
+
+  console.log('📝 Showing role selection screen - user has no role');
 
   const handleRoleSubmit = async () => {
     if (!selectedRole) {
@@ -121,16 +90,20 @@ const RoleSelection = () => {
         });
 
       if (error) {
-        console.error('Error saving role to database:', error);
+        console.error('❌ Error saving role to database:', error);
         alert(`Failed to save role: ${error.message}`);
         setSaving(false);
       } else {
-        console.log('Role saved successfully to database!', data);
-        // Navigate to home after successful save
-        navigate('/home');
+        console.log('✅ Role saved successfully to database!', data);
+        console.log('🔄 Refreshing user profile...');
+        // Refresh user profile in AuthContext
+        await refreshUserProfile();
+        console.log('✅ Profile refreshed - redirecting to /dashboard');
+        // Navigate to dashboard after successful save
+        navigate('/dashboard');
       }
     } catch (err) {
-      console.error('Exception in handleRoleSubmit:', err);
+      console.error('❌ Exception in handleRoleSubmit:', err);
       alert('An error occurred. Please try again.');
       setSaving(false);
     }

@@ -119,8 +119,13 @@ export const calculateYouTubeMetrics = (videoStats) => {
   // Higher engagement (likes/views ratio) suggests better watch time
   const avgDuration = videoStats.reduce((sum, v) => sum + v.duration, 0) / videoStats.length;
   const avgEngagementRate = totalLikes / Math.max(totalViews, 1);
-  const estimatedWatchTimeRate = Math.min(avgEngagementRate * 15, 0.85); // Estimate 15-85% retention
-  const youtube_watch_time_avg = avgDuration * estimatedWatchTimeRate;
+  
+  // Watch time retention estimation:
+  // - Base retention: 40% (typical YouTube average)
+  // - Bonus from engagement: up to +40% for highly engaged videos (10% engagement rate)
+  // - Formula: 40% base + (engagement_rate * 400) capped at 85% total
+  const estimatedWatchTimeRetention = Math.min(0.40 + (avgEngagementRate * 4), 0.85);
+  const youtube_watch_time_avg = avgDuration * estimatedWatchTimeRetention;
 
   // Shares estimation (approximately 1-3% of likes typically share)
   const youtube_shares_count = Math.floor(totalLikes * 0.02);
@@ -137,10 +142,7 @@ export const calculateYouTubeMetrics = (videoStats) => {
   const youtube_watch_time_rate = Math.max(0, 1 - (avgDaysOld / 365)); // Decreases over a year
 
   // Retention rate estimation (based on engagement metrics)
-  const youtube_retention_rate = Math.min(
-    (totalLikes + totalComments * 2) / Math.max(totalViews, 1),
-    0.95
-  );
+  const youtube_retention_rate = estimatedWatchTimeRetention;
 
   return {
     youtube_watch_time_avg,
@@ -148,7 +150,7 @@ export const calculateYouTubeMetrics = (videoStats) => {
     youtube_comments_count: totalComments,
     youtube_shares_count,
     youtube_watch_time_rate,
-    youtube_retention_rate,
+    youtube_retention_rate, // Now uses the proper watch time estimation
     youtube_view_count: totalViews,
   };
 };

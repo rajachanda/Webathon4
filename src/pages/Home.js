@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useAuth } from '../AuthContext';
 import './Home.css';
 
 const Home = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  // Auto-redirect logged-in users to dashboard
+  useEffect(() => {
+    if (!loading && user) {
+      console.log('🏠 User is logged in on Home page - redirecting to /dashboard');
+      navigate('/dashboard');
+    }
+  }, [user, loading, navigate]);
 
   return (
     <div className="content-overlay">

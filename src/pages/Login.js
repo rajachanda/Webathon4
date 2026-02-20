@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
-  const { user, signInWithGoogle, loading } = useAuth();
+  const { user, signInWithGoogle, loading, hasCompletedOnboarding } = useAuth();
   const navigate = useNavigate();
 
   if (loading) {
@@ -22,8 +22,11 @@ const Login = () => {
     );
   }
 
+  // If user is logged in, check if they have completed onboarding
   if (user) {
-    return <Navigate to="/select-role" />;
+    console.log('🔑 User logged in, hasCompletedOnboarding:', hasCompletedOnboarding);
+    // Redirect to dashboard - ProtectedRoute will redirect to /select-role if role is null
+    return <Navigate to="/dashboard" />;
   }
 
   return (

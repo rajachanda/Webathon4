@@ -92,7 +92,6 @@ const PersonaPage = () => {
   });
   const [locked, setLocked] = useState(false);
   const [projectMeta, setProjectMeta] = useState(null);
-  const [latestBuzz, setLatestBuzz] = useState(null);
 
   useEffect(() => {
     if (toast) {
@@ -104,11 +103,10 @@ const PersonaPage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const [p, tr, proj, buzzSnaps] = await Promise.all([
+        const [p, tr, proj] = await Promise.all([
           projectService.getProjectPersona(projectId),
           projectService.getTeamResponses(projectId),
           projectService.getProject(projectId),
-          projectService.getBuzzSnapshots(projectId),
         ]);
         if (p) {
           setLocked(p.locked || false);
@@ -123,10 +121,6 @@ const PersonaPage = () => {
         }
         setTeamResponses(tr || []);
         if (proj?.project_metadata) setProjectMeta(proj.project_metadata);
-        
-        // Load latest buzz snapshot
-        const sorted = (buzzSnaps || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        setLatestBuzz(sorted[0] || null);
       } catch (e) {
         console.error(e);
       } finally {
@@ -448,34 +442,6 @@ const PersonaPage = () => {
                   ))}
                 </div>
               </div>
-            </Card>
-
-            {/* Buzz Score Card */}
-            <Card style={{ marginTop: 20 }}>
-              <h3 className="section-title">Current Buzz Score</h3>
-              {latestBuzz ? (
-                <div>
-                  <div style={{ fontSize: 36, fontWeight: 700, color: latestBuzz.buzz_score >= 70 ? '#4ade80' : latestBuzz.buzz_score >= 40 ? '#fbbf24' : '#f87171', marginBottom: 8 }}>
-                    {latestBuzz.buzz_score} / 100
-                  </div>
-                  <div style={{ fontSize: 14, color: '#888', marginBottom: 12 }}>
-                    {latestBuzz.buzz_score >= 70 ? 'High' : latestBuzz.buzz_score >= 40 ? 'Medium' : 'Low'} Buzz
-                  </div>
-                  <div style={{ fontSize: 12, color: '#666', marginBottom: 16 }}>
-                    Last updated: {new Date(latestBuzz.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                  </div>
-                  <button className="btn-ghost" onClick={() => navigate(`/projects/${projectId}/buzz`)}>
-                    View Buzz Analytics →
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <p style={{ color: '#888', marginBottom: 12 }}>No buzz data yet.</p>
-                  <button className="btn-primary-green" onClick={() => navigate(`/projects/${projectId}/buzz`)}>
-                    Run Buzz Analysis
-                  </button>
-                </div>
-              )}
             </Card>
           </div>
         </div>
