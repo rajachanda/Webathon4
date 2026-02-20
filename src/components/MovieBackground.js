@@ -75,12 +75,6 @@ const MovieBackground = () => {
       img.loading = 'lazy';
       poster.appendChild(img);
       
-      // Create title overlay
-      const titleOverlay = document.createElement('div');
-      titleOverlay.className = 'poster-title';
-      titleOverlay.textContent = movieData.title;
-      poster.appendChild(titleOverlay);
-      
       // Add random rotation
       const randomRotation = (Math.random() - 0.5) * 2;
       poster.style.transform = `rotate(${randomRotation}deg)`;
