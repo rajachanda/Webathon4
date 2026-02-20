@@ -5,6 +5,11 @@ import Card from '../components/Card';
 import TagChip from '../components/TagChip';
 import { projectService } from '../services/api.service';
 import { getSentimentSummary } from '../services/sentiment.service';
+import { 
+  getVerdictColor,
+  getVerdictLabel,
+  getScoreInterpretation
+} from '../services/poster.service';
 import { getClusterLabel, getClusterColor } from '../utils/clusterMapping';
 import './CampaignPage.css';
 
@@ -20,6 +25,12 @@ const CampaignPage = () => {
   const [generating, setGenerating] = useState(false);
   const [toast, setToast] = useState('');
   const [checklist, setChecklist] = useState({});
+  
+  // Poster analysis state
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState(null);
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3500); };
 
@@ -59,6 +70,62 @@ const CampaignPage = () => {
       showToast('Generation failed — TODO: connect LLM service.');
     } finally {
       setGenerating(false);
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      showToast('Please upload an image file');
+      return;
+    }
+    
+    setUploadedImage(file);
+    setAnalysisResult(null);
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  
+  const handleAnalyzePoster = async () => {
+    if (!uploadedImage) {
+      showToast('Please upload a poster first');
+      return;
+    }
+    
+    setAnalyzing(true);
+    setAnalysisResult(null);
+    
+    try {
+      // Create form data to send the image
+      const formData = new FormData();
+      formData.append('image', uploadedImage);
+      
+      // Call backend API
+      const response = await fetch('/api/posters/analyze-upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+      
+      const result = await response.json();
+      setAnalysisResult(result);
+      showToast('✓ Poster analysis complete!');
+    } catch (error) {
+      console.error('Analysis error:', error);
+      showToast(`Analysis failed: ${error.message}`);
+    } finally {
+      setAnalyzing(false);
     }
   };
 
@@ -198,6 +265,151 @@ const CampaignPage = () => {
             </div>
           </Card>
         )}
+
+        {/* Poster Analysis Section */}
+        <Card style={{ marginBottom: 24, background: 'rgba(139, 92, 246, 0.1)', borderLeft: '3px solid #8b5cf6' }}>
+          <h4 style={{ fontSize: 16, fontWeight: 600, color: '#a78bfa', marginBottom: 16 }}>
+            🎨 Poster Analysis (3-Second Rule)
+          </h4>
+          
+          <p style={{ fontSize: 13, color: '#aaa', marginBottom: 16 }}>
+            Upload your movie poster to analyze its stopping power using AI trained on 26+ posters.
+          </p>
+
+          {/* Upload Section */}
+          <div style={{ marginBottom: 16 }}>
+            <input
+              type="file"
+              id="poster-upload"
+              accept="image/*"
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+            <label
+              htmlFor="poster-upload"
+              style={{
+                display: 'inline-block',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
+                color: '#fff',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: 14,
+                fontWeight: 600,
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.02)'}
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            >
+              📤 Upload Poster Image
+            </label>
+            {uploadedImage && (
+              <span style={{ marginLeft: 12, fontSize: 13, color: '#4ade80' }}>
+                ✓ {uploadedImage.name}
+              </span>
+            )}
+          </div>
+
+          {/* Image Preview */}
+          {imagePreview && (
+            <div style={{ marginBottom: 16, textAlign: 'center' }}>
+              <img
+                src={imagePreview}
+                alt="Uploaded poster preview"
+                style={{
+                  maxWidth: '300px',
+                  maxHeight: '400px',
+                  borderRadius: '8px',
+                  border: '2px solid #8b5cf6',
+                  objectFit: 'contain'
+                }}
+              />
+            </div>
+          )}
+
+          {/* Action Button */}
+          <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+            <button
+              className="btn-primary-green"
+              onClick={handleAnalyzePoster}
+              disabled={!uploadedImage || analyzing}
+              style={{ 
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
+                opacity: (!uploadedImage || analyzing) ? 0.5 : 1
+              }}
+            >
+              {analyzing ? '⏳ Analyzing...' : '🔍 Analyze Poster'}
+            </button>
+          </div>
+
+          {/* Analysis Results */}
+          {analysisResult && (
+            <div className="analysis-result-card" style={{
+              background: 'rgba(139, 92, 246, 0.15)',
+              borderRadius: '8px',
+              padding: '16px',
+              border: '1px solid rgba(139, 92, 246, 0.3)'
+            }}>
+              <h5 style={{ fontSize: 14, fontWeight: 600, color: '#a78bfa', marginBottom: 12 }}>
+                Analysis Results
+              </h5>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 16, marginBottom: 16 }}>
+                <div>
+                  <img
+                    src={imagePreview}
+                    alt="Analyzed poster"
+                    style={{ width: '100%', borderRadius: '6px', maxHeight: '300px', objectFit: 'contain' }}
+                  />
+                </div>
+                
+                <div>
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>Attractiveness Score</div>
+                    <div style={{ 
+                      fontSize: 32, 
+                      fontWeight: 700, 
+                      color: getVerdictColor(analysisResult.verdict)
+                    }}>
+                      {analysisResult.score}/100
+                    </div>
+                    <div style={{ 
+                      fontSize: 11, 
+                      color: getVerdictColor(analysisResult.verdict),
+                      fontWeight: 600,
+                      marginTop: 4
+                    }}>
+                      {getScoreInterpretation(analysisResult.score)}
+                    </div>
+                  </div>
+                  
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>Verdict</div>
+                    <span style={{
+                      padding: '4px 12px',
+                      borderRadius: '12px',
+                      fontSize: 12,
+                      fontWeight: 600,
+                      background: getVerdictColor(analysisResult.verdict) + '20',
+                      color: getVerdictColor(analysisResult.verdict)
+                    }}>
+                      {getVerdictLabel(analysisResult.verdict)}
+                    </span>
+                  </div>
+                  
+                  {analysisResult.suggestions && (
+                    <div>
+                      <div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>Suggestions</div>
+                      <p style={{ fontSize: 13, color: '#bbb', margin: 0, lineHeight: 1.5 }}>
+                        {analysisResult.suggestions}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </Card>
 
         <div style={{ marginBottom: 24 }}>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
