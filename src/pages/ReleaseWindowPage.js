@@ -8,6 +8,7 @@ import TagChip from '../components/TagChip';
 import { projectService } from '../services/api.service';
 import { analyzeReleaseWindow, saveReleaseWindowSuggestions } from '../services/releaseAnalysis.service';
 import { supabase } from '../supabaseClient';
+import { formatClusterList } from '../config/audienceClusters';
 import './ReleaseWindowPage.css';
 
 const ReleaseWindowPage = () => {
@@ -164,6 +165,34 @@ const ReleaseWindowPage = () => {
                 </div>
               )}
             </Card>
+
+            {/* Target Audience Card */}
+            {persona && (persona.target_core_clusters?.length > 0 || persona.target_secondary_clusters?.length > 0) && (
+              <Card style={{ marginTop: 20 }}>
+                <h3 className="section-title">🎯 Target Audience</h3>
+                <div style={{ marginTop: 12 }}>
+                  {persona.target_core_clusters && persona.target_core_clusters.length > 0 && (
+                    <div style={{ marginBottom: 12 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: '#4ade80', marginBottom: 6 }}>Primary:</div>
+                      <div style={{ fontSize: 14, color: '#ccc', lineHeight: 1.6 }}>
+                        {formatClusterList(persona.target_core_clusters)}
+                      </div>
+                    </div>
+                  )}
+                  {persona.target_secondary_clusters && persona.target_secondary_clusters.length > 0 && (
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: '#a78bfa', marginBottom: 6 }}>Secondary:</div>
+                      <div style={{ fontSize: 14, color: '#ccc', lineHeight: 1.6 }}>
+                        {formatClusterList(persona.target_secondary_clusters)}
+                      </div>
+                    </div>
+                  )}
+                  <div style={{ marginTop: 12, padding: 12, background: 'rgba(167,139,250,0.1)', borderRadius: 6, fontSize: 12, color: '#a78bfa' }}>
+                    💡 Analysis considers exam schedules, festivals, and events specific to your target audience
+                  </div>
+                </div>
+              </Card>
+            )}
           </div>
 
           {/* Right — analysis tools */}
@@ -210,8 +239,15 @@ const ReleaseWindowPage = () => {
             {/* Heatmap Calendar */}
             {dateAnalysis.length > 0 && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title">Release Date Heatmap</h3>
-                <p className="page-subtitle">Green = Favorable, Orange = Medium Risk, Red = High Risk</p>
+                <h3 className="section-title">📅 Release Date Heatmap</h3>
+                <p className="page-subtitle" style={{ marginTop: 8, marginBottom: 16 }}>
+                  <span style={{ color: '#4ade80', fontWeight: 600 }}>🟢 Green</span> = Best dates (low competition + favorable events) &nbsp;|&nbsp; 
+                  <span style={{ color: '#f59e0b', fontWeight: 600 }}>🟠 Orange</span> = Moderate risk &nbsp;|&nbsp; 
+                  <span style={{ color: '#ef4444', fontWeight: 600 }}>🔴 Red</span> = Avoid (exams/high competition)
+                </p>
+                <div style={{ padding: 12, background: 'rgba(167,139,250,0.1)', borderRadius: 6, fontSize: 13, color: '#a78bfa', marginBottom: 16 }}>
+                  🎯 Colors reflect impact on <strong>your target audience</strong>. Hover over dates for detailed breakdown.
+                </div>
                 <HeatmapCalendar 
                   dateAnalysis={dateAnalysis} 
                   onDateSelect={handleSelectDate} 
@@ -222,7 +258,10 @@ const ReleaseWindowPage = () => {
             {/* Top Suggestions */}
             {topSuggestions.length > 0 && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title">Top {topSuggestions.length} Recommendations</h3>
+                <h3 className="section-title">🤖 AI-Powered Top {topSuggestions.length} Recommendations</h3>
+                <p className="page-subtitle" style={{ marginBottom: 16 }}>
+                  Intelligently ranked based on your target audience preferences
+                </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {topSuggestions.map((suggestion, idx) => (
                     <Card key={suggestion.date} className="suggestion-card" style={{ background: 'rgba(255,255,255,0.05)', padding: 16 }}>
@@ -240,6 +279,24 @@ const ReleaseWindowPage = () => {
                           color={suggestion.riskColor} 
                         />
                       </div>
+
+                      {/* AI Reasoning */}
+                      {suggestion.aiReason && (
+                        <div style={{ 
+                          marginBottom: 12, 
+                          padding: 10, 
+                          background: 'rgba(167,139,250,0.1)', 
+                          borderRadius: 6, 
+                          borderLeft: '3px solid #a78bfa' 
+                        }}>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: '#a78bfa', marginBottom: 4 }}>
+                            🤖 AI Strategy:
+                          </div>
+                          <div style={{ fontSize: 13, color: '#ccc', lineHeight: 1.5 }}>
+                            {suggestion.aiReason}
+                          </div>
+                        </div>
+                      )}
                       
                       {suggestion.pros && suggestion.pros.length > 0 && (
                         <div style={{ marginBottom: 8 }}>

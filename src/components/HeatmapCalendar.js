@@ -124,6 +124,54 @@ const HeatmapDateCell = ({ dateItem, onSelect }) => {
             </div>
           )}
 
+          {/* Events/Holidays Section */}
+          {dateItem.events && dateItem.events.length > 0 && (
+            <div className="tooltip-section" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px', marginBottom: '8px' }}>
+              <div className="tooltip-section-title" style={{ color: '#a78bfa', fontWeight: 600 }}>
+                📅 Events & Holidays ({dateItem.events.length}):
+              </div>
+              <div style={{ marginTop: '6px' }}>
+                {dateItem.events.map((event, idx) => {
+                  const isPositive = dateItem.eventImpact > 0;
+                  const isNegative = dateItem.eventImpact < 0;
+                  const borderColor = isPositive ? '#4ade80' : isNegative ? '#ef4444' : '#6b7280';
+                  const eventIcon = getEventIcon(event.type);
+                  
+                  return (
+                    <div key={idx} style={{ 
+                      padding: '6px 8px', 
+                      marginBottom: '4px', 
+                      background: 'rgba(0,0,0,0.3)', 
+                      borderRadius: '4px',
+                      borderLeft: `3px solid ${borderColor}`
+                    }}>
+                      <div style={{ fontWeight: 600, color: '#fff', fontSize: '13px' }}>
+                        {eventIcon} {event.name}
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                        <span style={{ textTransform: 'capitalize' }}>{event.type?.replace(/_/g, ' ')}</span>
+                        {event.region && event.region !== 'National' && (
+                          <>
+                            <span> • </span>
+                            <span>{event.region}</span>
+                          </>
+                        )}
+                        {dateItem.eventImpact !== 0 && (
+                          <>
+                            <span> • </span>
+                            <span style={{ color: isPositive ? '#4ade80' : isNegative ? '#ef4444' : '#9ca3af' }}>
+                              {isPositive ? '+' : ''}{dateItem.eventImpact}% impact
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {dateItem.pros && dateItem.pros.length > 0 && (
             <div className="tooltip-section">
               <div className="tooltip-section-title">✓ Pros:</div>
@@ -156,5 +204,30 @@ const HeatmapDateCell = ({ dateItem, onSelect }) => {
     </div>
   );
 };
+
+/**
+ * Helper function to get icon for event type
+ */
+function getEventIcon(eventType) {
+  const icons = {
+    'HOLIDAY': '🏛️',
+    'FESTIVAL': '🎉',
+    'EXAM_FINAL': '📚',
+    'BOARD_EXAM': '📝',
+    'ENTRANCE_EXAM': '📖',
+    'EXAM_PERIOD': '📚',
+    'UNIVERSITY_EXAM': '🎓',
+    'SPORTS': '🏏',
+    'SCHOOL_VACATION': '🏖️',
+    'SCHOOL_BREAK': '🏖️',
+    'HARVEST': '🌾',
+    'RURAL_FAIR': '🎪',
+    'CORPORATE_BUSY': '💼',
+    'CULTURAL': '🎭',
+    'INFORMAL': '💝',
+    'WEATHER': '🌧️',
+  };
+  return icons[eventType] || '📅';
+}
 
 export default HeatmapCalendar;
