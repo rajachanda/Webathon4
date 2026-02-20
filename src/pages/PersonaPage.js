@@ -6,6 +6,51 @@ import { projectService } from '../services/api.service';
 import { generatePersona } from '../services/gemini.service';
 import './PersonaPage.css';
 
+// Map full question text → short display label
+const QUESTION_LABEL_MAP = [
+  { pattern: /tone/i,        label: 'Tone' },
+  { pattern: /theme/i,       label: 'Themes' },
+  { pattern: /strength/i,    label: 'Strengths' },
+  { pattern: /weak|risk/i,   label: 'Weaknesses' },
+  { pattern: /audience/i,    label: 'Audience' },
+  { pattern: /reference|film/i, label: 'References' },
+  { pattern: /note/i,        label: 'Notes' },
+  { pattern: /hero/i,        label: 'Hero' },
+  { pattern: /heroine/i,     label: 'Heroine' },
+  { pattern: /villain/i,     label: 'Villain' },
+  { pattern: /technolog/i,   label: 'Technology' },
+  { pattern: /music|song/i,  label: 'Music' },
+  { pattern: /market/i,      label: 'Marketing' },
+  { pattern: /competi/i,     label: 'Competition' },
+  { pattern: /concern/i,     label: 'Concerns' },
+  { pattern: /suggest/i,     label: 'Suggestions' },
+  { pattern: /differenti/i,  label: 'Differentiator' },
+  { pattern: /appeal/i,      label: 'Appeal' },
+  { pattern: /challeng/i,    label: 'Challenges' },
+  { pattern: /visua/i,       label: 'Visuals' },
+  { pattern: /narrat/i,      label: 'Narrative' },
+];
+
+const shortAnswer = (text, max = 40) => {
+  if (!text) return '';
+  const first = text.split(/[.,;\n]/)[0].trim();
+  return first.length > max ? first.slice(0, max).trimEnd() + '…' : first;
+};
+
+const shortLabel = (question) => {
+  for (const { pattern, label } of QUESTION_LABEL_MAP) {
+    if (pattern.test(question)) return label;
+  }
+  // Fallback: strip question words and take first 3 words
+  const cleaned = question
+    .replace(/^(how|what|who|describe|list|name|rate|explain|which|identify|in your opinion)[, ]*/i, '')
+    .replace(/\?$/, '')
+    .split(' ')
+    .slice(0, 3)
+    .join(' ');
+  return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+};
+
 const AUDIENCE_SEGMENTS = [
   { code: 'URBAN_YOUTH_18_30', label: 'Urban 18–30, Multiplex, Male-skewed', region: ['AP/TG','TN'] },
   { code: 'URBAN_WOMEN_18_35', label: 'Urban Women 18–35, Romance/Drama', region: ['AP/TG','TN','KA','KL'] },
@@ -207,9 +252,22 @@ const PersonaPage = () => {
                   {teamResponses.map(r => (
                     <Card key={r.id} className="team-response-card">
                       <div className="tr-role">{r.respondent_role || 'Team member'}</div>
-                      {r.perceived_strengths && <p className="tr-field"><strong>Strengths:</strong> {r.perceived_strengths}</p>}
-                      {r.likely_audience    && <p className="tr-field"><strong>Audience:</strong> {r.likely_audience}</p>}
-                      {r.reference_films    && <p className="tr-field"><strong>References:</strong> {r.reference_films}</p>}
+                      {r.tone_description    && <p className="tr-field"><strong>Tone:</strong> {shortAnswer(r.tone_description)}</p>}
+                      {r.themes_perceived    && <p className="tr-field"><strong>Themes:</strong> {shortAnswer(r.themes_perceived)}</p>}
+                      {r.perceived_strengths && <p className="tr-field"><strong>Strengths:</strong> {shortAnswer(r.perceived_strengths)}</p>}
+                      {r.perceived_weaknesses && <p className="tr-field"><strong>Weaknesses:</strong> {shortAnswer(r.perceived_weaknesses)}</p>}
+                      {r.likely_audience     && <p className="tr-field"><strong>Audience:</strong> {shortAnswer(r.likely_audience)}</p>}
+                      {r.reference_films     && <p className="tr-field"><strong>References:</strong> {shortAnswer(r.reference_films)}</p>}
+                      {r.notes               && <p className="tr-field"><strong>Notes:</strong> {shortAnswer(r.notes)}</p>}
+                      {Array.isArray(r.dynamic_answers) && r.dynamic_answers.length > 0 && (
+                        r.dynamic_answers.map((da, idx) => (
+                          da.answer && (
+                            <p key={idx} className="tr-field">
+                              <strong>{shortLabel(da.question)}:</strong> {shortAnswer(da.answer)}
+                            </p>
+                          )
+                        ))
+                      )}
                     </Card>
                   ))}
                 </div>
