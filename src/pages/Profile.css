@@ -1,0 +1,262 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-card {
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: cardSlideIn 0.5s ease-out;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #00ff88;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #00ff88;
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000;
+}
+
+.profile-name {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.profile-email {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+}
+
+.profile-role-section {
+    margin-bottom: 2rem;
+}
+
+.role-badge {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 204, 106, 0.1) 100%);
+    border: 2px solid #00ff88;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.2);
+}
+
+.role-icon-large {
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 10px rgba(0, 255, 136, 0.3));
+}
+
+.role-info {
+    flex: 1;
+}
+
+.role-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.role-title {
+    color: #00ff88;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem 0;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.detail-value {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-edit-profile,
+.btn-sign-out {
+    flex: 1;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-edit-profile {
+    background: rgba(255, 255, 255, 0.08);
+    color: #00ff88;
+    border: 2px solid #00ff88;
+}
+
+.btn-edit-profile:hover {
+    background: rgba(0, 255, 136, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.2);
+}
+
+.btn-sign-out {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+    border: 2px solid rgba(255, 59, 48, 0.3);
+}
+
+.btn-sign-out:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: #ff3b30;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 59, 48, 0.2);
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 2rem 1rem;
+    }
+
+    .profile-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .profile-name {
+        font-size: 1.6rem;
+    }
+
+    .role-badge {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .role-title {
+        font-size: 1.5rem;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .role-icon-large {
+        font-size: 3rem;
+    }
+
+    .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}

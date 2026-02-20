@@ -23,7 +23,7 @@ const Login = () => {
   }
 
   if (user) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/select-role" />;
   }
 
   return (
@@ -41,6 +41,7 @@ const Login = () => {
             <h2>Welcome Back!</h2>
             <p>Sign in to continue your movie promotion journey</p>
           </div>
+          
           <button onClick={signInWithGoogle} className="google-signin-btn">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19.8055 10.2292C19.8055 9.55156 19.7501 8.86719 19.6323 8.19531H10.2002V12.0492H15.6014C15.3776 13.291 14.6567 14.3695 13.6028 15.0875V17.5867H16.8251C18.712 15.8449 19.8055 13.2723 19.8055 10.2292Z" fill="#4285F4"/>

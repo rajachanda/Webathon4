@@ -130,6 +130,63 @@
     to { transform: rotate(360deg); }
 }
 
+.role-selection {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.role-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-align: left;
+}
+
+.role-dropdown {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2300ff88' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.2rem center;
+    padding-right: 3rem;
+}
+
+.role-dropdown:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(0, 255, 136, 0.5);
+}
+
+.role-dropdown:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #00ff88;
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+}
+
+.role-dropdown option {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 0.75rem;
+}
+
+.role-dropdown option:checked {
+    background: #00ff88;
+    color: #000;
+}
+
 .google-signin-btn {
     width: 100%;
     display: flex;

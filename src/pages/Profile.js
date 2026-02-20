@@ -1,0 +1,149 @@
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../AuthContext';
+import { Navigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
+import Header from '../components/Header';
+import './Profile.css';
+
+const Profile = () => {
+  const { user, loading, signOut } = useAuth();
+  const [userProfile, setUserProfile] = useState(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!user) {
+        setLoadingProfile(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (error) {
+          console.error('Error fetching profile:', error);
+        } else {
+          setUserProfile(data);
+        }
+      } catch (err) {
+        console.error('Error in fetchUserProfile:', err);
+      } finally {
+        setLoadingProfile(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
+
+  if (loading || loadingProfile) {
+    return (
+      <div className="content-overlay">
+        <Header />
+        <div className="profile-container">
+          <div className="loading-content">
+            <div className="spinner"></div>
+            <p>Loading your profile...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!userProfile) {
+    return <Navigate to="/select-role" />;
+  }
+
+  const getRoleIcon = (role) => {
+    const roleIcons = {
+      'Producer': '🎬',
+      'Director': '🎥',
+      'Assistant Director': '📋',
+      'Actor/Hero': '🎭',
+      'Actress/Heroine': '👑',
+      'Cinematographer/Cameraman': '📹',
+      'Editor': '✂️',
+      'Music Director': '🎵',
+      'Art Director': '🎨',
+      'Production Manager': '📊',
+      'Scriptwriter/Writer': '✍️',
+      'Sound Designer': '🔊',
+      'VFX Artist': '✨',
+      'Costume Designer': '👗',
+      'Makeup Artist': '💄',
+      'Stunt Coordinator': '🤸',
+      'Casting Director': '🎯'
+    };
+    return roleIcons[role] || '🎬';
+  };
+
+  return (
+    <div className="content-overlay">
+      <Header />
+      <div className="profile-container">
+        <div className="profile-card">
+          <div className="profile-header">
+            <div className="profile-avatar">
+              {userProfile.avatar_url ? (
+                <img src={userProfile.avatar_url} alt={userProfile.name} />
+              ) : (
+                <div className="avatar-placeholder">
+                  {userProfile.name?.charAt(0).toUpperCase()}
+                </div>
+              )}
+            </div>
+            <h1 className="profile-name">{userProfile.name}</h1>
+            <p className="profile-email">{userProfile.email}</p>
+          </div>
+
+          <div className="profile-role-section">
+            <div className="role-badge">
+              <span className="role-icon-large">{getRoleIcon(userProfile.role)}</span>
+              <div className="role-info">
+                <p className="role-label">Your Role</p>
+                <h2 className="role-title">{userProfile.role}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div className="profile-details">
+            <div className="detail-item">
+              <span className="detail-label">Member Since</span>
+              <span className="detail-value">
+                {new Date(userProfile.created_at).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Last Updated</span>
+              <span className="detail-value">
+                {new Date(userProfile.updated_at).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </span>
+            </div>
+          </div>
+
+          <div className="profile-actions">
+            <button className="btn-edit-profile">Edit Profile</button>
+            <button className="btn-sign-out" onClick={signOut}>Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
