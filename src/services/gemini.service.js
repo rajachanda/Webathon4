@@ -172,3 +172,6 @@ URBAN_YOUTH_18_30, URBAN_WOMEN_18_35, COLLEGE_CROWD, FAMILY_ALL_AGES, MASS_RURAL
   const parsed = parseJSON(raw);
   return parsed;
 }
+
+// Export utility functions for use in other services
+export { callGemini as callGroq, parseJSON };

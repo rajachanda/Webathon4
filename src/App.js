@@ -16,6 +16,7 @@ import ReleaseWindowPage from './pages/ReleaseWindowPage';
 import BuzzPage from './pages/BuzzPage';
 import CampaignPage from './pages/CampaignPage';
 import SentimentAnalysisPage from './pages/SentimentAnalysisPage';
+import CompetitionManager from './pages/CompetitionManager';
 import './App.css';
 
 function AppContent() {
@@ -34,6 +35,7 @@ function AppContent() {
         <Route path="/select-role"  element={<ProtectedRoute><RoleSelection /></ProtectedRoute>} />
         <Route path="/profile"      element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/dashboard"    element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="/competition"  element={<ProtectedRoute><CompetitionManager /></ProtectedRoute>} />
         <Route path="/projects/new" element={<ProtectedRoute><NewProjectOnboarding /></ProtectedRoute>} />
         <Route path="/projects/:projectId"                element={<ProtectedRoute><ProjectOverviewPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/persona"        element={<ProtectedRoute><PersonaPage /></ProtectedRoute>} />

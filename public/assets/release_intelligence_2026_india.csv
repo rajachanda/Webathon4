@@ -1,0 +1,44 @@
+Event_Name,Event_Type,Start_Date,End_Date,Region,Impact_UrbanYouth,Impact_College,Impact_Family,Impact_WorkingClass,Impact_Rural,Impact_KidsParents,Impact_SeniorCitizens,Impact_WomenCentric
+Republic Day,HOLIDAY,26/01/2026,26/01/2026,National,-15,-10,-20,-15,-10,-20,-15,-15
+Pongal,FESTIVAL,14/01/2026,17/01/2026,Tamil Nadu,-30,-40,-50,-25,-60,-45,-30,-35
+Makar Sankranti,FESTIVAL,14/01/2026,15/01/2026,National,-25,-30,-40,-20,-50,-35,-25,-30
+Holi,FESTIVAL,14/03/2026,15/03/2026,National,-40,-50,-60,-35,-70,-55,-40,-45
+Board Exams Class 10,EXAM_FINAL,01/03/2026,15/03/2026,National,0,-100,0,0,0,0,0,0
+Board Exams Class 12,EXAM_FINAL,01/03/2026,25/03/2026,National,0,-100,-5,0,0,-10,0,0
+Good Friday,HOLIDAY,03/04/2026,03/04/2026,National,-10,-5,-15,-10,-5,-15,-10,-10
+Easter,FESTIVAL,05/04/2026,05/04/2026,National,-15,-10,-25,-15,-20,-25,-15,-20
+Ugadi,FESTIVAL,22/03/2026,22/03/2026,Karnataka,-30,-35,-45,-25,-55,-40,-30,-35
+Tamil New Year,FESTIVAL,14/04/2026,14/04/2026,Tamil Nadu,-25,-30,-40,-20,-50,-35,-25,-30
+Ambedkar Jayanti,HOLIDAY,14/04/2026,14/04/2026,National,-10,-5,-15,-10,-5,-15,-10,-10
+Eid ul-Fitr,FESTIVAL,01/04/2026,03/04/2026,National,-50,-60,-70,-45,-80,-65,-50,-55
+Independence Day,HOLIDAY,15/08/2026,15/08/2026,National,-20,-15,-30,-20,-15,-30,-20,-20
+Raksha Bandhan,FESTIVAL,03/08/2026,03/08/2026,National,-15,-10,-25,-15,-30,-20,-15,-25
+Janmashtami,FESTIVAL,14/08/2026,15/08/2026,National,-25,-30,-40,-20,-50,-35,-25,-35
+Ganesh Chaturthi,FESTIVAL,22/08/2026,01/09/2026,Maharashtra,-40,-50,-60,-35,-70,-55,-40,-50
+Onam,FESTIVAL,26/08/2026,06/09/2026,Kerala,-35,-45,-55,-30,-65,-50,-35,-45
+Gandhi Jayanti,HOLIDAY,02/10/2026,02/10/2026,National,-10,-5,-15,-10,-5,-15,-10,-10
+Dussehra,FESTIVAL,23/10/2026,24/10/2026,National,-45,-55,-65,-40,-75,-60,-45,-55
+Diwali,FESTIVAL,11/11/2026,15/11/2026,National,-60,-70,-80,-55,-90,-75,-60,-70
+Guru Nanak Jayanti,FESTIVAL,30/11/2026,30/11/2026,Punjab,-30,-35,-45,-25,-55,-40,-30,-35
+Christmas,FESTIVAL,25/12/2026,25/12/2026,National,-35,-40,-50,-30,-45,-50,-35,-40
+New Year's Eve,FESTIVAL,31/12/2026,01/01/2027,National,-50,-60,-40,-45,-25,-35,-30,-40
+Maha Shivratri,FESTIVAL,17/02/2026,17/02/2026,National,-20,-25,-35,-15,-45,-30,-25,-30
+JEE Main,EXAM_PERIOD,20/01/2026,31/01/2026,National,0,-80,0,0,0,0,0,0
+NEET,EXAM_PERIOD,03/05/2026,03/05/2026,National,0,-90,0,0,0,0,0,0
+CA Final Exams,EXAM_PERIOD,10/05/2026,25/05/2026,National,-5,-70,-5,0,0,0,0,0
+School Summer Break,SCHOOL_BREAK,01/05/2026,15/06/2026,National,5,10,15,0,10,20,5,5
+Monsoon Season Start,WEATHER,01/06/2026,30/09/2026,National,-10,-10,-15,-10,-20,-15,-15,-10
+IPL Finals Week,SPORTS,25/05/2026,31/05/2026,National,-50,-70,-30,-40,-20,-25,-15,-20
+India vs Pakistan Cricket,SPORTS,15/06/2026,15/06/2026,National,-70,-80,-50,-60,-40,-45,-30,-40
+Durga Puja,FESTIVAL,01/10/2026,10/10/2026,West Bengal,-50,-60,-70,-45,-80,-65,-50,-60
+Navratri,FESTIVAL,17/10/2026,25/10/2026,Gujarat,-40,-50,-60,-35,-70,-55,-40,-55
+Karwa Chauth,FESTIVAL,24/10/2026,24/10/2026,National,-10,-5,-20,-10,-25,-15,-10,-30
+Bhai Dooj,FESTIVAL,13/11/2026,13/11/2026,National,-15,-10,-25,-15,-30,-20,-15,-25
+Children's Day,HOLIDAY,14/11/2026,14/11/2026,National,-5,0,-10,-5,0,-15,0,-5
+Women's Day,HOLIDAY,08/03/2026,08/03/2026,National,-5,0,-10,0,0,-5,0,-20
+Valentine's Day,INFORMAL,14/02/2026,14/02/2026,National,-25,-30,-5,-20,0,-5,0,-15
+Holi Weekend,FESTIVAL,13/03/2026,16/03/2026,National,-45,-55,-65,-40,-75,-60,-45,-50
+Ram Navami,FESTIVAL,02/04/2026,02/04/2026,National,-20,-25,-35,-15,-45,-30,-25,-30
+Mahavir Jayanti,FESTIVAL,06/04/2026,06/04/2026,National,-15,-10,-25,-15,-30,-20,-15,-20
+Buddha Purnima,FESTIVAL,24/05/2026,24/05/2026,National,-15,-10,-25,-15,-30,-20,-15,-20
+International Film Festival,CULTURAL,01/11/2026,10/11/2026,National,10,15,5,10,0,5,5,5

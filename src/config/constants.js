@@ -10,6 +10,7 @@ export const ROUTES = {
   LOGIN: '/login',
   DASHBOARD: '/dashboard',
   NEW_PROJECT: '/projects/new',
+  COMPETITION: '/competition',
   PROFILE: '/profile',
   SETTINGS: '/settings',
   HELP: '/help',
@@ -18,6 +19,7 @@ export const ROUTES = {
 export const NAVIGATION_ITEMS = [
   { id: 'home',         label: 'Home',           route: '/',           requiresAuth: false },
   { id: 'dashboard',    label: 'Dashboard',      route: '/dashboard',  requiresAuth: true  },
+  { id: 'competition',  label: 'Competition',    route: '/competition', requiresAuth: true },
   { id: 'new-project',  label: 'New Film +',     route: '/projects/new', requiresAuth: true },
 ];
 

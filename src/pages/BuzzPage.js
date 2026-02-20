@@ -29,7 +29,7 @@ const BuzzPage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        // Load project details to get film name
+        // Load project details to get film name and initial media links
         const projectData = await projectService.getProject(projectId);
         setProject(projectData);
         
@@ -51,15 +51,43 @@ const BuzzPage = () => {
             instagramHandle: existingConfig.instagram_handle || '',
             filmName: existingConfig.film_name || projectData?.title || '',
           });
-        } else if (projectData?.title) {
-          // Auto-populate film name and trigger auto-search
-          setConfig(prev => ({ ...prev, filmName: projectData.title }));
-          // Auto-search after component mounts (silent mode)
-          setTimeout(() => {
-            if (projectData?.title) {
-              handleAutoSearchAndConfigure(true);
+        } else {
+          // No config exists - check for initial_media_links from onboarding
+          const initialMediaLinks = projectData?.project_metadata?.initial_media_links;
+          
+          if (initialMediaLinks) {
+            // Use media links from onboarding
+            const urls = [];
+            if (initialMediaLinks.primary_trailer_url) {
+              urls.push(initialMediaLinks.primary_trailer_url);
             }
-          }, 1500);
+            if (initialMediaLinks.secondary_videos) {
+              urls.push(...initialMediaLinks.secondary_videos);
+            }
+            
+            if (urls.length > 0) {
+              // Pre-populate config with onboarding media links
+              const newConfig = {
+                youtubeUrls: urls,
+                instagramHandle: '',
+                filmName: projectData?.title || '',
+              };
+              setConfig(newConfig);
+              
+              // Auto-save initial config
+              await saveConfigToDatabase(newConfig);
+              showToast(`✓ Pre-populated ${urls.length} video(s) from onboarding`);
+            }
+          } else if (projectData?.title) {
+            // Fallback: Auto-populate film name and trigger auto-search
+            setConfig(prev => ({ ...prev, filmName: projectData.title }));
+            // Auto-search after component mounts (silent mode)
+            setTimeout(() => {
+              if (projectData?.title) {
+                handleAutoSearchAndConfigure(true);
+              }
+            }, 1500);
+          }
         }
       } catch (e) {
         console.error(e);

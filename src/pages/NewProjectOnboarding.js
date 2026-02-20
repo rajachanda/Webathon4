@@ -47,6 +47,13 @@ const STEPS = [
       { id: 'hook', placeholder: 'Interesting hook (e.g. Interval twist reveals he\'s the villain)' }
     ]
   },
+  { id: 'media_links',      label: 'Add your trailer/teaser/song links (optional, helps Buzz & Sentiment analysis)', type: 'multi-input',  required: false,
+    fields: [
+      { id: 'primary_trailer_url', placeholder: 'Primary trailer URL (e.g. https://youtube.com/watch?v=...)' },
+      { id: 'secondary_video_1', placeholder: 'Additional video URL 1 (optional)' },
+      { id: 'secondary_video_2', placeholder: 'Additional video URL 2 (optional)' }
+    ]
+  },
 ];
 
 const NewProjectOnboarding = () => {
@@ -88,6 +95,23 @@ const NewProjectOnboarding = () => {
       const logline = loglineHook.logline || '';
       const interesting_hook = loglineHook.hook || '';
 
+      // Parse media links (new Step 9)
+      const mediaLinksInput = answers.media_links || {};
+      const initial_media_links = {};
+      
+      if (mediaLinksInput.primary_trailer_url) {
+        initial_media_links.primary_trailer_url = mediaLinksInput.primary_trailer_url;
+      }
+      
+      const secondaryVideos = [
+        mediaLinksInput.secondary_video_1,
+        mediaLinksInput.secondary_video_2,
+      ].filter(Boolean);
+      
+      if (secondaryVideos.length > 0) {
+        initial_media_links.secondary_videos = secondaryVideos;
+      }
+
       // Parse genre/subgenre
       const genreParts = (answers.genre || '').split(' / ');
       const mainGenre = genreParts[0] || '';
@@ -112,6 +136,7 @@ const NewProjectOnboarding = () => {
           heroine_name,
           logline,
           interesting_hook,
+          initial_media_links: Object.keys(initial_media_links).length > 0 ? initial_media_links : null,
         },
       };
 
@@ -133,7 +158,7 @@ const NewProjectOnboarding = () => {
       <div className="onboarding-body">
         <div className="onboarding-heading">
           <h1 className="page-title">Introduce your film 🎬</h1>
-          <p className="page-subtitle">Answer 8 quick questions and we'll get started.</p>
+          <p className="page-subtitle">Answer 9 quick questions and we'll get started.</p>
         </div>
         <Card className="onboarding-card">
           {saving ? (

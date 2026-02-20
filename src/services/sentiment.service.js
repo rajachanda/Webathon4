@@ -216,3 +216,52 @@ export async function getAllSentimentAnalyses(projectId) {
   if (error) throw error;
   return data || [];
 }
+
+/**
+ * Get simplified sentiment summary for Campaign/Release pages
+ * @param {string} projectId - Project ID
+ * @returns {Promise<Object>} Simplified sentiment summary
+ */
+export async function getSentimentSummary(projectId) {
+  try {
+    const analysis = await getLatestSentimentAnalysis(projectId);
+    
+    if (!analysis) {
+      return null;
+    }
+
+    return {
+      positivePercent: analysis.positive_sentiment,
+      neutralPercent: analysis.neutral_sentiment,
+      negativePercent: analysis.negative_sentiment,
+      keyPositives: [
+        analysis.key_positive_1,
+        analysis.key_positive_2,
+        analysis.key_positive_3,
+      ].filter(Boolean),
+      keyConcerns: [
+        {
+          factor: analysis.concern_factor_1,
+          problem: analysis.concern_problem_1,
+          recommendedAction: analysis.action_strategy_1,
+        },
+        {
+          factor: analysis.concern_factor_2,
+          problem: analysis.concern_problem_2,
+          recommendedAction: analysis.action_strategy_2,
+        },
+        {
+          factor: analysis.concern_factor_3,
+          problem: analysis.concern_problem_3,
+          recommendedAction: analysis.action_strategy_3,
+        },
+      ].filter(c => c.factor && c.problem),
+      totalComments: analysis.total_comments_analyzed,
+      analyzedAt: analysis.analyzed_at,
+      videoSources: analysis.video_sources || [],
+    };
+  } catch (error) {
+    console.error('Error fetching sentiment summary:', error);
+    return null;
+  }
+}

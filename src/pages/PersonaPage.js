@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
+import TagChip from '../components/TagChip';
 import { projectService } from '../services/api.service';
 import { generatePersona } from '../services/gemini.service';
 import { TEAM_ROLES } from '../config/teamRoleQuestions';
+import { 
+  deriveTargetClustersFromPersona, 
+  TARGET_CLUSTERS, 
+  getClusterLabel, 
+  getClusterColor 
+} from '../utils/clusterMapping';
 import './PersonaPage.css';
 
 // Map full question text → short display label
@@ -66,6 +73,7 @@ const AUDIENCE_SEGMENTS = [
 const PersonaPage = () => {
   const { projectId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [teamResponses, setTeamResponses] = useState([]);
   const [inviteUrl, setInviteUrl] = useState('');
   const [showRoleModal, setShowRoleModal] = useState(false);
@@ -74,9 +82,17 @@ const PersonaPage = () => {
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [toast, setToast] = useState(location.state?.toast || '');
-  const [form, setForm] = useState({ persona_summary: '', positioning_statement: '', core_audience_segments: [], secondary_audience_segments: [] });
+  const [form, setForm] = useState({ 
+    persona_summary: '', 
+    positioning_statement: '', 
+    core_audience_segments: [], 
+    secondary_audience_segments: [],
+    target_core_clusters: [],
+    target_secondary_clusters: [],
+  });
   const [locked, setLocked] = useState(false);
   const [projectMeta, setProjectMeta] = useState(null);
+  const [latestBuzz, setLatestBuzz] = useState(null);
 
   useEffect(() => {
     if (toast) {
@@ -88,10 +104,11 @@ const PersonaPage = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const [p, tr, proj] = await Promise.all([
+        const [p, tr, proj, buzzSnaps] = await Promise.all([
           projectService.getProjectPersona(projectId),
           projectService.getTeamResponses(projectId),
           projectService.getProject(projectId),
+          projectService.getBuzzSnapshots(projectId),
         ]);
         if (p) {
           setLocked(p.locked || false);
@@ -100,10 +117,16 @@ const PersonaPage = () => {
             positioning_statement: p.positioning_statement || '',
             core_audience_segments: p.core_audience_segments || [],
             secondary_audience_segments: p.secondary_audience_segments || [],
+            target_core_clusters: p.target_core_clusters || [],
+            target_secondary_clusters: p.target_secondary_clusters || [],
           });
         }
         setTeamResponses(tr || []);
         if (proj?.project_metadata) setProjectMeta(proj.project_metadata);
+        
+        // Load latest buzz snapshot
+        const sorted = (buzzSnaps || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setLatestBuzz(sorted[0] || null);
       } catch (e) {
         console.error(e);
       } finally {
@@ -173,6 +196,29 @@ const PersonaPage = () => {
     const current = form[key] || [];
     const next = current.includes(code) ? current.filter(c => c !== code) : [...current, code];
     setForm({ ...form, [key]: next });
+    
+    // Auto-derive clusters when segments change
+    if (!locked) {
+      const allSegments = [
+        ...(type === 'core' ? next : form.core_audience_segments || []),
+        ...(type === 'secondary' ? next : form.secondary_audience_segments || []),
+      ];
+      const clusters = deriveTargetClustersFromPersona(allSegments);
+      setForm(prev => ({
+        ...prev,
+        [key]: next,
+        target_core_clusters: clusters.core,
+        target_secondary_clusters: clusters.secondary,
+      }));
+    }
+  };
+
+  const toggleCluster = (code, type) => {
+    if (locked) return;
+    const key = type === 'core' ? 'target_core_clusters' : 'target_secondary_clusters';
+    const current = form[key] || [];
+    const next = current.includes(code) ? current.filter(c => c !== code) : [...current, code];
+    setForm({ ...form, [key]: next });
   };
 
   if (loading) return <ProjectLayout><div className="loading-screen"><div className="loading-spinner" /></div></ProjectLayout>;
@@ -232,12 +278,21 @@ const PersonaPage = () => {
                     setGenerating(true);
                     try {
                       const result = await generatePersona(projectMeta, teamResponses);
+                      const coreSegs = (result.core_audience_segments || []).filter(c => AUDIENCE_SEGMENTS.some(s => s.code === c));
+                      const secondarySegs = (result.secondary_audience_segments || []).filter(c => AUDIENCE_SEGMENTS.some(s => s.code === c));
+                      
+                      // Derive target clusters
+                      const allSegments = [...coreSegs, ...secondarySegs];
+                      const clusters = deriveTargetClustersFromPersona(allSegments);
+                      
                       setForm(prev => ({
                         ...prev,
                         persona_summary:            result.persona_summary        || prev.persona_summary,
                         positioning_statement:       result.positioning_statement  || prev.positioning_statement,
-                        core_audience_segments:      (result.core_audience_segments      || []).filter(c => AUDIENCE_SEGMENTS.some(s => s.code === c)),
-                        secondary_audience_segments: (result.secondary_audience_segments || []).filter(c => AUDIENCE_SEGMENTS.some(s => s.code === c)),
+                        core_audience_segments:      coreSegs,
+                        secondary_audience_segments: secondarySegs,
+                        target_core_clusters:        clusters.core,
+                        target_secondary_clusters:   clusters.secondary,
                       }));
                       setToast('✦ Persona generated by Gemini — review & save.');
                     } catch (e) {
@@ -355,6 +410,72 @@ const PersonaPage = () => {
                   </div>
                 ))}
               </div>
+            </Card>
+
+            {/* Target Clusters (Derived from segments) */}
+            <Card style={{ marginTop: 20 }}>
+              <h3 className="section-title">Target Audience Clusters</h3>
+              <p className="persona-team-subtitle">Simplified clusters for Release & Campaign planning (auto-derived, editable).</p>
+              
+              <div style={{ marginBottom: 12 }}>
+                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Core Clusters:</label>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {Object.values(TARGET_CLUSTERS).map(cluster => (
+                    <TagChip
+                      key={cluster}
+                      label={getClusterLabel(cluster)}
+                      color={form.target_core_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
+                      size="md"
+                      onClick={() => !locked && toggleCluster(cluster, 'core')}
+                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_core_clusters?.includes(cluster) ? 1 : 0.5 }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Secondary Clusters:</label>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {Object.values(TARGET_CLUSTERS).map(cluster => (
+                    <TagChip
+                      key={cluster}
+                      label={getClusterLabel(cluster)}
+                      color={form.target_secondary_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
+                      size="md"
+                      onClick={() => !locked && toggleCluster(cluster, 'secondary')}
+                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_secondary_clusters?.includes(cluster) ? 1 : 0.5 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Card>
+
+            {/* Buzz Score Card */}
+            <Card style={{ marginTop: 20 }}>
+              <h3 className="section-title">Current Buzz Score</h3>
+              {latestBuzz ? (
+                <div>
+                  <div style={{ fontSize: 36, fontWeight: 700, color: latestBuzz.buzz_score >= 70 ? '#4ade80' : latestBuzz.buzz_score >= 40 ? '#fbbf24' : '#f87171', marginBottom: 8 }}>
+                    {latestBuzz.buzz_score} / 100
+                  </div>
+                  <div style={{ fontSize: 14, color: '#888', marginBottom: 12 }}>
+                    {latestBuzz.buzz_score >= 70 ? 'High' : latestBuzz.buzz_score >= 40 ? 'Medium' : 'Low'} Buzz
+                  </div>
+                  <div style={{ fontSize: 12, color: '#666', marginBottom: 16 }}>
+                    Last updated: {new Date(latestBuzz.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </div>
+                  <button className="btn-ghost" onClick={() => navigate(`/projects/${projectId}/buzz`)}>
+                    View Buzz Analytics →
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ color: '#888', marginBottom: 12 }}>No buzz data yet.</p>
+                  <button className="btn-primary-green" onClick={() => navigate(`/projects/${projectId}/buzz`)}>
+                    Run Buzz Analysis
+                  </button>
+                </div>
+              )}
             </Card>
           </div>
         </div>
