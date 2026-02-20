@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import TagChip from '../components/TagChip';
@@ -8,6 +8,7 @@ import './CampaignPage.css';
 
 const CampaignPage = () => {
   const { projectId } = useParams();
+  const navigate = useNavigate();
   const [blueprint, setBlueprint] = useState(null);
   const [persona, setPersona] = useState(null);
   const [latestBuzz, setLatestBuzz] = useState(null);
@@ -90,9 +91,18 @@ const CampaignPage = () => {
         </div>
 
         <div style={{ marginBottom: 24 }}>
-          <button className="btn-primary-green" onClick={handleGenerate} disabled={generating}>
-            {generating ? 'Generating…' : blueprint ? '↻ Regenerate Blueprint' : '✦ Generate Campaign Blueprint'}
-          </button>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <button className="btn-primary-green" onClick={handleGenerate} disabled={generating}>
+              {generating ? 'Generating…' : blueprint ? '↻ Regenerate Blueprint' : '✦ Generate Campaign Blueprint'}
+            </button>
+            <button 
+              className="btn-primary-green" 
+              onClick={() => navigate(`/projects/${projectId}/sentiment`)}
+              style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+            >
+              📊 Sentiment Analysis
+            </button>
+          </div>
           <p className="campaign-llm-note">
             🤖 TODO: LLM campaign generator — takes persona + buzz + release date and outputs blueprint.
           </p>

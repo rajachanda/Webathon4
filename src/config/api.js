@@ -38,4 +38,5 @@ export const TABLES = {
   RELEASE_WINDOWS: 'release_windows',
   BUZZ_SNAPSHOTS: 'buzz_snapshots',
   CAMPAIGN_BLUEPRINTS: 'campaign_blueprints',
+  FILM_SENTIMENT_ANALYSIS: 'film_sentiment_analysis',
 };

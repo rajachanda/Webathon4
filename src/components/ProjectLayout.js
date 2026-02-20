@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: 'Release Window', path: '/release-window' },
   { label: 'Buzz',           path: '/buzz' },
   { label: 'Campaign',       path: '/campaign' },
+  { label: 'Sentiment',      path: '/sentiment' },
 ];
 
 const ProjectLayout = ({ children }) => {
