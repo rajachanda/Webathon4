@@ -65,7 +65,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">
+      <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
         <h1>{APP_CONFIG.name}</h1>
         <p className="tagline">{APP_CONFIG.tagline}</p>
       </div>
