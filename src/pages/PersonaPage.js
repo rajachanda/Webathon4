@@ -4,6 +4,7 @@ import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import { projectService } from '../services/api.service';
 import { generatePersona } from '../services/gemini.service';
+import { TEAM_ROLES } from '../config/teamRoleQuestions';
 import './PersonaPage.css';
 
 // Map full question text → short display label
@@ -67,6 +68,8 @@ const PersonaPage = () => {
   const location = useLocation();
   const [teamResponses, setTeamResponses] = useState([]);
   const [inviteUrl, setInviteUrl] = useState('');
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
@@ -111,10 +114,32 @@ const PersonaPage = () => {
   }, [projectId]);
 
   const handleGenerateLink = async () => {
+    if (!selectedRole) {
+      setShowRoleModal(true);
+      return;
+    }
+    
     try {
-      const invite = await projectService.createTeamInvite(projectId, '');
+      const invite = await projectService.createTeamInvite(projectId, selectedRole);
       const url = `${window.location.origin}/projects/${projectId}/team-link/${invite.token}`;
       setInviteUrl(url);
+      setShowRoleModal(false);
+      setSelectedRole('');
+      setToast('Team link generated!');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleRoleSelect = async (role) => {
+    setSelectedRole(role);
+    try {
+      const invite = await projectService.createTeamInvite(projectId, role);
+      const url = `${window.location.origin}/projects/${projectId}/team-link/${invite.token}`;
+      setInviteUrl(url);
+      setShowRoleModal(false);
+      setSelectedRole('');
+      setToast('Team link generated!');
     } catch (e) {
       console.error(e);
     }
@@ -237,7 +262,29 @@ const PersonaPage = () => {
             <Card style={{ marginTop: 20 }}>
               <h3 className="section-title">Team POV</h3>
               <p className="persona-team-subtitle">Get your director, writer, co-producer to share their perspective.</p>
-              <button className="btn-primary-green" onClick={handleGenerateLink}>Generate team link</button>
+              <button className="btn-primary-green" onClick={() => setShowRoleModal(true)}>Generate team link</button>
+              
+              {showRoleModal && (
+                <div className="role-modal-overlay" onClick={() => setShowRoleModal(false)}>
+                  <div className="role-modal" onClick={e => e.stopPropagation()}>
+                    <h3>Select Team Member Role</h3>
+                    <p className="role-modal-subtitle">Questions will be customized based on their role</p>
+                    <div className="role-options">
+                      {TEAM_ROLES.map(role => (
+                        <button
+                          key={role.value}
+                          className="role-option-btn"
+                          onClick={() => handleRoleSelect(role.value)}
+                        >
+                          {role.label}
+                        </button>
+                      ))}
+                    </div>
+                    <button className="role-modal-close" onClick={() => setShowRoleModal(false)}>×</button>
+                  </div>
+                </div>
+              )}
+              
               {inviteUrl && (
                 <div className="invite-url-box">
                   <span className="invite-url-text">{inviteUrl}</span>

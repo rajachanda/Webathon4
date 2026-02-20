@@ -11,16 +11,42 @@ const STEPS = [
   { id: 'title',            label: "What's your film called? 🎬",                    type: 'text',     required: true, placeholder: 'e.g. Rangasthalam 2' },
   { id: 'language_region',  label: 'Language & primary region?',                      type: 'select',   required: true,
     options: ['Telugu – AP/TG', 'Tamil – TN', 'Kannada – KA', 'Malayalam – KL', 'Pan South'] },
-  { id: 'genre',            label: 'Genre & sub-genre?',                              type: 'select',   required: true,
-    options: ['Action', 'Romance', 'Comedy', 'Drama', 'Thriller', 'Horror', 'Family', 'Social Drama', 'Fantasy', 'Action-Comedy', 'Romantic Comedy', 'Action-Drama'] },
-  { id: 'tone_pace',        label: 'Pick the tone & pace of your film.',              type: 'chips',    required: false,
-    options: ['Light', 'Dark', 'Mixed', 'Fast-paced', 'Slow-burn', 'Balanced'] },
-  { id: 'budget_star',      label: 'Budget band & star power?',                      type: 'chips',    required: false,
-    options: ['Micro budget', 'Small budget', 'Mid budget', 'Unknown talent', 'Rising star', 'Known face'] },
-  { id: 'rating_platform',  label: 'Film rating & platform strategy?',               type: 'chips',    required: false,
-    options: ['U', 'U/A', 'A', 'Theatrical-first', 'OTT-first', 'Direct-OTT'] },
-  { id: 'runtime_cast',     label: 'Runtime, hero & heroine names (brief)?',         type: 'text',     required: false, placeholder: 'e.g. 140 min | Ram | Sai Pallavi' },
-  { id: 'logline',          label: 'Give us the logline + what\'s the interesting hook?', type: 'textarea', required: false, placeholder: 'e.g. A village boy fights a corrupt system… Hook: twist in interval' },
+  { id: 'genre',            label: 'Genre & sub-genre?',                              type: 'genre-subgenre',   required: true,
+    mainGenres: ['Action', 'Romance', 'Comedy', 'Drama', 'Thriller', 'Horror', 'Family', 'Social Drama', 'Fantasy'],
+    subGenreMap: {
+      'Action': ['Martial Arts', 'Superhero', 'Military', 'Heist', 'Spy/Espionage', 'Revenge'],
+      'Romance': ['Romantic Drama', 'Romantic Comedy', 'Period Romance', 'Teen Romance', 'Musical Romance'],
+      'Comedy': ['Slapstick', 'Dark Comedy', 'Satire', 'Parody', 'Situational Comedy', 'Family Comedy'],
+      'Drama': ['Social Drama', 'Family Drama', 'Political Drama', 'Biographical', 'Sports Drama', 'Legal Drama'],
+      'Thriller': ['Psychological', 'Crime', 'Mystery', 'Legal Thriller', 'Political Thriller'],
+      'Horror': ['Supernatural', 'Slasher', 'Psychological Horror', 'Comedy-Horror', 'Monster'],
+      'Family': ['Animation', 'Children', 'Family Adventure', 'Family Drama'],
+      'Social Drama': ['Caste/Class Issues', 'Rural', 'Urban', 'Women-centric', 'Education'],
+      'Fantasy': ['Mythological', 'Fairy Tale', 'Sci-Fi Fantasy', 'Dark Fantasy', 'Adventure Fantasy']
+    }
+  },
+  { id: 'tone_pace',        label: 'Pick the tone & pace of your film.',              type: 'tone-pace',    required: false,
+    toneOptions: ['Light', 'Dark', 'Mixed'],
+    paceOptions: ['Fast-paced', 'Slow-burn', 'Balanced'] },
+  { id: 'budget_star',      label: 'Budget band & star power?',                      type: 'budget-star',    required: false,
+    budgetOptions: ['Micro budget', 'Small budget', 'Mid budget'],
+    starPowerOptions: ['Unknown talent', 'Rising star', 'Known face'] },
+  { id: 'rating_platform',  label: 'Film rating & platform strategy?',               type: 'rating-platform',    required: false,
+    ratingOptions: ['U', 'U/A', 'A'],
+    platformOptions: ['Theatrical-first', 'OTT-first', 'Direct-OTT'] },
+  { id: 'cast_runtime',     label: 'Runtime, hero & heroine names?',                  type: 'multi-input',  required: false,
+    fields: [
+      { id: 'runtime', placeholder: 'Runtime in minutes (e.g. 140)' },
+      { id: 'hero_name', placeholder: 'Hero name (e.g. Ram Charan)' },
+      { id: 'heroine_name', placeholder: 'Heroine name (e.g. Sai Pallavi)' }
+    ]
+  },
+  { id: 'logline_hook',     label: 'Give us the logline + what\'s the interesting hook?', type: 'multi-input',  required: false,
+    fields: [
+      { id: 'logline', placeholder: 'Logline (e.g. A village boy fights a corrupt system)' },
+      { id: 'hook', placeholder: 'Interesting hook (e.g. Interval twist reveals he\'s the villain)' }
+    ]
+  },
 ];
 
 const NewProjectOnboarding = () => {
@@ -35,25 +61,37 @@ const NewProjectOnboarding = () => {
     try {
       // Parse composite answers
       const [language, region_primary] = (answers.language_region || '').split(' – ');
-      const toneChips  = answers.tone_pace  || [];
-      const toneArr    = Array.isArray(toneChips) ? toneChips : [toneChips];
-      const tone       = toneArr.find(t => ['Light','Dark','Mixed'].includes(t)) || '';
-      const pace       = toneArr.find(t => ['Fast-paced','Slow-burn','Balanced'].includes(t)) || '';
+      
+      // Parse tone/pace
+      const tonePaceParts = (answers.tone_pace || '').split(' / ');
+      const tone = tonePaceParts[0] || '';
+      const pace = tonePaceParts[1] || '';
 
-      const budgetChips = answers.budget_star || [];
-      const budgetArr   = Array.isArray(budgetChips) ? budgetChips : [budgetChips];
-      const budget_band     = budgetArr.find(b => ['Micro budget','Small budget','Mid budget'].includes(b))?.replace(' budget','').toLowerCase() || '';
-      const star_power_band = budgetArr.find(b => ['Unknown talent','Rising star','Known face'].includes(b))?.toLowerCase() || '';
+      // Parse budget/star power
+      const budgetStarParts = (answers.budget_star || '').split(' / ');
+      const budget_band = budgetStarParts[0] ? budgetStarParts[0].replace(' budget', '').toLowerCase() : '';
+      const star_power_band = budgetStarParts[1] ? budgetStarParts[1].toLowerCase() : '';
 
-      const rpChips  = answers.rating_platform || [];
-      const rpArr    = Array.isArray(rpChips) ? rpChips : [rpChips];
-      const rating   = rpArr.find(r => ['U','U/A','A'].includes(r)) || '';
-      const platform = rpArr.find(r => ['Theatrical-first','OTT-first','Direct-OTT'].includes(r))?.toLowerCase().replace('-','').replace(' ','-') || '';
+      // Parse rating/platform
+      const ratingPlatformParts = (answers.rating_platform || '').split(' / ');
+      const rating = ratingPlatformParts[0] || '';
+      const platform = ratingPlatformParts[1] ? ratingPlatformParts[1].toLowerCase().replace('-', '').replace(' ', '-') : '';
 
-      const castParts = (answers.runtime_cast || '').split('|').map(s => s.trim());
-      const runtime_minutes = parseInt(castParts[0]) || null;
-      const hero_name   = castParts[1] || '';
-      const heroine_name = castParts[2] || '';
+      // Parse cast/runtime multi-input
+      const castRuntime = answers.cast_runtime || {};
+      const runtime_minutes = parseInt(castRuntime.runtime) || null;
+      const hero_name = castRuntime.hero_name || '';
+      const heroine_name = castRuntime.heroine_name || '';
+
+      // Parse logline/hook multi-input
+      const loglineHook = answers.logline_hook || {};
+      const logline = loglineHook.logline || '';
+      const interesting_hook = loglineHook.hook || '';
+
+      // Parse genre/subgenre
+      const genreParts = (answers.genre || '').split(' / ');
+      const mainGenre = genreParts[0] || '';
+      const subGenre = genreParts[1] || '';
 
       const payload = {
         title: answers.title || 'Untitled',
@@ -61,8 +99,8 @@ const NewProjectOnboarding = () => {
         metadata: {
           language: language || '',
           region_primary: region_primary || '',
-          genre: answers.genre || '',
-          subgenre: '',
+          genre: mainGenre,
+          subgenre: subGenre,
           tone,
           pace,
           budget_band,
@@ -72,8 +110,8 @@ const NewProjectOnboarding = () => {
           runtime_minutes,
           hero_name,
           heroine_name,
-          logline: answers.logline || '',
-          interesting_hook: answers.logline || '',
+          logline,
+          interesting_hook,
         },
       };
 
