@@ -15,6 +15,7 @@ import TeamPovFormPage from './pages/TeamPovFormPage';
 import ReleaseWindowPage from './pages/ReleaseWindowPage';
 import BuzzPage from './pages/BuzzPage';
 import CampaignPage from './pages/CampaignPage';
+import SentimentAnalysisPage from './pages/SentimentAnalysisPage';
 import './App.css';
 
 function AppContent() {
@@ -39,6 +40,7 @@ function AppContent() {
         <Route path="/projects/:projectId/release-window" element={<ProtectedRoute><ReleaseWindowPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/buzz"           element={<ProtectedRoute><BuzzPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/campaign"       element={<ProtectedRoute><CampaignPage /></ProtectedRoute>} />
+        <Route path="/projects/:projectId/sentiment"      element={<ProtectedRoute><SentimentAnalysisPage /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

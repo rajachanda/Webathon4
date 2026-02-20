@@ -1,0 +1,247 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  SENTIMENT ANALYSIS FEATURE - FILE MAP                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📁 PROJECT ROOT
+├─ 📄 sentiment-analysis-setup.sql ········ DATABASE SCHEMA (RUN THIS FIRST!)
+├─ 📄 SENTIMENT-ANALYSIS-GUIDE.md ········· COMPLETE SETUP GUIDE
+├─ 📄 IMPLEMENTATION-SUMMARY.md ············ QUICK REFERENCE
+├─ 📄 .env ····································· UPDATED (YouTube API key)
+│
+├─ 📁 src/
+│  │
+│  ├─ 📄 App.js ································ MODIFIED (added sentiment route)
+│  │
+│  ├─ 📁 services/
+│  │  ├─ 📄 youtube.service.js ············· NEW (YouTube API integration)
+│  │  └─ 📄 sentiment.service.js ··········· NEW (AI sentiment analysis)
+│  │
+│  ├─ 📁 pages/
+│  │  ├─ 📄 SentimentAnalysisPage.js ······· NEW (main sentiment page)
+│  │  ├─ 📄 SentimentAnalysisPage.css ······ NEW (styling)
+│  │  └─ 📄 CampaignPage.js ················ MODIFIED (added button)
+│  │
+│  ├─ 📁 components/
+│  │  └─ 📄 ProjectLayout.js ··············· MODIFIED (added sidebar link)
+│  │
+│  └─ 📁 config/
+│     └─ 📄 api.js ······················· MODIFIED (added table constant)
+│
+└─ 📁 public/ (no changes)
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           NAVIGATION FLOW                                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+User Journey:
+┌─────────────┐
+│   Project   │
+│  Dashboard  │
+└──────┬──────┘
+       │
+       ├──> Campaign Page ──> [📊 Sentiment Analysis] Button ──┐
+       │                                                         │
+       └──> Sidebar ──> "Sentiment" Link ──────────────────────┤
+                                                                │
+                                                                ▼
+                                            ┌──────────────────────────────┐
+                                            │  Sentiment Analysis Page     │
+                                            │  ========================    │
+                                            │  1. Enter YouTube URLs       │
+                                            │  2. Click Analyze            │
+                                            │  3. View Report              │
+                                            └──────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           DATA FLOW                                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────┐
+│ User enters  │
+│ YouTube URLs │
+└──────┬───────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│ youtube.service.js          │
+│ • Extract video IDs         │
+│ • Fetch comments (100 each) │
+│ • Combine all comments      │
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│ sentiment.service.js        │
+│ • Format comments           │
+│ • Call Gemini AI            │
+│ • Parse JSON response       │
+│ • Validate percentages      │
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│ Supabase Database           │
+│ film_sentiment_analysis     │
+│ • Save analysis results     │
+│ • Link to project           │
+│ • Store video sources       │
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│ SentimentAnalysisPage       │
+│ • Display report            │
+│ • Show sentiment %          │
+│ • List positive aspects     │
+│ • Show concerns + actions   │
+└─────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        API INTEGRATIONS                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────┐
+│ YouTube Data API v3                                         │
+│ • Key: REACT_APP_YOUTUBE_API_KEY (from .env)               │
+│ • Endpoints used:                                           │
+│   - commentThreads (fetch comments)                         │
+│   - videos (get video details)                              │
+│ • Quota: Free tier (check Google Cloud Console)            │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ Gemini AI (gemini-1.5-flash)                               │
+│ • Keys: 4 keys with auto-rotation (from .env)              │
+│ • Model: gemini-1.5-flash                                   │
+│ • Temperature: 0.5                                          │
+│ • Max tokens: 3000                                          │
+│ • Retry logic: Up to 4 attempts                            │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ Supabase                                                    │
+│ • Table: film_sentiment_analysis                           │
+│ • RLS: Enabled (users see only their data)                 │
+│ • Indexes: project_id, analyzed_at                         │
+└─────────────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          SETUP STEPS                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Step 1: Database Setup
+┌──────────────────────────────────────────────────────┐
+│ 1. Open Supabase Dashboard                          │
+│ 2. Go to SQL Editor                                  │
+│ 3. Run: sentiment-analysis-setup.sql                 │
+│ 4. Verify: film_sentiment_analysis table exists     │
+└──────────────────────────────────────────────────────┘
+
+Step 2: Environment Variables (Already Done ✓)
+┌──────────────────────────────────────────────────────┐
+│ .env file contains:                                  │
+│ • REACT_APP_YOUTUBE_API_KEY                          │
+│ • GOOGLE_API_KEYS (4 keys for rotation)             │
+│ • REACT_APP_SUPABASE_URL                             │
+│ • REACT_APP_SUPABASE_ANON_KEY                        │
+└──────────────────────────────────────────────────────┘
+
+Step 3: Test the Feature
+┌──────────────────────────────────────────────────────┐
+│ 1. npm start                                         │
+│ 2. Go to any project                                 │
+│ 3. Click Campaign → Sentiment Analysis              │
+│ 4. Enter YouTube URLs                                │
+│ 5. Click Analyze                                     │
+└──────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                       REPORT STRUCTURE                                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────┐
+│           SENTIMENT OVERVIEW                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
+│  │ POSITIVE │  │ NEUTRAL  │  │ NEGATIVE │        │
+│  │   58%    │  │   22%    │  │   20%    │        │
+│  └──────────┘  └──────────┘  └──────────┘        │
+└────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────┐
+│           SUMMARY OPINION                          │
+│  Overall audience sentiment analysis based on      │
+│  YouTube comments from trailers and teasers...     │
+│                                                     │
+│  📊 150 comments • 🎥 3 videos • 📅 Feb 20, 2026  │
+└────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────┐
+│        KEY POSITIVE ASPECTS                        │
+│  👍 Cinematography and visual effects             │
+│  👍 Background score and music                     │
+│  👍 Strong performances by lead actors            │
+└────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────┐
+│  AUDIENCE CONCERNS & RECOMMENDED ACTIONS           │
+│                                                     │
+│  Concern 1: Story Clarity                          │
+│  Problem: Trailer doesn't clearly show conflict    │
+│  Action: Release story-focused 30-sec teaser       │
+│                                                     │
+│  Concern 2: Pacing Issues                          │
+│  Problem: Second half feels rushed                 │
+│  Action: Highlight emotional moments               │
+│                                                     │
+│  Concern 3: Genre Confusion                        │
+│  Problem: Unclear if action or drama               │
+│  Action: Position as "Action Drama" consistently   │
+└────────────────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                      TROUBLESHOOTING                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Problem: Button not showing
+Fix: Verify CampaignPage.js was modified correctly
+
+Problem: "Invalid YouTube URL"
+Fix: Use format youtube.com/watch?v=VIDEO_ID
+
+Problem: "Quota exceeded"
+Fix: Wait 24 hours or add more API keys
+
+Problem: "No comments found"
+Fix: Check if video has comments enabled
+
+Problem: Analysis fails
+Fix: Check browser console for detailed errors
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         QUICK REFERENCE                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Access Path:
+  Project → Campaign → [📊 Sentiment Analysis]
+  Project → Sidebar → Sentiment
+
+Direct URL:
+  /projects/{projectId}/sentiment
+
+Database Table:
+  film_sentiment_analysis (11 fields per analysis)
+
+API Keys Used:
+  • YouTube: REACT_APP_YOUTUBE_API_KEY
+  • Gemini: 4 keys with auto-rotation
+
+Processing Time:
+  30-60 seconds (depends on comment volume)
+
+Comment Limit:
+  Up to 100 per video, 1000 total
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         ALL SET! 🎉                                         ║
+║  Run sentiment-analysis-setup.sql in Supabase and you're ready to go!      ║
+╚══════════════════════════════════════════════════════════════════════════════╝

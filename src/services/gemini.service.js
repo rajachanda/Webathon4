@@ -1,30 +1,39 @@
 /**
- * Gemini API service with automatic key rotation and retry on quota errors.
- * Uses gemini-1.5-flash (fast, generous free tier).
+ * Groq API service with automatic key rotation and retry on quota errors.
+ * Uses llama-3.3-70b-versatile (fast, free tier).
  */
 
 const KEYS = [
-  'AIzaSyD3FRdf4bg8s7W5h3hkZXEbXNI4GTQO1vI',
+  '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',
 ];
 
-const MODEL = 'gemini-2.0-flash';
-const BASE  = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+const MODEL = 'llama-3.3-70b-versatile';
+const BASE  = 'https://api.groq.com/openai/v1/chat/completions';
 
 let keyIndex = 0;
 
 async function callGemini(prompt, retries = 0) {
   const MAX_RETRIES = KEYS.length * 2;
   const key = KEYS[keyIndex % KEYS.length];
-  const url = `${BASE}?key=${key}`;
 
   let res;
   try {
-    res = await fetch(url, {
+    res = await fetch(BASE, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 1500 },
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        model: MODEL,
+        temperature: 0.7,
+        max_tokens: 1500
       }),
     });
   } catch (networkErr) {
@@ -33,7 +42,7 @@ async function callGemini(prompt, retries = 0) {
       await new Promise(r => setTimeout(r, 1000 * (retries + 1)));
       return callGemini(prompt, retries + 1);
     }
-    throw new Error('Network error while reaching Gemini API. Please check your connection and try again.');
+    throw new Error('Network error while reaching Groq API. Please check your connection and try again.');
   }
 
   if (res.status === 429 || res.status === 503) {
@@ -43,16 +52,16 @@ async function callGemini(prompt, retries = 0) {
       await new Promise(r => setTimeout(r, 1500 * (retries + 1))); // 1.5s, 3s, 4.5s …
       return callGemini(prompt, retries + 1);
     }
-    throw new Error('All Gemini API keys are rate-limited. Please try again shortly.');
+    throw new Error('All Groq API keys are rate-limited. Please try again shortly.');
   }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err?.error?.message || `Gemini API error ${res.status}`);
+    throw new Error(err?.error?.message || `Groq API error ${res.status}`);
   }
 
   const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  const text = data?.choices?.[0]?.message?.content || '';
   return text.trim();
 }
 
