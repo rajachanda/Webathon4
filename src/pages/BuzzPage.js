@@ -4,41 +4,63 @@ import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import GaugeMeter from '../components/GaugeMeter';
 import SparklineChart from '../components/SparklineChart';
+import BuzzConfiguration from '../components/BuzzConfiguration';
+import AutoBuzzMetrics from '../components/AutoBuzzMetrics';
 import { projectService } from '../services/api.service';
+import { searchFilmVideos } from '../services/youtube-search.service';
+import { supabase } from '../supabaseClient';
 import './BuzzPage.css';
-
-const DEFAULT_FORM = {
-  watch_time_norm: '',
-  share_rate_norm: '',
-  sentiment_score_norm: '',
-  search_growth_norm: '',
-  engagement_rate_norm: '',
-};
-
-const calcBuzz = (f) => {
-  const w = parseFloat(f.watch_time_norm)      || 0;
-  const s = parseFloat(f.share_rate_norm)       || 0;
-  const se= parseFloat(f.sentiment_score_norm)  || 0;
-  const sg= parseFloat(f.search_growth_norm)    || 0;
-  const e = parseFloat(f.engagement_rate_norm)  || 0;
-  return Math.round((0.25*w + 0.20*s + 0.20*se + 0.15*sg + 0.20*e) * 100);
-};
 
 const BuzzPage = () => {
   const { projectId } = useParams();
+  const [project, setProject] = useState(null);
   const [snapshots, setSnapshots] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
-  const [form, setForm] = useState(DEFAULT_FORM);
+  const [config, setConfig] = useState({
+    youtubeUrls: [],
+    instagramHandle: '',
+    filmName: '',
+  });
+  const [autoSearching, setAutoSearching] = useState(false);
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3500); };
 
   useEffect(() => {
     const load = async () => {
       try {
+        // Load project details to get film name
+        const projectData = await projectService.getProject(projectId);
+        setProject(projectData);
+        
+        // Load buzz snapshots
         const data = await projectService.getBuzzSnapshots(projectId);
         setSnapshots(data || []);
+        
+        // Check if configuration exists
+        const { data: existingConfig } = await supabase
+          .from('buzz_config')
+          .select('*')
+          .eq('project_id', projectId)
+          .single();
+        
+        if (existingConfig && existingConfig.youtube_urls?.length > 0) {
+          // Load existing config
+          setConfig({
+            youtubeUrls: existingConfig.youtube_urls || [],
+            instagramHandle: existingConfig.instagram_handle || '',
+            filmName: existingConfig.film_name || projectData?.title || '',
+          });
+        } else if (projectData?.title) {
+          // Auto-populate film name and trigger auto-search
+          setConfig(prev => ({ ...prev, filmName: projectData.title }));
+          // Auto-search after component mounts (silent mode)
+          setTimeout(() => {
+            if (projectData?.title) {
+              handleAutoSearchAndConfigure(true);
+            }
+          }, 1500);
+        }
       } catch (e) {
         console.error(e);
       } finally {
@@ -48,28 +70,87 @@ const BuzzPage = () => {
     load();
   }, [projectId]);
 
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const buzz_score = calcBuzz(form);
-      const payload = {
-        ...Object.fromEntries(
-          Object.entries(form).map(([k, v]) => [k, parseFloat(v) || 0])
-        ),
-        buzz_score,
-        date: new Date().toISOString().split('T')[0],
-        source_type: 'manual',
-      };
-      const snap = await projectService.createBuzzSnapshot(projectId, payload);
-      setSnapshots([...snapshots, snap]);
-      setForm(DEFAULT_FORM);
-      showToast(`Buzz snapshot saved! Score: ${buzz_score}/100`);
-    } catch (e) {
-      console.error(e);
-      showToast('Error saving snapshot.');
-    } finally {
-      setSaving(false);
+  const handleConfigUpdate = (newConfig) => {
+    setConfig(newConfig);
+  };
+
+  const handleAutoSearchAndConfigure = async (silent = false) => {
+    if (!project?.title) {
+      if (!silent) showToast('Movie name not found. Please update project details.');
+      return;
     }
+
+    setAutoSearching(true);
+    try {
+      if (!silent) showToast(`🔍 Searching YouTube for "${project.title}"...`);
+      
+      // Auto-search YouTube for top videos
+      const videoUrls = await searchFilmVideos(project.title, 5);
+      
+      console.log('YouTube Search Results:', videoUrls);
+      
+      // Update config with YouTube videos only
+      const updatedConfig = {
+        youtubeUrls: videoUrls,
+        instagramHandle: config.instagramHandle || '',
+        filmName: project.title,
+      };
+      
+      setConfig(updatedConfig);
+      
+      // Auto-save to database
+      await saveConfigToDatabase(updatedConfig);
+      
+      if (!silent) {
+        if (videoUrls.length > 0) {
+          showToast(`✅ Found ${videoUrls.length} YouTube videos!`);
+        } else {
+          showToast(`⚠️ No YouTube videos found. You can add URLs manually.`);
+        }
+      }
+      
+    } catch (error) {
+      console.error('Auto-search error:', error);
+      if (!silent) {
+        showToast(`⚠️ ${error.message || 'Search failed. Please try manually.'}`);
+      }
+    } finally {
+      setAutoSearching(false);
+    }
+  };
+
+  const saveConfigToDatabase = async (configData) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('buzz_config')
+        .upsert([{
+          project_id: projectId,
+          user_id: user.id,
+          youtube_urls: configData.youtubeUrls,
+          instagram_handle: configData.instagramHandle,
+          film_name: configData.filmName,
+        }], { onConflict: 'project_id' });
+
+      if (error) console.error('Error saving config:', error);
+    } catch (err) {
+      console.error('Save config error:', err);
+    }
+  };
+
+  const handleSnapshotSaved = () => {
+    // Reload snapshots when a new one is saved
+    const reload = async () => {
+      try {
+        const data = await projectService.getBuzzSnapshots(projectId);
+        setSnapshots(data || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    reload();
   };
 
   const latest = snapshots[snapshots.length - 1];
@@ -78,8 +159,6 @@ const BuzzPage = () => {
   const trend   = latest && prev
     ? ((latest.buzz_score - prev.buzz_score) / (prev.buzz_score || 1) * 100).toFixed(1)
     : null;
-
-  const previewScore = Object.values(form).some(v => v !== '') ? calcBuzz(form) : null;
 
   if (loading) return <ProjectLayout><div className="loading-screen"><div className="loading-spinner" /></div></ProjectLayout>;
 
@@ -114,52 +193,61 @@ const BuzzPage = () => {
             ) : (
               <div className="buzz-no-data">
                 <p>No buzz data yet.</p>
-                <p className="buzz-no-data-sub">Add your first snapshot below.</p>
+                <p className="buzz-no-data-sub">Configure and analyze below to get started.</p>
               </div>
             )}
           </Card>
 
-          {/* Input form */}
+          {/* Quick Auto-Search Button */}
           <Card>
-            <h3 className="section-title">Add Snapshot (Manual)</h3>
-            <p className="buzz-form-hint">Enter values as decimals 0–1 (e.g. 0.72 = 72%)</p>
-            {[
-              { id: 'watch_time_norm',     label: 'Watch time (normalised 0–1)',     weight: '25%' },
-              { id: 'share_rate_norm',     label: 'Share rate (0–1)',                weight: '20%' },
-              { id: 'sentiment_score_norm',label: 'Sentiment score (0–1)',           weight: '20%' },
-              { id: 'search_growth_norm',  label: 'Search growth (0–1)',             weight: '15%' },
-              { id: 'engagement_rate_norm',label: 'Engagement rate (0–1)',           weight: '20%' },
-            ].map(f => (
-              <div key={f.id} className="buzz-input-row">
-                <label className="buzz-input-label">
-                  {f.label} <span className="buzz-weight">({f.weight})</span>
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  className="buzz-input"
-                  placeholder="0.00"
-                  value={form[f.id]}
-                  onChange={e => setForm({ ...form, [f.id]: e.target.value })}
-                />
-              </div>
-            ))}
-
-            {previewScore !== null && (
-              <div className="buzz-preview">
-                Preview score: <strong style={{ color: previewScore >= 70 ? '#00ff88' : previewScore >= 40 ? '#ffa028' : '#ff5050' }}>{previewScore} / 100</strong>
+            <h3 className="section-title">🚀 Quick Start</h3>
+            <p className="buzz-form-hint">
+              Automatically find YouTube videos for your film
+            </p>
+            <div style={{ marginTop: 16 }}>
+              <button 
+                className="auto-search-btn"
+                onClick={() => handleAutoSearchAndConfigure(false)}
+                disabled={autoSearching || !project?.title}
+              >
+                {autoSearching ? '🔍 Searching...' : '✨ Auto-Find Content'}
+              </button>
+              {project?.title && (
+                <p style={{ marginTop: 12, fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>
+                  Film: <strong style={{ color: '#00ff88' }}>{project.title}</strong>
+                </p>
+              )}
+            </div>
+            {config.youtubeUrls?.length > 0 && (
+              <div style={{ marginTop: 16, padding: 12, background: 'rgba(0, 255, 136, 0.1)', borderRadius: 8, border: '1px solid rgba(0, 255, 136, 0.3)' }}>
+                <p style={{ fontSize: '0.85rem', color: '#00ff88', margin: 0 }}>
+                  ✓ Found {config.youtubeUrls.length} YouTube video{config.youtubeUrls.length > 1 ? 's' : ''}
+                </p>
               </div>
             )}
-
-            <button className="btn-primary-green" onClick={handleSave} disabled={saving} style={{ marginTop: 12 }}>
-              {saving ? 'Saving…' : 'Save Snapshot'}
-            </button>
-            <p className="buzz-api-note">
-              🔧 TODO: Integrate YouTube / Instagram APIs for auto buzz metrics.
+            <p className="buzz-api-note" style={{ marginTop: 16 }}>
+              💡 Auto-searches YouTube for "{project?.title}" videos. Google Trends data auto-generated based on film characteristics.
             </p>
           </Card>
+        </div>
+
+        {/* Configuration Section */}
+        <div style={{ marginTop: 24 }}>
+          <BuzzConfiguration 
+            projectId={projectId}
+            onConfigUpdate={handleConfigUpdate}
+            initialConfig={config}
+          />
+        </div>
+
+        {/* Auto-Calculated Metrics */}
+        <div style={{ marginTop: 24 }}>
+          <AutoBuzzMetrics
+            projectId={projectId}
+            youtubeUrls={config.youtubeUrls}
+            instagramHandle={config.instagramHandle}
+            filmName={config.filmName || project?.title}
+          />
         </div>
 
         {/* History */}

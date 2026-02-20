@@ -1,3 +1,7 @@
+// API Keys
+export const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
+export const GROQ_API_KEYS = process.env.REACT_APP_GROQ_API_KEYS?.split(',') || [];
+
 // API endpoints configuration for Supabase
 export const API_ENDPOINTS = {
   // Auth endpoints
