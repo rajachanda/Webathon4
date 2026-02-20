@@ -163,6 +163,27 @@ export const projectService = {
     return data;
   },
 
+  /**
+   * Public method (no auth required) — gets project_metadata via a team invite token.
+   * Used by TeamPovFormPage to generate custom Gemini questions.
+   */
+  async getProjectMetadataByToken(token) {
+    const { data: invite, error: invErr } = await supabase
+      .from(TABLES.TEAM_INVITES)
+      .select('project_id')
+      .eq('token', token)
+      .single();
+    if (invErr) throw invErr;
+
+    const { data, error } = await supabase
+      .from(TABLES.PROJECT_METADATA)
+      .select('*')
+      .eq('project_id', invite.project_id)
+      .maybeSingle();
+    if (error) throw error;
+    return data;
+  },
+
   async submitTeamResponse(token, payload) {
     // Resolve invite
     const invite = await this.getTeamInvite(token);
