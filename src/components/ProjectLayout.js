@@ -6,8 +6,8 @@ import './ProjectLayout.css';
 const NAV_LINKS = [
   { label: 'Overview',       path: '' },
   { label: 'Persona',        path: '/persona' },
-  { label: 'Release Window', path: '/release-window' },
   { label: 'Buzz',           path: '/buzz' },
+  { label: 'Release Window', path: '/release-window' },
   { label: 'Campaign',       path: '/campaign' },
   { label: 'Sentiment',      path: '/sentiment' },
 ];

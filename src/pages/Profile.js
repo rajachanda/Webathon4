@@ -22,12 +22,14 @@ const Profile = () => {
           .from('user_profiles')
           .select('*')
           .eq('id', user.id)
-          .single();
+          .maybeSingle(); // Use maybeSingle to handle missing profiles gracefully
 
         if (error) {
           console.error('Error fetching profile:', error);
-        } else {
+        } else if (data) {
           setUserProfile(data);
+        } else {
+          console.log('No profile found for user');
         }
       } catch (err) {
         console.error('Error in fetchUserProfile:', err);

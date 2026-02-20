@@ -143,16 +143,24 @@ export const calculateBuzzMetrics = async (projectId, options = {}) => {
     );
 
     // Step 6: Calculate normalized metrics
+    // Engagement rate: (likes + comments) / views
+    // Typical YouTube engagement: 2-5% is good, 5-10% is excellent, 10%+ is viral
+    const rawEngagementRate = (youtubeMetrics.youtube_likes_count + youtubeMetrics.youtube_comments_count) / 
+      Math.max(youtubeMetrics.youtube_view_count, 1);
+    
+    // Scale engagement: 0-10% engagement maps to 0-1 normalized
+    const engagementScaled = Math.min(rawEngagementRate * 10, 1);
+    
+    // Watch time: Use retention rate (already estimated in YouTube service based on engagement)
+    // youtube_retention_rate is calculated as: 40% base + (engagement * 4), capped at 85%
+    const watchTimeScaled = Math.min(youtubeMetrics.youtube_retention_rate || 0, 1);
+    
     const normalizedMetrics = {
-      watch_time_norm: Math.min(youtubeMetrics.youtube_retention_rate, 1),
+      watch_time_norm: watchTimeScaled,
       share_rate_norm: Math.min(youtubeMetrics.youtube_shares_count / 10000, 1),
       sentiment_score_norm: (youtubeSentimentScore + 1) / 2,
       search_growth_norm: Math.min(Math.max((googleTrendsData.google_trends_search_growth_rate + 10) / 60, 0), 1),
-      engagement_rate_norm: Math.min(
-        (youtubeMetrics.youtube_likes_count + youtubeMetrics.youtube_comments_count) / 
-        Math.max(youtubeMetrics.youtube_view_count, 1),
-        1
-      ),
+      engagement_rate_norm: engagementScaled,
     };
 
     return {

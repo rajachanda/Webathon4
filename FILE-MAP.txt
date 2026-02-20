@@ -243,5 +243,5 @@ Comment Limit:
 
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                         ALL SET! 🎉                                         ║
-║  Run sentiment-analysis-setup.sql in Supabase and you're ready to go!      ║
+║  Run sentiment-analysis-setup.sql in Supabase and you're ready to go!        ║
 ╚══════════════════════════════════════════════════════════════════════════════╝

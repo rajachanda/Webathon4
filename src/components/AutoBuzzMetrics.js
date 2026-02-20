@@ -4,7 +4,7 @@
  * Includes Groq AI-powered analysis and insights
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useBuzzMetrics } from '../hooks/useBuzzMetrics';
 import './AutoBuzzMetrics.css';
 
@@ -73,19 +73,20 @@ const AutoBuzzMetrics = ({ projectId, youtubeUrls, instagramHandle, filmName }) 
   const [analyzing, setAnalyzing] = useState(false);
   const [aiInsights, setAiInsights] = useState(null);
   const [insightsError, setInsightsError] = useState(null);
+  const [shouldGenerateInsights, setShouldGenerateInsights] = useState(false);
 
-  const handleAnalyzeBuzzScore = async () => {
-    setAnalyzing(true);
-    setInsightsError(null);
-    
-    try {
-      // Step 1: Fetch and calculate metrics
-      await refresh();
+  // Generate AI insights after metrics are freshly loaded
+  useEffect(() => {
+    const generateAIInsights = async () => {
+      if (!shouldGenerateInsights || loading || buzzScore === 0) {
+        return;
+      }
+
+      // Reset flag
+      setShouldGenerateInsights(false);
       
-      // Step 2: Get AI insights (after metrics are calculated)
-      setTimeout(async () => {
-        try {
-          const analysisPrompt = `
+      try {
+        const analysisPrompt = `
 Analyze this South Indian film's buzz metrics:
 
 Film: ${filmName || 'Untitled Film'}
@@ -117,18 +118,34 @@ Provide:
 
 Keep it concise and actionable.`;
 
-          const insights = await callGroq(analysisPrompt);
-          setAiInsights(insights);
-        } catch (err) {
-          console.error('Error getting AI insights:', err);
-          setInsightsError('AI analysis unavailable. Metrics calculated successfully.');
-        } finally {
-          setAnalyzing(false);
-        }
-      }, 1000); // Wait 1 second for metrics to be available
+        const insights = await callGroq(analysisPrompt);
+        setAiInsights(insights);
+      } catch (err) {
+        console.error('Error getting AI insights:', err);
+        setInsightsError('AI analysis unavailable. Metrics calculated successfully.');
+      } finally {
+        setAnalyzing(false);
+      }
+    };
+
+    generateAIInsights();
+  }, [shouldGenerateInsights, loading, buzzScore, filmName, componentScores, metrics, rawMetrics]);
+
+  const handleAnalyzeBuzzScore = async () => {
+    setAnalyzing(true);
+    setInsightsError(null);
+    setAiInsights(null); // Clear old insights
+    
+    try {
+      // Fetch and calculate metrics
+      await refresh();
+      
+      // Set flag to generate insights once data is loaded
+      setShouldGenerateInsights(true);
       
     } catch (err) {
       setAnalyzing(false);
+      setShouldGenerateInsights(false);
       setInsightsError(err.message);
     }
   };
