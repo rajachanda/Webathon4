@@ -52,8 +52,16 @@ const HeatmapCalendar = ({ dateAnalysis, onDateSelect }) => {
 
 const HeatmapDateCell = ({ dateItem, onSelect }) => {
   const [showTooltip, setShowTooltip] = React.useState(false);
+  const hideTimer = React.useRef(null);
   const dateObj = new Date(dateItem.date);
   const dayNum = dateObj.getDate();
+
+  const startHide = () => {
+    hideTimer.current = setTimeout(() => setShowTooltip(false), 120);
+  };
+  const cancelHide = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current);
+  };
 
   const handleClick = () => {
     if (onSelect) {
@@ -65,14 +73,14 @@ const HeatmapDateCell = ({ dateItem, onSelect }) => {
     <div
       className={`heatmap-cell heatmap-cell--${dateItem.riskColor}`}
       onClick={handleClick}
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
+      onMouseEnter={() => { cancelHide(); setShowTooltip(true); }}
+      onMouseLeave={startHide}
     >
       <div className="heatmap-cell-day">{dayNum}</div>
       <div className="heatmap-cell-dow">{dateItem.dayOfWeek}</div>
 
       {showTooltip && (
-        <div className="heatmap-tooltip">
+        <div className="heatmap-tooltip" onMouseEnter={cancelHide} onMouseLeave={startHide}>
           <div className="tooltip-header">
             <strong>{dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong>
             <span className={`tooltip-score tooltip-score--${dateItem.riskColor}`}>
