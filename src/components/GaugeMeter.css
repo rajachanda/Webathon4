@@ -1,0 +1,38 @@
+.gauge-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 160px;
+}
+
+.gauge-svg {
+    width: 160px;
+    height: 120px;
+}
+
+.gauge-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -28px;
+}
+
+.gauge-score {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.gauge-max {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.gauge-text {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}

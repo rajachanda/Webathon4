@@ -1,0 +1,117 @@
+.buzz-page { display: flex; flex-direction: column; }
+
+.buzz-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    margin-top: 4px;
+}
+
+@media (max-width: 800px) { .buzz-grid { grid-template-columns: 1fr; } }
+
+.buzz-score-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.buzz-date {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin: 0;
+}
+
+.buzz-trend { font-size: 13px; font-weight: 600; margin: 0; }
+.buzz-trend--up   { color: #00ff88; }
+.buzz-trend--down { color: #ff5050; }
+
+.buzz-sparkline { margin-top: 4px; }
+
+.buzz-no-data {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.buzz-no-data p { color: rgba(255,255,255,0.4); font-size: 14px; margin: 0 0 6px; }
+.buzz-no-data-sub { font-size: 12px !important; }
+
+.buzz-form-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin: -8px 0 14px;
+}
+
+.buzz-input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.buzz-input-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    flex: 1;
+}
+
+.buzz-weight { color: rgba(255,255,255,0.3); }
+
+.buzz-input {
+    width: 80px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    font-size: 13px;
+    text-align: right;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.buzz-input:focus { border-color: rgba(0,255,136,0.35); }
+
+.buzz-preview {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+}
+
+.buzz-api-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    font-style: italic;
+    margin: 8px 0 0;
+}
+
+/* History table */
+.buzz-history-table { display: flex; flex-direction: column; gap: 6px; }
+
+.bht-head, .bht-row {
+    display: grid;
+    grid-template-columns: 110px 60px repeat(5, 1fr);
+    gap: 8px;
+    font-size: 12px;
+    padding: 6px 4px;
+}
+
+.bht-head {
+    color: rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.bht-row {
+    color: rgba(255,255,255,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.bht-score {
+    font-weight: 700;
+    color: #00ff88;
+}

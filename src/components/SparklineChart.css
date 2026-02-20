@@ -1,0 +1,5 @@
+.sparkline-svg { display: block; }
+.sparkline-empty {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+}
