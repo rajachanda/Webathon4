@@ -81,7 +81,7 @@ const Header = () => {
               onClick={() => setShowProfileMenu(!showProfileMenu)}
               aria-label="Profile menu"
             >
-              <div className="profile-avatar">{getInitials(user.email)}</div>
+              <span className="profile-text">Profile</span>
               <span className="profile-arrow">▼</span>
             </button>
             {showProfileMenu && (
