@@ -19,3 +19,18 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Uploaded poster images (temporary)
+/uploads
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Model files (large binary files)
+poster_model/*.pth
+poster_model/*.h5
+poster_model/*.pkl
