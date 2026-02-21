@@ -533,7 +533,15 @@ This project is developed for educational purposes as part of a hackathon.
 
 ---
 
-## 🙏 Acknowledgments
+## � Security Note
+
+This repository underwent security remediation on **February 22, 2026**. All API keys that were previously exposed in Git history have been **revoked and are no longer valid**. Current implementation uses environment variables (`.env` file) for all sensitive credentials, which are not tracked in version control.
+
+If you're reviewing old commits and see API keys, please note they are **inactive and cannot be used**.
+
+---
+
+## �🙏 Acknowledgments
 
 - **Supabase** for the amazing backend-as-a-service platform
 - **Google Gemini** for powerful LLM capabilities
