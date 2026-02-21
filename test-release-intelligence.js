@@ -1,11 +1,25 @@
 /**
  * Test Script for Release Timing Intelligence System
  * Run: node test-release-intelligence.js
+ * 
+ * IMPORTANT: Set these environment variables before running:
+ * - REACT_APP_SPORTS_API_KEY
+ * - REACT_APP_GOOGLE_CALENDAR_API_KEY
+ * 
+ * Example: 
+ * set REACT_APP_SPORTS_API_KEY=your_key && node test-release-intelligence.js
  */
 
-// Mock environment for Node.js testing
-process.env.REACT_APP_SPORTS_API_KEY = 'AIzaSyBbI8P8mKV8Z_57epj1Rv5jtz1cL_gPPoE';
-process.env.REACT_APP_GOOGLE_CALENDAR_API_KEY = 'AIzaSyBbI8P8mKV8Z_57epj1Rv5jtz1cL_gPPoE';
+// Load environment variables from .env if available
+require('dotenv').config();
+
+// Verify required environment variables
+if (!process.env.REACT_APP_SPORTS_API_KEY) {
+  console.warn('⚠️ REACT_APP_SPORTS_API_KEY not set');
+}
+if (!process.env.REACT_APP_GOOGLE_CALENDAR_API_KEY) {
+  console.warn('⚠️ REACT_APP_GOOGLE_CALENDAR_API_KEY not set');
+}
 
 // Import the release scoring library
 const path = require('path');

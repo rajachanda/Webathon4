@@ -3,9 +3,15 @@
  * Uses llama-3.3-70b-versatile (fast, free tier).
  */
 
-const KEYS = [
-  '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',
-];
+// Load API keys from environment variables
+const KEYS = process.env.REACT_APP_GROQ_API_KEYS 
+  ? process.env.REACT_APP_GROQ_API_KEYS.split(',').map(k => k.trim())
+  : [];
+
+// Fallback warning if no keys are configured
+if (KEYS.length === 0) {
+  console.warn('⚠️ No REACT_APP_GROQ_API_KEYS configured in .env file');
+}
 
 const MODEL = 'llama-3.3-70b-versatile';
 const BASE  = 'https://api.groq.com/openai/v1/chat/completions';
