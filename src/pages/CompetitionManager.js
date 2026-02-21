@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Header from '../components/Header';
+import Card from '../components/Card';
+import Icon from '../components/Icon';
 import { 
   autoImportCompetitionData, 
   getCompetitionMovies,
@@ -97,64 +100,76 @@ export default function CompetitionManager() {
   
   return (
     <div className="competition-manager">
-      <div className="competition-header">
-        <div>
-          <h1>Competition Calendar</h1>
-          <p className="subtitle">Upcoming movie releases with buzz tracking</p>
+      <Header />
+      <div className="competition-body">
+        <div className="competition-header">
+          <div>
+            <h1 className="competition-title">
+              <Icon name="calendar" size={28} /> Competition Calendar
+            </h1>
+            <p className="subtitle">Upcoming movie releases with buzz tracking</p>
+          </div>
+          
+          <button 
+            onClick={handleImport} 
+            disabled={importing}
+            className="import-button"
+          >
+            <Icon name={importing ? 'refresh' : 'film'} size={16} />
+            {importing ? ' Importing...' : ' Import Movies from CSV'}
+          </button>
         </div>
-        
-        <button 
-          onClick={handleImport} 
-          disabled={importing}
-          className="import-button"
-        >
-          {importing ? 'Importing...' : 'Import Movies from CSV'}
-        </button>
-      </div>
       
-      {importResult && (
-        <div className={`import-result ${importResult.success ? 'success' : 'error'}`}>
-          <p>{importResult.message}</p>
-          {importResult.success && (
-            <p className="import-stats">
-              ✓ {importResult.imported} imported • {importResult.skipped} skipped (duplicates)
+        {importResult && (
+          <div className={`import-result ${importResult.success ? 'success' : 'error'}`}>
+            <p>
+              <Icon name={importResult.success ? 'checkCircle' : 'warning'} size={16} />
+              {importResult.message}
             </p>
-          )}
+            {importResult.success && (
+              <p className="import-stats">
+                ✓ {importResult.imported} imported • {importResult.skipped} skipped (duplicates)
+              </p>
+            )}
+          </div>
+        )}
+      
+        <div className="filter-tabs">
+          <button 
+            className={filter === 'upcoming' ? 'active' : ''}
+            onClick={() => setFilter('upcoming')}
+          >
+            <Icon name="calendar" size={14} /> Upcoming (6 months)
+          </button>
+          <button 
+            className={filter === 'high-buzz' ? 'active' : ''}
+            onClick={() => setFilter('high-buzz')}
+          >
+            <Icon name="trendingUp" size={14} /> High Buzz (≥70)
+          </button>
+          <button 
+            className={filter === 'all' ? 'active' : ''}
+            onClick={() => setFilter('all')}
+          >
+            <Icon name="film" size={14} /> All Movies (1 year)
+          </button>
         </div>
-      )}
       
-      <div className="filter-tabs">
-        <button 
-          className={filter === 'upcoming' ? 'active' : ''}
-          onClick={() => setFilter('upcoming')}
-        >
-          Upcoming (6 months)
-        </button>
-        <button 
-          className={filter === 'high-buzz' ? 'active' : ''}
-          onClick={() => setFilter('high-buzz')}
-        >
-          High Buzz (≥70)
-        </button>
-        <button 
-          className={filter === 'all' ? 'active' : ''}
-          onClick={() => setFilter('all')}
-        >
-          All Movies (1 year)
-        </button>
-      </div>
-      
-      {loading ? (
-        <div className="loading-state">Loading movies...</div>
-      ) : (
-        <div className="movies-grid">
-          {movies.length === 0 ? (
-            <div className="empty-state">
-              <p>No movies found. Click "Import Movies from CSV" to load data.</p>
-            </div>
-          ) : (
+        {loading ? (
+          <div className="loading-state">
+            <Icon name="refresh" size={24} />
+            <p>Loading movies...</p>
+          </div>
+        ) : (
+          <div className="movies-grid">
+            {movies.length === 0 ? (
+              <div className="empty-state">
+                <Icon name="film" size={48} />
+                <p>No movies found. Click "Import Movies from CSV" to load data.</p>
+              </div>
+            ) : (
             movies.map((movie, idx) => (
-              <div key={idx} className="movie-card">
+              <Card key={idx} className="movie-card">
                 <div className="movie-header">
                   <h3>{movie.title}</h3>
                   <span 
@@ -166,6 +181,13 @@ export default function CompetitionManager() {
                 </div>
                 
                 <div className="movie-meta">
+                  <div className="meta-row">
+                    <span className="label">Buzz Score:</span>
+                    <span className="value" style={{ color: getBuzzColor(movie.external_buzz_score) }}>
+                      {movie.external_buzz_score}%
+                    </span>
+                  </div>
+                  
                   <div className="meta-row">
                     <span className="label">Release:</span>
                     <span className="value">{formatDate(movie.release_date)}</span>
@@ -205,24 +227,25 @@ export default function CompetitionManager() {
                   )}
                 </div>
                 
-                {movie.notes && (
+                {movie.notes && !movie.notes.includes('Auto-imported') && (
                   <div className="movie-notes">
                     <small>{movie.notes}</small>
                   </div>
                 )}
-              </div>
+              </Card>
             ))
           )}
-        </div>
-      )}
-      
-      <div className="stats-footer">
-        <p>Total movies: {movies.length}</p>
-        {movies.length > 0 && (
-          <p>
-            Average buzz: {(movies.reduce((sum, m) => sum + (m.external_buzz_score || 0), 0) / movies.length).toFixed(1)}
-          </p>
+          </div>
         )}
+      
+        <div className="stats-footer">
+          <p><Icon name="film" size={16} /> Total movies: {movies.length}</p>
+          {movies.length > 0 && (
+            <p>
+              <Icon name="trendingUp" size={16} /> Average buzz: {(movies.reduce((sum, m) => sum + (m.external_buzz_score || 0), 0) / movies.length).toFixed(1)}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

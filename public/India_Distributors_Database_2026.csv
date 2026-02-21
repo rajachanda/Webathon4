@@ -1,0 +1,1001 @@
+Distributor ID,Distributor Name,Industry,Headquarters City,Coverage Area,Founded Year,Market Reach Score (%),Network Strength Score (%),Reliability Score (%),Growth Rate Score (%),Market Share Estimate (%),Success Rate (%),Pros,Cons,Overall Performance Score (%),Website,Contact Email,Data Confidence Score (%),Notes
+IND-DIST-1001,Reliance Entertainment,Film,Mumbai,National,2008,96,86,88,71,11.21,86,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.65,www.relianceentertainment.in,contact@relianceentertainment.com,89,Key player in current market analysis.
+IND-DIST-1002,Pen Studios,Film,Lucknow,National,1987,91,82,86,92,14.77,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.35,www.penstudios.in,contact@penstudios.com,89,Key player in current market analysis.
+IND-DIST-1003,AA Films,Film,Delhi,Regional,1977,99,96,90,71,8.93,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.95,www.aafilms.in,contact@aafilms.com,94,Key player in current market analysis.
+IND-DIST-1004,Yash Raj Films Distribution,Film,Hyderabad,National,1977,89,73,79,92,3.75,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.1,www.yashrajfilmsdistribution.in,contact@yashrajfilmsdistribution.com,88,Key player in current market analysis.
+IND-DIST-1005,Eros International,Film,Mumbai,Regional,1976,94,95,85,71,4.54,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.5,www.erosinternational.in,contact@erosinternational.com,88,Key player in current market analysis.
+IND-DIST-1006,Dharma Productions,Film,Pune,National,1971,98,92,77,81,6.08,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.15,www.dharmaproductions.in,contact@dharmaproductions.com,87,Key player in current market analysis.
+IND-DIST-1007,Zee Studios,Film,Kolkata,National,2015,78,84,83,68,2.4,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.75,www.zeestudios.in,contact@zeestudios.com,97,Key player in current market analysis.
+IND-DIST-1008,E4 Entertainment,Film,Pune,Regional,1980,81,77,91,78,4.56,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.0,www.e4entertainment.in,contact@e4entertainment.com,94,Key player in current market analysis.
+IND-DIST-1009,Sri Venkateswara Creations,Film,Hyderabad,National,1986,97,87,75,79,2.57,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.5,www.srivenkateswaracreations.in,contact@srivenkateswaracreations.com,94,Key player in current market analysis.
+IND-DIST-1010,Hombale Films,Film,Gurugram,National,1986,80,83,89,89,9.76,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.25,www.hombalefilms.in,contact@hombalefilms.com,94,Key player in current market analysis.
+IND-DIST-1011,Geetha Arts,Film,Hyderabad,International,1971,83,78,91,79,12.67,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.95,www.geethaarts.in,contact@geethaarts.com,93,Key player in current market analysis.
+IND-DIST-1012,Suresh Productions,Film,Noida,National,1979,96,83,91,89,11.33,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.05,www.sureshproductions.in,contact@sureshproductions.com,91,Key player in current market analysis.
+IND-DIST-1013,Mythri Movie Makers,Film,Chennai,Regional,2006,70,73,96,65,8.74,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",76.85,www.mythrimoviemakers.in,contact@mythrimoviemakers.com,92,Key player in current market analysis.
+IND-DIST-1014,Studio Green,Film,Lucknow,National,2014,96,98,92,93,11.05,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",93.45,www.studiogreen.in,contact@studiogreen.com,90,Key player in current market analysis.
+IND-DIST-1015,SVP Pictures,Film,Kolkata,International,1983,76,85,75,72,14.41,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.75,www.svppictures.in,contact@svppictures.com,88,Key player in current market analysis.
+IND-DIST-1016,Red Giant Movies,Film,Hyderabad,Regional,2002,87,84,75,86,3.52,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.15,www.redgiantmovies.in,contact@redgiantmovies.com,89,Key player in current market analysis.
+IND-DIST-1017,Ayngaran International,Film,Bengaluru,National,1994,88,81,97,86,4.88,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.6,www.ayngaraninternational.in,contact@ayngaraninternational.com,93,Key player in current market analysis.
+IND-DIST-1018,Fox Star Studios (Disney Star),Film,Chennai,National,1981,81,99,97,94,1.99,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",91.55,www.foxstarstudios(disneystar).in,contact@foxstarstudios(disneystar).com,90,Key player in current market analysis.
+IND-DIST-1019,Viacom18 Studios,Film,Kolkata,Regional,2006,76,72,97,86,9.08,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.4,www.viacom18studios.in,contact@viacom18studios.com,92,Key player in current market analysis.
+IND-DIST-1020,Saregama India,Film,Delhi,National,1980,90,92,89,80,14.59,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.55,www.saregamaindia.in,contact@saregamaindia.com,91,Key player in current market analysis.
+IND-DIST-1021,Panorama Studios,Film,Lucknow,National,1979,79,88,78,78,13.77,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.75,www.panoramastudios.in,contact@panoramastudios.com,96,Key player in current market analysis.
+IND-DIST-1022,T-Series Distribution,Film,Ahmedabad,National,1992,78,85,81,85,4.99,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.75,www.t-seriesdistribution.in,contact@t-seriesdistribution.com,94,Key player in current market analysis.
+IND-DIST-1023,Phars Film,Film,Delhi,National,2017,78,87,77,71,5.01,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.35,www.pharsfilm.in,contact@pharsfilm.com,91,Key player in current market analysis.
+IND-DIST-1024,AP International,Film,Lucknow,National,1976,79,75,99,74,6.77,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.5,www.apinternational.in,contact@apinternational.com,96,Key player in current market analysis.
+IND-DIST-1025,KJR Studios,Film,Ahmedabad,National,2005,76,96,92,77,10.31,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.45,www.kjrstudios.in,contact@kjrstudios.com,85,Key player in current market analysis.
+IND-DIST-1026,Thinkk Big Entertainment,Film,Lucknow,National,1995,95,74,83,80,8.39,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.95,www.thinkkbigentertainment.in,contact@thinkkbigentertainment.com,85,Key player in current market analysis.
+IND-DIST-1027,Goldmines Telefilms,Film,Bengaluru,National,2015,85,92,79,77,2.34,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.15,www.goldminestelefilms.in,contact@goldminestelefilms.com,89,Key player in current market analysis.
+IND-DIST-1028,B4U Movies,Film,Kochi,Regional,2014,94,95,94,85,7.38,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",91.85,www.b4umovies.in,contact@b4umovies.com,96,Key player in current market analysis.
+IND-DIST-1029,Venus Worldwide Entertainment,Film,Kolkata,Regional,1983,91,96,96,69,4.47,73,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.25,www.venusworldwideentertainment.in,contact@venusworldwideentertainment.com,89,Key player in current market analysis.
+IND-DIST-1030,UFO Moviez,Film,Lucknow,National,1996,73,93,82,70,6.19,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.05,www.ufomoviez.in,contact@ufomoviez.com,95,Key player in current market analysis.
+IND-DIST-1031,PVR Pictures,Film,Hyderabad,National,2010,93,83,87,65,11.42,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.8,www.pvrpictures.in,contact@pvrpictures.com,97,Key player in current market analysis.
+IND-DIST-1032,Mukta Arts,Film,Gurugram,International,1995,82,81,99,72,5.02,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.85,www.muktaarts.in,contact@muktaarts.com,93,Key player in current market analysis.
+IND-DIST-1033,Tips Industries,Film,Chennai,National,1994,88,82,85,83,9.77,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.35,www.tipsindustries.in,contact@tipsindustries.com,94,Key player in current market analysis.
+IND-DIST-1034,Shemaroo Entertainment,Film,Pune,International,1985,79,73,98,83,5.78,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.2,www.shemarooentertainment.in,contact@shemarooentertainment.com,86,Key player in current market analysis.
+IND-DIST-1035,Hindustan Unilever distributors,FMCG,Lucknow,National,1996,87,98,77,84,7.8,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.3,www.hindustanunileverdistributors.in,contact@hindustanunileverdistributors.com,93,Key player in current market analysis.
+IND-DIST-1036,ITC distributors,FMCG,Lucknow,International,1974,93,80,80,93,3.26,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.65,www.itcdistributors.in,contact@itcdistributors.com,94,Key player in current market analysis.
+IND-DIST-1037,Nestle India distributors,FMCG,Kolkata,Regional,1971,80,70,91,67,8.3,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",76.55,www.nestleindiadistributors.in,contact@nestleindiadistributors.com,89,Key player in current market analysis.
+IND-DIST-1038,Britannia Industries distributors,FMCG,Mumbai,National,1975,76,97,83,88,14.51,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.65,www.britanniaindustriesdistributors.in,contact@britanniaindustriesdistributors.com,94,Key player in current market analysis.
+IND-DIST-1039,Parle Products distributors,FMCG,Ahmedabad,National,1976,75,89,93,89,9.82,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.55,www.parleproductsdistributors.in,contact@parleproductsdistributors.com,86,Key player in current market analysis.
+IND-DIST-1040,Marico distributors,FMCG,Delhi,National,1989,78,86,85,77,6.5,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.15,www.maricodistributors.in,contact@maricodistributors.com,95,Key player in current market analysis.
+IND-DIST-1041,Dabur India distributors,FMCG,Chennai,International,1995,84,72,88,66,14.05,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.3,www.daburindiadistributors.in,contact@daburindiadistributors.com,85,Key player in current market analysis.
+IND-DIST-1042,Godrej Consumer Products distributors,FMCG,Gurugram,National,1978,72,95,75,65,2.63,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.85,www.godrejconsumerproductsdistributors.in,contact@godrejconsumerproductsdistributors.com,95,Key player in current market analysis.
+IND-DIST-1043,Amul (GCMMF) distributors,FMCG,Pune,National,2013,90,73,88,71,7.27,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.8,www.amul(gcmmf)distributors.in,contact@amul(gcmmf)distributors.com,88,Key player in current market analysis.
+IND-DIST-1044,Patanjali Ayurved distributors,FMCG,Lucknow,National,1998,73,83,86,94,9.16,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.3,www.patanjaliayurveddistributors.in,contact@patanjaliayurveddistributors.com,90,Key player in current market analysis.
+IND-DIST-1045,Adani Wilmar distributors,FMCG,Gurugram,National,1992,83,80,81,87,13.73,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.5,www.adaniwilmardistributors.in,contact@adaniwilmardistributors.com,88,Key player in current market analysis.
+IND-DIST-1046,Tata Consumer Products distributors,FMCG,Lucknow,National,2016,78,84,97,83,13.02,73,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.3,www.tataconsumerproductsdistributors.in,contact@tataconsumerproductsdistributors.com,93,Key player in current market analysis.
+IND-DIST-1047,Colgate-Palmolive distributors,FMCG,Mumbai,National,2015,81,86,86,82,9.01,88,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.45,www.colgate-palmolivedistributors.in,contact@colgate-palmolivedistributors.com,93,Key player in current market analysis.
+IND-DIST-1048,P&G India distributors,FMCG,Pune,National,1983,70,95,80,88,12.55,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.85,www.pandgindiadistributors.in,contact@pandgindiadistributors.com,91,Key player in current market analysis.
+IND-DIST-1049,PepsiCo India distributors,FMCG,Mumbai,International,1975,77,90,93,70,7.39,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.1,www.pepsicoindiadistributors.in,contact@pepsicoindiadistributors.com,93,Key player in current market analysis.
+IND-DIST-1050,Coca-Cola India distributors,FMCG,Chennai,National,1983,71,93,77,68,2.3,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.35,www.coca-colaindiadistributors.in,contact@coca-colaindiadistributors.com,92,Key player in current market analysis.
+IND-DIST-1051,Haldiram's distributors,FMCG,Pune,National,1970,83,89,89,79,9.5,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.35,www.haldiram'sdistributors.in,contact@haldiram'sdistributors.com,90,Key player in current market analysis.
+IND-DIST-1052,Bikanervala distributors,FMCG,Kolkata,Regional,1994,79,76,94,81,11.62,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.3,www.bikanervaladistributors.in,contact@bikanervaladistributors.com,85,Key player in current market analysis.
+IND-DIST-1053,Mother Dairy distributors,FMCG,Noida,National,2017,85,95,83,86,14.58,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.9,www.motherdairydistributors.in,contact@motherdairydistributors.com,95,Key player in current market analysis.
+IND-DIST-1054,Emami Ltd distributors,FMCG,Lucknow,Regional,1985,78,99,85,88,11.72,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.1,www.emamiltddistributors.in,contact@emamiltddistributors.com,86,Key player in current market analysis.
+IND-DIST-1055,Jyothy Labs distributors,FMCG,Pune,National,1980,89,90,81,76,3.86,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.35,www.jyothylabsdistributors.in,contact@jyothylabsdistributors.com,91,Key player in current market analysis.
+IND-DIST-1056,Varun Beverages,FMCG,Delhi,National,1984,97,93,94,89,3.66,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.75,www.varunbeverages.in,contact@varunbeverages.com,91,Key player in current market analysis.
+IND-DIST-1057,Hatsun Agro Product,FMCG,Kochi,International,2003,95,87,80,75,2.53,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.15,www.hatsunagroproduct.in,contact@hatsunagroproduct.com,89,Key player in current market analysis.
+IND-DIST-1058,Kwality Wall's Distribution,FMCG,Lucknow,International,2015,73,83,98,75,14.7,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.9,www.kwalitywall'sdistribution.in,contact@kwalitywall'sdistribution.com,90,Key player in current market analysis.
+IND-DIST-1059,Vadilal Industries,FMCG,Pune,Regional,1970,90,79,86,66,7.09,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.35,www.vadilalindustries.in,contact@vadilalindustries.com,97,Key player in current market analysis.
+IND-DIST-1060,Sun Pharma distribution,Pharma,Bengaluru,National,2003,99,70,93,75,3.92,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.9,www.sunpharmadistribution.in,contact@sunpharmadistribution.com,94,Key player in current market analysis.
+IND-DIST-1061,Cipla distribution,Pharma,Kolkata,National,2003,84,96,82,76,10.14,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.25,www.cipladistribution.in,contact@cipladistribution.com,91,Key player in current market analysis.
+IND-DIST-1062,Dr. Reddy's Laboratories,Pharma,Ahmedabad,International,1982,92,76,95,86,7.1,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.0,www.dr.reddy'slaboratories.in,contact@dr.reddy'slaboratories.com,87,Key player in current market analysis.
+IND-DIST-1063,Zydus Lifesciences,Pharma,Pune,National,2017,87,81,79,88,1.46,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.4,www.zyduslifesciences.in,contact@zyduslifesciences.com,88,Key player in current market analysis.
+IND-DIST-1064,Lupin Limited,Pharma,Ahmedabad,National,2005,77,78,89,87,7.97,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.7,www.lupinlimited.in,contact@lupinlimited.com,95,Key player in current market analysis.
+IND-DIST-1065,Aurobindo Pharma,Pharma,Mumbai,International,2006,93,82,77,77,7.26,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.45,www.aurobindopharma.in,contact@aurobindopharma.com,88,Key player in current market analysis.
+IND-DIST-1066,Torrent Pharmaceuticals,Pharma,Mumbai,National,1997,70,74,94,79,11.05,73,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.6,www.torrentpharmaceuticals.in,contact@torrentpharmaceuticals.com,89,Key player in current market analysis.
+IND-DIST-1067,Macleods Pharmaceuticals,Pharma,Chennai,Regional,2006,98,94,97,71,11.47,88,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",91.25,www.macleodspharmaceuticals.in,contact@macleodspharmaceuticals.com,94,Key player in current market analysis.
+IND-DIST-1068,Alkem Laboratories,Pharma,Bengaluru,Regional,1993,88,80,80,77,9.29,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.95,www.alkemlaboratories.in,contact@alkemlaboratories.com,94,Key player in current market analysis.
+IND-DIST-1069,Mankind Pharma,Pharma,Mumbai,National,1975,88,96,98,82,7.25,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.0,www.mankindpharma.in,contact@mankindpharma.com,91,Key player in current market analysis.
+IND-DIST-1070,Abbott India,Pharma,Bengaluru,Regional,1975,98,73,93,83,6.68,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.3,www.abbottindia.in,contact@abbottindia.com,86,Key player in current market analysis.
+IND-DIST-1071,GSK India,Pharma,Pune,Regional,1994,75,87,97,78,9.14,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.3,www.gskindia.in,contact@gskindia.com,96,Key player in current market analysis.
+IND-DIST-1072,Sanofi India,Pharma,Ahmedabad,Regional,2007,87,93,88,77,4.92,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.25,www.sanofiindia.in,contact@sanofiindia.com,88,Key player in current market analysis.
+IND-DIST-1073,Pfizer India,Pharma,Lucknow,Regional,1974,88,96,81,65,1.35,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.6,www.pfizerindia.in,contact@pfizerindia.com,90,Key player in current market analysis.
+IND-DIST-1074,Glenmark Pharmaceuticals,Pharma,Mumbai,Regional,1975,89,79,80,73,8.23,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.45,www.glenmarkpharmaceuticals.in,contact@glenmarkpharmaceuticals.com,95,Key player in current market analysis.
+IND-DIST-1075,Biocon,Pharma,Hyderabad,International,2007,74,85,81,74,9.75,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.4,www.biocon.in,contact@biocon.com,96,Key player in current market analysis.
+IND-DIST-1076,Ipca Laboratories,Pharma,Ahmedabad,National,1996,98,79,97,73,4.17,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.7,www.ipcalaboratories.in,contact@ipcalaboratories.com,92,Key player in current market analysis.
+IND-DIST-1077,Alembic Pharmaceuticals,Pharma,Ahmedabad,Regional,1994,78,80,82,77,4.4,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.5,www.alembicpharmaceuticals.in,contact@alembicpharmaceuticals.com,89,Key player in current market analysis.
+IND-DIST-1078,Intas Pharmaceuticals,Pharma,Mumbai,National,1976,78,90,85,66,6.39,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.15,www.intaspharmaceuticals.in,contact@intaspharmaceuticals.com,94,Key player in current market analysis.
+IND-DIST-1079,JB Chemicals & Pharma,Pharma,Chennai,Regional,1983,95,81,83,93,2.31,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.95,www.jbchemicalsandpharma.in,contact@jbchemicalsandpharma.com,87,Key player in current market analysis.
+IND-DIST-1080,Eris Lifesciences,Pharma,Gurugram,National,2005,73,75,97,85,3.76,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.4,www.erislifesciences.in,contact@erislifesciences.com,85,Key player in current market analysis.
+IND-DIST-1081,Natco Pharma,Pharma,Delhi,National,1981,93,94,89,70,6.7,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.3,www.natcopharma.in,contact@natcopharma.com,88,Key player in current market analysis.
+IND-DIST-1082,Strides Pharma Science,Pharma,Gurugram,International,1982,79,72,78,93,13.66,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.95,www.stridespharmascience.in,contact@stridespharmascience.com,85,Key player in current market analysis.
+IND-DIST-1083,Granules India,Pharma,Delhi,Regional,1999,93,94,82,85,12.66,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.45,www.granulesindia.in,contact@granulesindia.com,93,Key player in current market analysis.
+IND-DIST-1084,Laurus Labs,Pharma,Lucknow,National,2001,91,82,98,80,2.25,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.2,www.lauruslabs.in,contact@lauruslabs.com,85,Key player in current market analysis.
+IND-DIST-1085,Redington India,Electronics / IT,Ahmedabad,Regional,2008,96,95,95,85,2.9,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.75,www.redingtonindia.in,contact@redingtonindia.com,93,Key player in current market analysis.
+IND-DIST-1086,Ingram Micro India,Electronics / IT,Bengaluru,National,1998,89,94,95,82,4.69,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.1,www.ingrammicroindia.in,contact@ingrammicroindia.com,86,Key player in current market analysis.
+IND-DIST-1087,Savex Technologies,Electronics / IT,Hyderabad,Regional,1984,77,79,95,78,10.48,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.0,www.savextechnologies.in,contact@savextechnologies.com,87,Key player in current market analysis.
+IND-DIST-1088,HCL Infosystems,Electronics / IT,Pune,National,2010,74,91,93,79,7.11,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.35,www.hclinfosystems.in,contact@hclinfosystems.com,91,Key player in current market analysis.
+IND-DIST-1089,Compuage Infocom,Electronics / IT,Kochi,International,1975,87,77,92,81,13.95,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.3,www.compuageinfocom.in,contact@compuageinfocom.com,97,Key player in current market analysis.
+IND-DIST-1090,Iris Computers,Electronics / IT,Bengaluru,National,1977,89,95,80,65,4.68,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.1,www.iriscomputers.in,contact@iriscomputers.com,91,Key player in current market analysis.
+IND-DIST-1091,Supertron Electronics,Electronics / IT,Lucknow,Regional,1978,85,92,85,70,12.39,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.7,www.supertronelectronics.in,contact@supertronelectronics.com,97,Key player in current market analysis.
+IND-DIST-1092,RP tech India,Electronics / IT,Bengaluru,Regional,2005,77,95,92,79,10.53,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.05,www.rptechindia.in,contact@rptechindia.com,93,Key player in current market analysis.
+IND-DIST-1093,Brightstar India,Electronics / IT,Delhi,National,2004,79,93,75,68,11.49,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.85,www.brightstarindia.in,contact@brightstarindia.com,86,Key player in current market analysis.
+IND-DIST-1094,Inflow Technologies,Electronics / IT,Delhi,National,2002,90,79,91,94,13.58,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.1,www.inflowtechnologies.in,contact@inflowtechnologies.com,87,Key player in current market analysis.
+IND-DIST-1095,TechnoBind,Electronics / IT,Hyderabad,National,1971,71,88,79,77,3.78,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.45,www.technobind.in,contact@technobind.com,90,Key player in current market analysis.
+IND-DIST-1096,M.Tech Solutions,Electronics / IT,Hyderabad,National,2001,91,98,98,78,3.25,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.8,www.m.techsolutions.in,contact@m.techsolutions.com,89,Key player in current market analysis.
+IND-DIST-1097,DigiCare,Electronics / IT,Hyderabad,National,1981,93,99,94,93,4.01,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",94.55,www.digicare.in,contact@digicare.com,89,Key player in current market analysis.
+IND-DIST-1098,V-Guard Industries,Electronics / IT,Delhi,National,2004,98,78,91,73,12.63,91,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.8,www.v-guardindustries.in,contact@v-guardindustries.com,94,Key player in current market analysis.
+IND-DIST-1099,Havells India,Electronics / IT,Chennai,National,2015,88,74,84,73,5.43,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.75,www.havellsindia.in,contact@havellsindia.com,90,Key player in current market analysis.
+IND-DIST-1100,Bajaj Electricals,Electronics / IT,Kolkata,National,1981,90,87,92,82,4.24,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.95,www.bajajelectricals.in,contact@bajajelectricals.com,92,Key player in current market analysis.
+IND-DIST-1101,Crompton Greaves Consumer Electricals,Electronics / IT,Ahmedabad,International,2004,92,79,98,82,7.38,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.9,www.cromptongreavesconsumerelectricals.in,contact@cromptongreavesconsumerelectricals.com,86,Key player in current market analysis.
+IND-DIST-1102,Blue Star,Electronics / IT,Ahmedabad,International,2006,70,99,78,90,6.61,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.45,www.bluestar.in,contact@bluestar.com,94,Key player in current market analysis.
+IND-DIST-1103,Voltas,Electronics / IT,Kolkata,International,1988,92,93,94,69,11.36,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.65,www.voltas.in,contact@voltas.com,94,Key player in current market analysis.
+IND-DIST-1104,Dixon Technologies,Electronics / IT,Noida,Regional,2016,74,75,96,69,12.63,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.15,www.dixontechnologies.in,contact@dixontechnologies.com,90,Key player in current market analysis.
+IND-DIST-1105,Amber Enterprises,Electronics / IT,Lucknow,National,1998,84,85,82,84,10.84,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.8,www.amberenterprises.in,contact@amberenterprises.com,95,Key player in current market analysis.
+IND-DIST-1106,Symphony Limited,Electronics / IT,Kolkata,National,1975,91,97,91,67,13.13,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.65,www.symphonylimited.in,contact@symphonylimited.com,91,Key player in current market analysis.
+IND-DIST-1107,Orient Electric,Electronics / IT,Hyderabad,National,2016,77,97,85,72,8.51,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.7,www.orientelectric.in,contact@orientelectric.com,85,Key player in current market analysis.
+IND-DIST-1108,Polycab India,Electronics / IT,Chennai,International,2017,71,73,78,69,8.71,88,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",75.15,www.polycabindia.in,contact@polycabindia.com,93,Key player in current market analysis.
+IND-DIST-1109,Finolex Cables,Electronics / IT,Ahmedabad,Regional,1976,70,93,91,93,12.69,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.4,www.finolexcables.in,contact@finolexcables.com,94,Key player in current market analysis.
+IND-DIST-1110,Delhivery,Logistics,Hyderabad,Regional,1998,75,79,82,77,14.43,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.95,www.delhivery.in,contact@delhivery.com,86,Key player in current market analysis.
+IND-DIST-1111,Blue Dart Express,Logistics,Lucknow,International,1999,88,84,92,69,12.53,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.05,www.bluedartexpress.in,contact@bluedartexpress.com,87,Key player in current market analysis.
+IND-DIST-1112,Gati Ltd,Logistics,Noida,Regional,2006,75,96,98,89,8.03,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.2,www.gatiltd.in,contact@gatiltd.com,97,Key player in current market analysis.
+IND-DIST-1113,TCI Express,Logistics,Delhi,Regional,1974,73,93,84,76,1.69,86,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.6,www.tciexpress.in,contact@tciexpress.com,93,Key player in current market analysis.
+IND-DIST-1114,Safexpress,Logistics,Gurugram,Regional,2008,76,97,77,83,13.46,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.6,www.safexpress.in,contact@safexpress.com,93,Key player in current market analysis.
+IND-DIST-1115,DHL Express India,Logistics,Lucknow,National,2005,90,87,88,74,13.18,73,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.9,www.dhlexpressindia.in,contact@dhlexpressindia.com,89,Key player in current market analysis.
+IND-DIST-1116,FedEx India,Logistics,Lucknow,National,1982,81,92,86,66,6.43,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.3,www.fedexindia.in,contact@fedexindia.com,92,Key player in current market analysis.
+IND-DIST-1117,DTDC Express,Logistics,Hyderabad,National,1974,87,85,90,69,13.73,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.65,www.dtdcexpress.in,contact@dtdcexpress.com,88,Key player in current market analysis.
+IND-DIST-1118,Ecom Express,Logistics,Kochi,National,2004,80,87,82,67,2.95,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.3,www.ecomexpress.in,contact@ecomexpress.com,92,Key player in current market analysis.
+IND-DIST-1119,Shadowfax,Logistics,Ahmedabad,Regional,1993,77,96,98,91,8.54,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.9,www.shadowfax.in,contact@shadowfax.com,95,Key player in current market analysis.
+IND-DIST-1120,Rivigo,Logistics,Delhi,National,2009,77,71,96,91,13.18,73,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.8,www.rivigo.in,contact@rivigo.com,95,Key player in current market analysis.
+IND-DIST-1121,XpressBees,Logistics,Delhi,Regional,1972,82,78,98,80,4.07,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.75,www.xpressbees.in,contact@xpressbees.com,97,Key player in current market analysis.
+IND-DIST-1122,Mahindra Logistics,Logistics,Kolkata,National,2010,88,71,98,70,7.07,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.1,www.mahindralogistics.in,contact@mahindralogistics.com,95,Key player in current market analysis.
+IND-DIST-1123,Container Corporation of India (CONCOR),Logistics,Gurugram,National,2003,84,97,98,68,8.09,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.35,www.containercorporationofindia(concor).in,contact@containercorporationofindia(concor).com,90,Key player in current market analysis.
+IND-DIST-1124,Allcargo Logistics,Logistics,Noida,Regional,1973,96,94,82,83,5.27,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.15,www.allcargologistics.in,contact@allcargologistics.com,95,Key player in current market analysis.
+IND-DIST-1125,Transport Corporation of India (TCI),Logistics,Chennai,Regional,1973,97,74,95,93,14.23,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.4,www.transportcorporationofindia(tci).in,contact@transportcorporationofindia(tci).com,95,Key player in current market analysis.
+IND-DIST-1126,VRL Logistics,Logistics,Kochi,National,1973,92,94,78,81,4.77,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.5,www.vrllogistics.in,contact@vrllogistics.com,88,Key player in current market analysis.
+IND-DIST-1127,Agility Logistics,Logistics,Pune,Regional,1980,88,86,79,76,2.65,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.75,www.agilitylogistics.in,contact@agilitylogistics.com,96,Key player in current market analysis.
+IND-DIST-1128,Kuehne + Nagel India,Logistics,Gurugram,Regional,2009,77,92,91,71,6.07,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.55,www.kuehne+nagelindia.in,contact@kuehne+nagelindia.com,95,Key player in current market analysis.
+IND-DIST-1129,DB Schenker India,Logistics,Kolkata,National,1987,85,71,75,83,5.97,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.25,www.dbschenkerindia.in,contact@dbschenkerindia.com,97,Key player in current market analysis.
+IND-DIST-1130,CEVA Logistics India,Logistics,Kolkata,Regional,1983,80,95,90,78,10.14,86,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.35,www.cevalogisticsindia.in,contact@cevalogisticsindia.com,91,Key player in current market analysis.
+IND-DIST-1131,Bolloré Logistics India,Logistics,Kolkata,National,1987,89,88,95,71,8.69,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.4,www.bollorélogisticsindia.in,contact@bollorélogisticsindia.com,91,Key player in current market analysis.
+IND-DIST-1132,Maersk India,Logistics,Mumbai,Regional,2004,71,92,92,66,9.9,86,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.95,www.maerskindia.in,contact@maerskindia.com,90,Key player in current market analysis.
+IND-DIST-1133,CMA CGM India,Logistics,Lucknow,National,2016,75,85,79,90,7.4,91,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.95,www.cmacgmindia.in,contact@cmacgmindia.com,94,Key player in current market analysis.
+IND-DIST-1134,MSC India,Logistics,Mumbai,National,1987,80,91,81,75,8.01,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.7,www.mscindia.in,contact@mscindia.com,87,Key player in current market analysis.
+IND-DIST-1135,Reliance Retail,Retail,Kolkata,Regional,1977,73,81,83,83,4.21,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.25,www.relianceretail.in,contact@relianceretail.com,95,Key player in current market analysis.
+IND-DIST-1136,Future Retail,Retail,Ahmedabad,National,2014,93,77,78,79,7.76,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.55,www.futureretail.in,contact@futureretail.com,97,Key player in current market analysis.
+IND-DIST-1137,Aditya Birla Fashion and Retail,Retail,Kochi,National,2014,85,84,81,89,3.76,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.05,www.adityabirlafashionandretail.in,contact@adityabirlafashionandretail.com,95,Key player in current market analysis.
+IND-DIST-1138,Trent (Tata Group),Retail,Hyderabad,Regional,1978,95,85,97,91,6.68,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.8,www.trent(tatagroup).in,contact@trent(tatagroup).com,94,Key player in current market analysis.
+IND-DIST-1139,Shoppers Stop,Retail,Hyderabad,Regional,1993,82,73,86,80,7.61,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.1,www.shoppersstop.in,contact@shoppersstop.com,95,Key player in current market analysis.
+IND-DIST-1140,Avenue Supermarts (DMart),Retail,Mumbai,National,1990,92,74,84,82,5.04,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.15,www.avenuesupermarts(dmart).in,contact@avenuesupermarts(dmart).com,94,Key player in current market analysis.
+IND-DIST-1141,Spencer's Retail,Retail,Kochi,National,2005,85,79,77,93,1.26,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.8,www.spencer'sretail.in,contact@spencer'sretail.com,87,Key player in current market analysis.
+IND-DIST-1142,V-Mart Retail,Retail,Kolkata,International,1997,70,85,79,68,14.5,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.55,www.v-martretail.in,contact@v-martretail.com,85,Key player in current market analysis.
+IND-DIST-1143,More Retail,Retail,Lucknow,International,1995,95,89,83,86,7.48,91,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.15,www.moreretail.in,contact@moreretail.com,94,Key player in current market analysis.
+IND-DIST-1144,Big Bazaar (via Reliance/Amazon),Retail,Lucknow,National,1999,78,73,81,79,8.1,76,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.2,www.bigbazaar(viareliance/amazon).in,contact@bigbazaar(viareliance/amazon).com,88,Key player in current market analysis.
+IND-DIST-1145,Metro Cash & Carry India,Retail,Pune,National,1988,98,94,78,87,10.58,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.95,www.metrocashandcarryindia.in,contact@metrocashandcarryindia.com,92,Key player in current market analysis.
+IND-DIST-1146,LOTS Wholesale Solutions,Retail,Noida,National,1979,97,93,78,65,7.76,79,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.7,www.lotswholesalesolutions.in,contact@lotswholesalesolutions.com,94,Key player in current market analysis.
+IND-DIST-1147,Walmart India (Flipkart Wholesale),Retail,Ahmedabad,Regional,1985,91,74,98,86,12.05,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.85,www.walmartindia(flipkartwholesale).in,contact@walmartindia(flipkartwholesale).com,90,Key player in current market analysis.
+IND-DIST-1148,Spencer's Retail,Retail,Gurugram,National,2000,79,87,75,71,1.47,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.85,www.spencer'sretail.in,contact@spencer'sretail.com,94,Key player in current market analysis.
+IND-DIST-1149,Westside,Retail,Gurugram,National,1984,96,82,79,70,7.33,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.05,www.westside.in,contact@westside.com,86,Key player in current market analysis.
+IND-DIST-1150,Pantaloons,Retail,Ahmedabad,Regional,2015,78,78,91,67,7.87,79,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.1,www.pantaloons.in,contact@pantaloons.com,92,Key player in current market analysis.
+IND-DIST-1151,Max Fashion,Retail,Pune,Regional,1976,74,90,93,85,7.02,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.15,www.maxfashion.in,contact@maxfashion.com,92,Key player in current market analysis.
+IND-DIST-1152,Lifestyle International,Retail,Kochi,Regional,1976,96,78,98,72,13.03,86,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.8,www.lifestyleinternational.in,contact@lifestyleinternational.com,91,Key player in current market analysis.
+IND-DIST-1153,Raymond,Retail,Lucknow,Regional,2009,97,77,85,83,5.92,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.1,www.raymond.in,contact@raymond.com,97,Key player in current market analysis.
+IND-DIST-1154,Fabindia,Retail,Pune,National,1991,98,97,77,65,5.62,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.15,www.fabindia.in,contact@fabindia.com,89,Key player in current market analysis.
+IND-DIST-1155,Biba,Retail,Bengaluru,International,2007,87,99,86,78,4.84,70,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.9,www.biba.in,contact@biba.com,97,Key player in current market analysis.
+IND-DIST-1156,Manyavar (Vedant Fashions),Retail,Kochi,International,2014,96,80,99,69,3.52,71,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.8,www.manyavar(vedantfashions).in,contact@manyavar(vedantfashions).com,92,Key player in current market analysis.
+IND-DIST-1157,Titan Company,Retail,Mumbai,National,2011,79,87,92,86,3.92,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.35,www.titancompany.in,contact@titancompany.com,92,Key player in current market analysis.
+IND-DIST-1158,Kalyan Jewellers,Retail,Chennai,National,1996,84,92,82,70,9.88,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.85,www.kalyanjewellers.in,contact@kalyanjewellers.com,96,Key player in current market analysis.
+IND-DIST-1159,Malabar Gold & Diamonds,Retail,Kolkata,National,1980,86,72,75,91,14.94,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.95,www.malabargoldanddiamonds.in,contact@malabargoldanddiamonds.com,88,Key player in current market analysis.
+IND-DIST-1160,Film Solutions Group 1,Film,Gurugram,Regional,2011,77,99,97,67,8.87,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.5,www.filmsolutionsgroup1.in,contact@filmsolutionsgroup1.com,92,Key player in current market analysis.
+IND-DIST-1161,FMCG Solutions Group 2,FMCG,Gurugram,National,1975,93,81,92,89,7.22,82,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.55,www.fmcgsolutionsgroup2.in,contact@fmcgsolutionsgroup2.com,89,Key player in current market analysis.
+IND-DIST-1162,Pharma Solutions Group 3,Pharma,Kochi,National,2011,90,78,84,66,5.56,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.95,www.pharmasolutionsgroup3.in,contact@pharmasolutionsgroup3.com,85,Key player in current market analysis.
+IND-DIST-1163,Electronics / IT Solutions Group 4,Electronics / IT,Delhi,International,2008,72,90,76,72,12.48,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.45,www.electronics/itsolutionsgroup4.in,contact@electronics/itsolutionsgroup4.com,86,Key player in current market analysis.
+IND-DIST-1164,Logistics Solutions Group 5,Logistics,Lucknow,Regional,1982,83,75,88,92,8.66,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.0,www.logisticssolutionsgroup5.in,contact@logisticssolutionsgroup5.com,92,Key player in current market analysis.
+IND-DIST-1165,Retail Solutions Group 6,Retail,Delhi,International,1983,94,80,93,73,11.14,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.75,www.retailsolutionsgroup6.in,contact@retailsolutionsgroup6.com,92,Key player in current market analysis.
+IND-DIST-1166,Film Solutions Group 7,Film,Kolkata,International,1991,92,72,93,76,13.16,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.05,www.filmsolutionsgroup7.in,contact@filmsolutionsgroup7.com,86,Key player in current market analysis.
+IND-DIST-1167,FMCG Solutions Group 8,FMCG,Gurugram,National,2015,95,92,91,89,4.99,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",91.35,www.fmcgsolutionsgroup8.in,contact@fmcgsolutionsgroup8.com,89,Key player in current market analysis.
+IND-DIST-1168,Pharma Solutions Group 9,Pharma,Kolkata,National,1997,85,99,91,85,11.17,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.75,www.pharmasolutionsgroup9.in,contact@pharmasolutionsgroup9.com,91,Key player in current market analysis.
+IND-DIST-1169,Electronics / IT Solutions Group 10,Electronics / IT,Pune,International,1986,75,86,88,65,1.36,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",78.7,www.electronics/itsolutionsgroup10.in,contact@electronics/itsolutionsgroup10.com,90,Key player in current market analysis.
+IND-DIST-1170,Logistics Solutions Group 11,Logistics,Noida,International,1985,71,81,89,79,13.82,96,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.05,www.logisticssolutionsgroup11.in,contact@logisticssolutionsgroup11.com,86,Key player in current market analysis.
+IND-DIST-1171,Retail Solutions Group 12,Retail,Bengaluru,International,1976,71,92,89,71,13.6,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.15,www.retailsolutionsgroup12.in,contact@retailsolutionsgroup12.com,95,Key player in current market analysis.
+IND-DIST-1172,Film Solutions Group 13,Film,Kolkata,International,1978,88,93,96,68,1.44,91,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.3,www.filmsolutionsgroup13.in,contact@filmsolutionsgroup13.com,93,Key player in current market analysis.
+IND-DIST-1173,FMCG Solutions Group 14,FMCG,Noida,International,1974,74,91,94,86,9.97,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.0,www.fmcgsolutionsgroup14.in,contact@fmcgsolutionsgroup14.com,90,Key player in current market analysis.
+IND-DIST-1174,Pharma Solutions Group 15,Pharma,Mumbai,National,2015,98,91,89,74,1.19,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.7,www.pharmasolutionsgroup15.in,contact@pharmasolutionsgroup15.com,87,Key player in current market analysis.
+IND-DIST-1175,Electronics / IT Solutions Group 16,Electronics / IT,Kolkata,National,2007,83,73,94,90,3.31,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.85,www.electronics/itsolutionsgroup16.in,contact@electronics/itsolutionsgroup16.com,97,Key player in current market analysis.
+IND-DIST-1176,Logistics Solutions Group 17,Logistics,Kolkata,National,1970,89,86,98,66,3.76,74,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.35,www.logisticssolutionsgroup17.in,contact@logisticssolutionsgroup17.com,90,Key player in current market analysis.
+IND-DIST-1177,Retail Solutions Group 18,Retail,Chennai,Regional,1980,84,81,94,74,12.45,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.9,www.retailsolutionsgroup18.in,contact@retailsolutionsgroup18.com,90,Key player in current market analysis.
+IND-DIST-1178,Film Solutions Group 19,Film,Noida,National,1976,97,85,87,94,13.75,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",90.35,www.filmsolutionsgroup19.in,contact@filmsolutionsgroup19.com,86,Key player in current market analysis.
+IND-DIST-1179,FMCG Solutions Group 20,FMCG,Lucknow,National,1983,97,98,91,87,9.49,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",91.7,www.fmcgsolutionsgroup20.in,contact@fmcgsolutionsgroup20.com,89,Key player in current market analysis.
+IND-DIST-1180,Pharma Solutions Group 21,Pharma,Noida,Regional,2010,94,80,91,77,10.64,83,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.7,www.pharmasolutionsgroup21.in,contact@pharmasolutionsgroup21.com,86,Key player in current market analysis.
+IND-DIST-1181,Electronics / IT Solutions Group 22,Electronics / IT,Kochi,International,2007,98,89,96,67,6.69,91,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.65,www.electronics/itsolutionsgroup22.in,contact@electronics/itsolutionsgroup22.com,94,Key player in current market analysis.
+IND-DIST-1182,Logistics Solutions Group 23,Logistics,Pune,International,1993,82,85,81,78,13.96,89,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.0,www.logisticssolutionsgroup23.in,contact@logisticssolutionsgroup23.com,93,Key player in current market analysis.
+IND-DIST-1183,Retail Solutions Group 24,Retail,Pune,National,1974,87,78,75,86,6.92,87,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.2,www.retailsolutionsgroup24.in,contact@retailsolutionsgroup24.com,92,Key player in current market analysis.
+IND-DIST-1184,Film Solutions Group 25,Film,Lucknow,National,2005,93,73,84,76,3.26,85,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.45,www.filmsolutionsgroup25.in,contact@filmsolutionsgroup25.com,90,Key player in current market analysis.
+IND-DIST-1185,FMCG Solutions Group 26,FMCG,Chennai,National,1987,86,93,76,86,9.51,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",86.35,www.fmcgsolutionsgroup26.in,contact@fmcgsolutionsgroup26.com,87,Key player in current market analysis.
+IND-DIST-1186,Pharma Solutions Group 27,Pharma,Pune,International,1990,80,91,99,83,14.37,80,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",87.0,www.pharmasolutionsgroup27.in,contact@pharmasolutionsgroup27.com,91,Key player in current market analysis.
+IND-DIST-1187,Electronics / IT Solutions Group 28,Electronics / IT,Pune,Regional,1995,96,98,86,71,8.35,81,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.5,www.electronics/itsolutionsgroup28.in,contact@electronics/itsolutionsgroup28.com,95,Key player in current market analysis.
+IND-DIST-1188,Logistics Solutions Group 29,Logistics,Kochi,National,1988,87,97,81,82,7.73,95,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",88.75,www.logisticssolutionsgroup29.in,contact@logisticssolutionsgroup29.com,93,Key player in current market analysis.
+IND-DIST-1189,Retail Solutions Group 30,Retail,Ahmedabad,National,1973,78,81,95,75,6.19,93,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.95,www.retailsolutionsgroup30.in,contact@retailsolutionsgroup30.com,85,Key player in current market analysis.
+IND-DIST-1190,Film Solutions Group 31,Film,Ahmedabad,National,2010,70,86,80,83,6.41,90,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",80.95,www.filmsolutionsgroup31.in,contact@filmsolutionsgroup31.com,96,Key player in current market analysis.
+IND-DIST-1191,FMCG Solutions Group 32,FMCG,Kochi,National,1983,77,77,81,90,2.31,72,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",79.0,www.fmcgsolutionsgroup32.in,contact@fmcgsolutionsgroup32.com,97,Key player in current market analysis.
+IND-DIST-1192,Pharma Solutions Group 33,Pharma,Mumbai,Regional,1994,78,78,80,65,10.21,84,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",77.35,www.pharmasolutionsgroup33.in,contact@pharmasolutionsgroup33.com,96,Key player in current market analysis.
+IND-DIST-1193,Electronics / IT Solutions Group 34,Electronics / IT,Ahmedabad,National,2017,79,92,82,70,8.04,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",83.45,www.electronics/itsolutionsgroup34.in,contact@electronics/itsolutionsgroup34.com,88,Key player in current market analysis.
+IND-DIST-1194,Logistics Solutions Group 35,Logistics,Delhi,Regional,2003,77,73,97,94,10.55,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",82.7,www.logisticssolutionsgroup35.in,contact@logisticssolutionsgroup35.com,91,Key player in current market analysis.
+IND-DIST-1195,Retail Solutions Group 36,Retail,Pune,Regional,1998,83,92,91,84,5.93,75,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.8,www.retailsolutionsgroup36.in,contact@retailsolutionsgroup36.com,88,Key player in current market analysis.
+IND-DIST-1196,Film Solutions Group 37,Film,Pune,National,1993,80,94,95,88,8.36,94,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",89.8,www.filmsolutionsgroup37.in,contact@filmsolutionsgroup37.com,95,Key player in current market analysis.
+IND-DIST-1197,FMCG Solutions Group 38,FMCG,Chennai,National,1988,77,88,81,67,5.07,92,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",81.3,www.fmcgsolutionsgroup38.in,contact@fmcgsolutionsgroup38.com,95,Key player in current market analysis.
+IND-DIST-1198,Pharma Solutions Group 39,Pharma,Mumbai,National,2008,85,97,75,90,13.36,77,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.55,www.pharmasolutionsgroup39.in,contact@pharmasolutionsgroup39.com,86,Key player in current market analysis.
+IND-DIST-1199,Electronics / IT Solutions Group 40,Electronics / IT,Noida,National,1995,87,94,76,81,1.17,78,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",84.3,www.electronics/itsolutionsgroup40.in,contact@electronics/itsolutionsgroup40.com,93,Key player in current market analysis.
+IND-DIST-1200,Logistics Solutions Group 41,Logistics,Delhi,National,1977,92,77,88,77,10.61,97,"• Strong regional network
+• Efficient supply chain
+• High digital adoption","• High operational costs
+• Strict credit terms
+• Regional dependency",85.95,www.logisticssolutionsgroup41.in,contact@logisticssolutionsgroup41.com,97,Key player in current market analysis.

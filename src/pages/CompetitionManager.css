@@ -1,7 +1,17 @@
 .competition-manager {
-  max-width: 1400px;
-  margin: 2rem auto;
-  padding: 2rem;
+  min-height: 100vh;
+  background: #0a0a0f;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.competition-body {
+  padding: 40px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .competition-header {
@@ -13,34 +23,41 @@
   gap: 1rem;
 }
 
-.competition-header h1 {
+.competition-title {
   margin: 0;
-  font-size: 2rem;
-  color: #1f2937;
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .competition-header .subtitle {
-  margin: 0.5rem 0 0 0;
-  color: #6b7280;
-  font-size: 1rem;
+  margin: 8px 0 0 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 15px;
 }
 
 .import-button {
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #0a0a0f;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2);
 }
 
 .import-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
 }
 
 .import-button:disabled {
@@ -49,147 +66,168 @@
 }
 
 .import-result {
-  padding: 1rem 1.5rem;
+  padding: 16px 20px;
   border-radius: 8px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
   animation: slideIn 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .import-result.success {
-  background: #d1fae5;
-  border: 1px solid #10b981;
-  color: #065f46;
+  background: rgba(0, 255, 136, 0.1);
+  border-color: #00ff88;
 }
 
 .import-result.error {
-  background: #fee2e2;
-  border: 1px solid #ef4444;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
 }
 
 .import-result p {
   margin: 0;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.import-result.success p {
+  color: #00ff88;
+}
+
+.import-result.error p {
+  color: #ef4444;
 }
 
 .import-result .import-stats {
-  margin-top: 0.5rem;
+  margin-top: 8px;
   font-weight: 400;
-  font-size: 0.9rem;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .filter-tabs {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  gap: 12px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
 }
 
 .filter-tabs button {
-  padding: 0.6rem 1.2rem;
-  background: white;
-  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 14px;
   font-weight: 500;
-  color: #6b7280;
+  color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .filter-tabs button:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: #00ff88;
+  color: #00ff88;
+  background: rgba(0, 255, 136, 0.05);
 }
 
 .filter-tabs button.active {
-  background: #667eea;
-  color: white;
-  border-color: #667eea;
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #0a0a0f;
+  border-color: #00ff88;
+  font-weight: 600;
 }
 
 .loading-state {
   text-align: center;
-  padding: 3rem;
-  color: #6b7280;
-  font-size: 1.1rem;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .empty-state {
   text-align: center;
-  padding: 4rem 2rem;
-  background: #f9fafb;
+  padding: 80px 40px;
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 12px;
-  border: 2px dashed #d1d5db;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  grid-column: 1 / -1;
 }
 
 .empty-state p {
   margin: 0;
-  color: #6b7280;
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
 }
 
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 20px;
+  margin-bottom: 32px;
 }
 
 .movie-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
 }
 
 .movie-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-color: #667eea;
 }
 
 .movie-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
-  gap: 1rem;
+  margin-bottom: 16px;
+  gap: 12px;
 }
 
 .movie-header h3 {
   margin: 0;
-  font-size: 1.1rem;
-  color: #1f2937;
+  font-size: 18px;
+  color: #fff;
   line-height: 1.4;
   flex: 1;
+  font-weight: 600;
 }
 
 .buzz-badge {
-  padding: 0.4rem 0.8rem;
+  padding: 6px 12px;
   color: white;
   border-radius: 20px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 14px;
   min-width: 50px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .movie-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 10px;
 }
 
 .meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .meta-row:last-child {
@@ -200,9 +238,9 @@
 .meta-row-full {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid #f3f4f6;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .meta-row-full:last-child {
@@ -213,69 +251,74 @@
 .clusters-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 6px;
 }
 
 .cluster-chip {
-  padding: 0.25rem 0.6rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #0a0a0f;
   border-radius: 12px;
-  font-size: 0.75rem;
+  font-size: 11px;
   font-weight: 600;
   text-transform: capitalize;
 }
 
-.meta-row .label {
-  font-size: 0.85rem;
-  color: #6b7280;
+.meta-row .label,
+.meta-row-full .label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
   font-weight: 500;
 }
 
 .meta-row .value {
-  font-size: 0.9rem;
-  color: #1f2937;
+  font-size: 14px;
+  color: #fff;
   font-weight: 600;
 }
 
 .scale-badge {
-  padding: 0.25rem 0.75rem;
-  background: #f3f4f6;
-  color: #374151;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #00ff88;
   border-radius: 12px;
-  font-size: 0.85rem;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .movie-notes {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #f3f4f6;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .movie-notes small {
-  color: #6b7280;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .stats-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  background: #f9fafb;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 16px;
+  margin-top: 32px;
 }
 
 .stats-footer p {
   margin: 0;
-  color: #6b7280;
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 @keyframes slideIn {
@@ -290,8 +333,8 @@
 }
 
 @media (max-width: 768px) {
-  .competition-manager {
-    padding: 1rem;
+  .competition-body {
+    padding: 20px;
   }
   
   .competition-header {
@@ -299,8 +342,13 @@
     align-items: flex-start;
   }
   
+  .competition-title {
+    font-size: 24px;
+  }
+  
   .import-button {
     width: 100%;
+    justify-content: center;
   }
   
   .movies-grid {
