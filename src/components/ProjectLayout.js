@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { label: 'Campaign',       path: '/campaign' },
   { label: 'Sentiment',      path: '/sentiment' },
   { label: 'Distributor Analyzer', path: '/distributor-analyzer' },
-  { label: 'OTT Deal',       path: '/ott-deal' },
 ];
 
 const ProjectLayout = ({ children }) => {
