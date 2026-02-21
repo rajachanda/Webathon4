@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: 'Release Window', path: '/release-window' },
   { label: 'Campaign',       path: '/campaign' },
   { label: 'Sentiment',      path: '/sentiment' },
+  { label: 'Distributor Analyzer', path: '/distributor-analyzer' },
   { label: 'OTT Deal',       path: '/ott-deal' },
 ];
 

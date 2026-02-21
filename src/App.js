@@ -16,6 +16,7 @@ import ReleaseWindowPage from './pages/ReleaseWindowPage';
 import BuzzPage from './pages/BuzzPage';
 import CampaignPage from './pages/CampaignPage';
 import SentimentAnalysisPage from './pages/SentimentAnalysisPage';
+import DistributorAnalyzerPage from './pages/DistributorAnalyzerPage';
 import CompetitionManager from './pages/CompetitionManager';
 import OTTDealPage from './pages/OTTDealPage';
 import './App.css';
@@ -44,6 +45,7 @@ function AppContent() {
         <Route path="/projects/:projectId/buzz"           element={<ProtectedRoute><BuzzPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/campaign"       element={<ProtectedRoute><CampaignPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/sentiment"      element={<ProtectedRoute><SentimentAnalysisPage /></ProtectedRoute>} />
+        <Route path="/projects/:projectId/distributor-analyzer" element={<ProtectedRoute><DistributorAnalyzerPage /></ProtectedRoute>} />
         <Route path="/projects/:projectId/ott-deal"       element={<ProtectedRoute><OTTDealPage /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" />} />
