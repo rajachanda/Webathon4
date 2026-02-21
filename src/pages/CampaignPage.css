@@ -10,7 +10,7 @@
 .ctx-card { flex: 1; min-width: 200px; }
 
 .ctx-label {
-    font-size: 11px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgba(255,255,255,0.3);
@@ -18,14 +18,14 @@
 }
 
 .ctx-value {
-    font-size: 14px;
+    font-size: 20px;
     color: rgba(255,255,255,0.7);
     margin: 0;
     line-height: 1.4;
 }
 
 .ctx-buzz {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     margin: 0;
 }
@@ -35,14 +35,14 @@
 .ctx-buzz--low  { color: #ff5050; }
 
 .campaign-llm-note {
-    font-size: 11px;
+    font-size: 14px;
     color: rgba(255,255,255,0.25);
     font-style: italic;
     margin: 8px 0 0;
 }
 
 .campaign-summary {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1.6;
     color: rgba(255,255,255,0.7);
     margin: 0;
@@ -57,7 +57,7 @@
 .campaign-week { margin-bottom: 20px; }
 
 .campaign-week-label {
-    font-size: 11px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgba(255,255,255,0.3);
@@ -68,9 +68,9 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 13px;
+    font-size: 18px;
     color: rgba(255,255,255,0.7);
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255,255,255,0.04);
     cursor: pointer;
     transition: color 0.2s;
@@ -96,11 +96,11 @@
     text-align: center;
 }
 
-.ces-icon { font-size: 40px; }
+.ces-icon { font-size: 48px; }
 
 .campaign-empty-state p {
     color: rgba(255,255,255,0.35);
-    font-size: 14px;
+    font-size: 18px;
     margin: 0;
 }
 
@@ -154,4 +154,240 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ─── 14-Day Timeline ─────────────────────────────────────────── */
+.tl-subtitle {
+    font-size: 17px;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+
+.tl-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 28px;
+}
+.tl-list::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+    border-radius: 2px;
+}
+
+.tl-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 16px 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 10px;
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-item:hover { background: rgba(255,255,255,0.03); }
+
+/* Timeline dot */
+.tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 22px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid #0a0a0f;
+    transition: transform 0.2s;
+}
+.tl-item:hover .tl-dot { transform: scale(1.3); }
+.tl-dot--early  { background: #8b5cf6; box-shadow: 0 0 6px rgba(139,92,246,0.5); }
+.tl-dot--mid    { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.5); }
+.tl-dot--near   { background: #fb923c; box-shadow: 0 0 6px rgba(251,146,60,0.5); }
+.tl-dot--release{ background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,0.5); }
+
+/* Checkbox */
+.tl-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.15);
+    background: transparent;
+    flex-shrink: 0;
+    margin-top: 2px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s, border-color 0.2s;
+}
+.tl-check:checked {
+    background: #00ff88;
+    border-color: #00ff88;
+}
+.tl-check:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: 2px solid #000;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+}
+
+.tl-content { flex: 1; min-width: 0; }
+
+.tl-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.tl-day-badge {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.tl-day-badge--early  { background: rgba(139,92,246,0.2);  color: #a78bfa; }
+.tl-day-badge--mid    { background: rgba(251,191,36,0.2);   color: #fbbf24; }
+.tl-day-badge--near   { background: rgba(251,146,60,0.2);   color: #fb923c; }
+.tl-day-badge--release{ background: rgba(74,222,128,0.2);   color: #4ade80; }
+
+.tl-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    transition: color 0.2s;
+}
+.tl-item--done .tl-title {
+    text-decoration: line-through;
+    color: rgba(255,255,255,0.3);
+}
+
+.tl-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 10px;
+    line-height: 1.55;
+}
+.tl-item--done .tl-desc { color: rgba(255,255,255,0.2); }
+
+.tl-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tl-channel-chip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.tl-empty {
+    font-size: 16px;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 32px 0;
+}
+
+/* ─── Focus Channels ──────────────────────────────────────────── */
+.fc-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.38);
+    margin: 0 0 20px;
+}
+
+.fc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+}
+
+.fc-card {
+    position: relative;
+    padding: 18px 18px 16px;
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.15);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+.fc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4ade80, #00d4ff);
+    border-radius: 14px 14px 0 0;
+}
+.fc-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(74,222,128,0.35);
+    background: rgba(74,222,128,0.1);
+}
+
+.fc-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.fc-platform-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fc-platform-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(74,222,128,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.fc-platform-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4ade80;
+    line-height: 1.2;
+}
+
+.fc-rationale {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin: 10px 0 0;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.05);
 }
