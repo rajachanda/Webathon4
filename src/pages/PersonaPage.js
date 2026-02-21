@@ -370,6 +370,44 @@ const PersonaPage = () => {
                 </div>
               )}
             </Card>
+
+            {/* Target Clusters — moved here below Team POV */}
+            <Card style={{ marginTop: 20 }}>
+              <h3 className="section-title">Target Audience Clusters</h3>
+              <p className="persona-team-subtitle">Simplified clusters for Release &amp; Campaign planning (auto-derived, editable).</p>
+              
+              <div style={{ marginBottom: 12 }}>
+                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Core Clusters:</label>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {Object.values(TARGET_CLUSTERS).map(cluster => (
+                    <TagChip
+                      key={cluster}
+                      label={getClusterLabel(cluster)}
+                      color={form.target_core_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
+                      size="md"
+                      onClick={() => !locked && toggleCluster(cluster, 'core')}
+                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_core_clusters?.includes(cluster) ? 1 : 0.5 }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Secondary Clusters:</label>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {Object.values(TARGET_CLUSTERS).map(cluster => (
+                    <TagChip
+                      key={cluster}
+                      label={getClusterLabel(cluster)}
+                      color={form.target_secondary_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
+                      size="md"
+                      onClick={() => !locked && toggleCluster(cluster, 'secondary')}
+                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_secondary_clusters?.includes(cluster) ? 1 : 0.5 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Card>
           </div>
 
           {/* Right — Audience builder */}
@@ -407,43 +445,6 @@ const PersonaPage = () => {
               </div>
             </Card>
 
-            {/* Target Clusters (Derived from segments) */}
-            <Card style={{ marginTop: 20 }}>
-              <h3 className="section-title">Target Audience Clusters</h3>
-              <p className="persona-team-subtitle">Simplified clusters for Release & Campaign planning (auto-derived, editable).</p>
-              
-              <div style={{ marginBottom: 12 }}>
-                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Core Clusters:</label>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {Object.values(TARGET_CLUSTERS).map(cluster => (
-                    <TagChip
-                      key={cluster}
-                      label={getClusterLabel(cluster)}
-                      color={form.target_core_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
-                      size="md"
-                      onClick={() => !locked && toggleCluster(cluster, 'core')}
-                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_core_clusters?.includes(cluster) ? 1 : 0.5 }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="persona-field-label" style={{ marginBottom: 8, display: 'block' }}>Secondary Clusters:</label>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {Object.values(TARGET_CLUSTERS).map(cluster => (
-                    <TagChip
-                      key={cluster}
-                      label={getClusterLabel(cluster)}
-                      color={form.target_secondary_clusters?.includes(cluster) ? getClusterColor(cluster) : 'gray'}
-                      size="md"
-                      onClick={() => !locked && toggleCluster(cluster, 'secondary')}
-                      style={{ cursor: locked ? 'default' : 'pointer', opacity: form.target_secondary_clusters?.includes(cluster) ? 1 : 0.5 }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </Card>
           </div>
         </div>
       </div>
