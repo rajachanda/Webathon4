@@ -20,6 +20,7 @@ import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import './OTTDealPage.css';
 import axios from 'axios';
+import { projectService } from '../services/api.service';
 
 const OTTDealPage = () => {
   const { projectId } = useParams();
@@ -49,12 +50,105 @@ const OTTDealPage = () => {
   const [scenarioView, setScenarioView] = useState('medium'); // low/medium/high
   const [platforms, setPlatforms] = useState([]);
   const [loadingPlatforms, setLoadingPlatforms] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-  // Load platform information on mount
+  // Load all data on mount
   useEffect(() => {
     loadPlatforms();
     loadCalendarEvents();
-  }, []);
+    loadProjectData();
+  }, [projectId]);
+
+  // Load existing project data to pre-populate form
+  const loadProjectData = async () => {
+    try {
+      // Fetch project, persona, and buzz data in parallel
+      const [project, persona, buzzSnapshots] = await Promise.all([
+        projectService.getProject(projectId),
+        projectService.getProjectPersona(projectId).catch(() => null),
+        projectService.getBuzzSnapshots(projectId).catch(() => []),
+      ]);
+
+      // Pre-populate producer inputs from project metadata
+      if (project?.project_metadata) {
+        const metadata = project.project_metadata;
+        const newProducerInputs = { ...producerInputs };
+
+        // Map genre
+        if (metadata.genre) {
+          newProducerInputs.filmGenre = metadata.genre;
+          if (metadata.subgenre) {
+            newProducerInputs.filmGenre += ` - ${metadata.subgenre}`;
+          }
+        }
+
+        // Map budget (convert from crores to lakhs if needed)
+        if (metadata.budget) {
+          // Assuming budget is stored in crores or lakhs
+          const budgetValue = parseFloat(metadata.budget);
+          // If budget seems to be in crores (< 100), convert to lakhs
+          newProducerInputs.filmBudget = budgetValue < 100 ? (budgetValue * 100).toString() : budgetValue.toString();
+        }
+
+        // Map target audience from persona if available
+        if (persona?.film_market_persona) {
+          const personaData = persona.film_market_persona;
+          if (personaData.primary_audience) {
+            newProducerInputs.targetAudience = personaData.primary_audience;
+          } else if (personaData.target_clusters && personaData.target_clusters.length > 0) {
+            // Build audience description from clusters
+            newProducerInputs.targetAudience = personaData.target_clusters.slice(0, 2).join(', ');
+          }
+        }
+
+        setProducerInputs(newProducerInputs);
+      }
+
+      // Pre-populate platform signals from buzz snapshots
+      if (buzzSnapshots && buzzSnapshots.length > 0) {
+        // Get latest buzz snapshot
+        const latestBuzz = buzzSnapshots.sort((a, b) => 
+          new Date(b.created_at) - new Date(a.created_at)
+        )[0];
+
+        const newPlatformSignals = { ...platformSignals };
+
+        // Map buzz score (0-100)
+        if (latestBuzz.buzz_score !== undefined && latestBuzz.buzz_score !== null) {
+          newPlatformSignals.buzz = Math.round(latestBuzz.buzz_score);
+        }
+
+        // Map sentiment score (0-1)
+        if (latestBuzz.sentiment_score_norm !== undefined && latestBuzz.sentiment_score_norm !== null) {
+          newPlatformSignals.sentiment = latestBuzz.sentiment_score_norm;
+        }
+
+        // Map trailer views and retention from metadata if available
+        if (latestBuzz.metadata) {
+          const metadata = latestBuzz.metadata;
+          
+          // Try to get view count from YouTube metrics
+          if (metadata.youtubeMetrics?.view_count) {
+            newPlatformSignals.trailerViews = metadata.youtubeMetrics.view_count;
+          }
+
+          // Try to calculate retention from watch time and duration
+          if (metadata.youtubeMetrics?.avg_watch_time && metadata.youtubeMetrics?.video_duration) {
+            const retention = (metadata.youtubeMetrics.avg_watch_time / metadata.youtubeMetrics.video_duration) * 100;
+            newPlatformSignals.trailerRetention = Math.round(retention);
+          }
+        }
+
+        setPlatformSignals(newPlatformSignals);
+      }
+
+      setDataLoaded(true);
+      console.log('✅ Auto-populated OTT Deal form from existing project data');
+    } catch (err) {
+      console.error('Failed to load project data for auto-population:', err);
+      setDataLoaded(true); // Still mark as loaded even if error
+    }
+  };
 
   const loadPlatforms = async () => {
     try {
@@ -215,6 +309,19 @@ const OTTDealPage = () => {
         {/* Input Form */}
         <div className="input-section">
           <h2>Step 1: Film & Producer Details</h2>
+          {dataLoaded && (producerInputs.filmGenre || producerInputs.filmBudget || producerInputs.targetAudience) && (
+            <div style={{ 
+              fontSize: '12px', 
+              color: 'rgba(0, 255, 136, 0.7)', 
+              marginBottom: '12px',
+              padding: '8px 12px',
+              background: 'rgba(0, 255, 136, 0.1)',
+              borderRadius: '6px',
+              border: '1px solid rgba(0, 255, 136, 0.2)'
+            }}>
+              ✓ Auto-filled from project data
+            </div>
+          )}
           
           <div className="form-group">
             <label>Your Confidence Level</label>
@@ -259,6 +366,19 @@ const OTTDealPage = () => {
           </div>
 
           <h2>Step 2: Platform Signals</h2>
+          {dataLoaded && (platformSignals.buzz !== 50 || platformSignals.sentiment !== 0.5 || platformSignals.trailerViews > 0) && (
+            <div style={{ 
+              fontSize: '12px', 
+              color: 'rgba(0, 255, 136, 0.7)', 
+              marginBottom: '12px',
+              padding: '8px 12px',
+              background: 'rgba(0, 255, 136, 0.1)',
+              borderRadius: '6px',
+              border: '1px solid rgba(0, 255, 136, 0.2)'
+            }}>
+              ✓ Auto-filled from buzz metrics
+            </div>
+          )}
 
           <div className="form-group">
             <label>Sentiment Score ({platformSignals.sentiment})</label>
