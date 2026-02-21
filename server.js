@@ -260,6 +260,13 @@ app.get('/api/health', (req, res) => {
 });
 
 /**
+ * OTT Deal Assistant Routes
+ * Mounted at /api/ott-assistant
+ */
+const ottDealRoutes = require('./routes/ottDeal.routes');
+app.use('/api/ott-assistant', ottDealRoutes);
+
+/**
  * Executes the Python poster analysis model
  * @param {string} imagePath - Absolute path to the poster image
  * @returns {Promise<Object>} Analysis result with score, verdict, suggestions
@@ -336,6 +343,9 @@ app.listen(PORT, () => {
   console.log(`   POST /api/posters/analyze - Analyze a single poster`);
   console.log(`   POST /api/posters/analyze-upload - Analyze uploaded poster`);
   console.log(`   POST /api/posters/compare - Compare two posters (A/B)`);
+  console.log(`   POST /api/ott-assistant/evaluate - Get OTT deal recommendation`);
+  console.log(`   GET  /api/ott-assistant/examples - Get example payloads`);
+  console.log(`   GET  /api/ott-assistant/platforms - Get platform info`);
   console.log(`   GET  /api/health - Health check`);
   console.log(`\n🐍 Using Python command: ${PYTHON_CMD}`);
 });
