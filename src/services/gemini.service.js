@@ -4,7 +4,8 @@
  */
 
 const KEYS = [
-  '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',
+  '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',
+  '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',
 ];
 
 const MODEL = 'llama-3.3-70b-versatile';
