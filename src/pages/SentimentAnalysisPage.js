@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
+import Icon from '../components/Icon';
 import { projectService } from '../services/api.service';
 import { fetchCommentsFromMultipleVideos, extractVideoId } from '../services/youtube.service';
 import { analyzeSentimentFromComments, saveSentimentAnalysis, getLatestSentimentAnalysis } from '../services/sentiment.service';
@@ -280,11 +281,11 @@ const SentimentAnalysisPage = () => {
               <h3 className="section-title">Summary Opinion</h3>
               <p className="sentiment-summary">{displayAnalysis.summary_opinion}</p>
               <div className="analysis-meta">
-                <span>📊 {displayAnalysis.total_comments_analyzed} comments analyzed</span>
+                <span><Icon name="chart" size={14} /> {displayAnalysis.total_comments_analyzed} comments analyzed</span>
                 <span>•</span>
-                <span>🎥 {displayAnalysis.video_sources?.length || 0} video(s)</span>
+                <span><Icon name="tv" size={14} /> {displayAnalysis.video_sources?.length || 0} video(s)</span>
                 <span>•</span>
-                <span>📅 {new Date(displayAnalysis.analyzed_at).toLocaleDateString()}</span>
+                <span><Icon name="calendar" size={14} /> {new Date(displayAnalysis.analyzed_at).toLocaleDateString()}</span>
               </div>
             </Card>
 

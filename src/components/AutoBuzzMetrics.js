@@ -6,6 +6,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useBuzzMetrics } from '../hooks/useBuzzMetrics';
+import { saveBuzzSnapshot } from '../services/buzz-metrics.service';
+import { supabase } from '../supabaseClient';
+import Icon from './Icon';
 import './AutoBuzzMetrics.css';
 
 // Groq API integration for AI-powered insights
@@ -51,7 +54,7 @@ const callGroq = async (prompt) => {
   return data.choices[0].message.content;
 };
 
-const AutoBuzzMetrics = ({ projectId, youtubeUrls, instagramHandle, filmName }) => {
+const AutoBuzzMetrics = ({ projectId, youtubeUrls, instagramHandle, filmName, onSnapshotSaved, hasSnapshots }) => {
   const {
     metrics,
     buzzScore,
@@ -61,7 +64,6 @@ const AutoBuzzMetrics = ({ projectId, youtubeUrls, instagramHandle, filmName }) 
     metadata,
     rawMetrics,
     refresh,
-    saveSnapshot,
   } = useBuzzMetrics(projectId, {
     youtubeVideoUrls: youtubeUrls || [],
     instagramHandle: instagramHandle || '',
@@ -74,6 +76,79 @@ const AutoBuzzMetrics = ({ projectId, youtubeUrls, instagramHandle, filmName }) 
   const [aiInsights, setAiInsights] = useState(null);
   const [insightsError, setInsightsError] = useState(null);
   const [shouldGenerateInsights, setShouldGenerateInsights] = useState(false);
+  
+  // Display state - shows either latest snapshot or fresh analysis
+  const [displayMetrics, setDisplayMetrics] = useState({
+    watch_time_norm: 0,
+    share_rate_norm: 0,
+    sentiment_score_norm: 0,
+    search_growth_norm: 0,
+    engagement_rate_norm: 0,
+  });
+  const [displayBuzzScore, setDisplayBuzzScore] = useState(0);
+  const [displayComponentScores, setDisplayComponentScores] = useState({
+    youtube: 0,
+    googleTrends: 0,
+  });
+  const [displayRawMetrics, setDisplayRawMetrics] = useState(null);
+
+  // Load latest snapshot on mount to show last calculated score
+  useEffect(() => {
+    const loadLatestSnapshot = async () => {
+      if (!projectId || !hasSnapshots) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('buzz_snapshots')
+          .select('*')
+          .eq('project_id', projectId)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (data && !error) {
+          // Populate display state from snapshot
+          setDisplayBuzzScore(data.buzz_score || 0);
+          setDisplayMetrics({
+            watch_time_norm: data.watch_time_norm || 0,
+            share_rate_norm: data.share_rate_norm || 0,
+            sentiment_score_norm: data.sentiment_score_norm || 0,
+            search_growth_norm: data.search_growth_norm || 0,
+            engagement_rate_norm: data.engagement_rate_norm || 0,
+          });
+          
+          // Parse component scores if available in metadata
+          if (data.metadata && data.metadata.componentScores) {
+            setDisplayComponentScores(data.metadata.componentScores);
+          }
+          
+          // Parse raw metrics if available
+          if (data.metadata && data.metadata.rawMetrics) {
+            setDisplayRawMetrics(data.metadata.rawMetrics);
+          }
+          
+          // Load AI insights if available
+          if (data.ai_insights) {
+            setAiInsights(data.ai_insights);
+          }
+        }
+      } catch (err) {
+        console.error('Error loading latest snapshot:', err);
+      }
+    };
+
+    loadLatestSnapshot();
+  }, [projectId, hasSnapshots]);
+
+  // Update display values when new analysis completes
+  useEffect(() => {
+    if (buzzScore > 0) {
+      setDisplayBuzzScore(buzzScore);
+      setDisplayMetrics(metrics);
+      setDisplayComponentScores(componentScores);
+      setDisplayRawMetrics(rawMetrics);
+    }
+  }, [buzzScore, metrics, componentScores, rawMetrics]);
 
   // Generate AI insights after metrics are freshly loaded
   useEffect(() => {
@@ -151,9 +226,21 @@ Keep it concise and actionable.`;
   };
 
   const handleSaveSnapshot = async () => {
-    const result = await saveSnapshot();
+    // Save snapshot with AI insights
+    const result = await saveBuzzSnapshot(projectId, {
+      normalizedMetrics: metrics,
+      buzzScore,
+      metadata,
+      rawMetrics,
+      aiInsights, // Include AI insights
+    });
+    
     if (result.success) {
       alert('Buzz snapshot saved successfully!');
+      // Refresh the gauge meter on the page
+      if (onSnapshotSaved) {
+        onSnapshotSaved();
+      }
     } else {
       alert(`Failed to save snapshot: ${result.error || 'Unknown error'}`);
     }
@@ -202,14 +289,14 @@ Keep it concise and actionable.`;
             onClick={handleAnalyzeBuzzScore}
             disabled={loading || analyzing || !youtubeUrls || youtubeUrls.length === 0}
           >
-            {analyzing ? '🔄 Analyzing...' : loading ? '⟳ Calculating...' : '🤖 Analyze Buzz Score'}
+            {analyzing ? <><Icon name="refresh" size={14} /> Analyzing...</> : loading ? <><Icon name="refresh" size={14} /> Calculating...</> : <><Icon name="robot" size={14} /> Analyze Buzz Score</>}
           </button>
           <button 
             className="auto-buzz-save-btn" 
             onClick={handleSaveSnapshot}
             disabled={loading || analyzing || buzzScore === 0}
           >
-            💾 Save Snapshot
+            <Icon name="save" size={14} /> Save Snapshot
           </button>
         </div>
       </div>
@@ -235,22 +322,22 @@ Keep it concise and actionable.`;
       </p>
 
       {/* Component Scores */}
-      {componentScores && (componentScores.youtube > 0 || componentScores.googleTrends > 0) && (
+      {displayComponentScores && (displayComponentScores.youtube > 0 || displayComponentScores.googleTrends > 0) && (
         <div className="auto-buzz-components">
-          <h4 style={{ fontSize: '0.95rem', marginBottom: 12, color: 'rgba(255,255,255,0.9)' }}>📈 Component Scores</h4>
+          <h4 style={{ fontSize: '0.95rem', marginBottom: 12, color: 'rgba(255,255,255,0.9)' }}><Icon name="trendingUp" size={16} /> Component Scores</h4>
           <div className="component-scores-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <div className="component-score-card">
-              <div className="component-icon">📺</div>
+              <div className="component-icon"><Icon name="tv" size={24} color="#ff0000" /></div>
               <div className="component-label">YouTube (60%)</div>
               <div className="component-value" style={{ color: '#ff0000' }}>
-                {componentScores.youtube.toFixed(1)}/100
+                {displayComponentScores.youtube.toFixed(1)}/100
               </div>
             </div>
             <div className="component-score-card">
-              <div className="component-icon">📊</div>
+              <div className="component-icon"><Icon name="chart" size={24} color="#4285f4" /></div>
               <div className="component-label">Google Trends (40%)</div>
               <div className="component-value" style={{ color: '#4285f4' }}>
-                {componentScores.googleTrends.toFixed(1)}/100
+                {displayComponentScores.googleTrends.toFixed(1)}/100
               </div>
             </div>
           </div>
@@ -267,7 +354,7 @@ Keep it concise and actionable.`;
               <span className="auto-buzz-metric-weight">({field.weight})</span>
             </div>
             <div className={`auto-buzz-metric-value ${loading ? 'loading' : ''}`}>
-              {loading ? '...' : (metrics[field.id] || 0).toFixed(2)}
+              {loading ? '...' : (displayMetrics[field.id] || 0).toFixed(2)}
             </div>
             <div className="auto-buzz-metric-description">
               {field.description}
@@ -279,13 +366,13 @@ Keep it concise and actionable.`;
       <div className="auto-buzz-score-preview">
         <strong>Current Buzz Score:</strong>
         <span className={`auto-buzz-score ${loading ? 'loading' : ''}`}>
-          {loading ? '...' : buzzScore.toFixed(1)}
+          {loading ? '...' : displayBuzzScore.toFixed(1)}
         </span>
-        {buzzScore > 0 && (
+        {displayBuzzScore > 0 && (
           <span className="auto-buzz-score-rating">
-            {buzzScore >= 75 ? '🔥 Excellent' : 
-             buzzScore >= 50 ? '✨ Good' : 
-             buzzScore >= 25 ? '📈 Fair' : '📊 Growing'}
+            {displayBuzzScore >= 75 ? <><Icon name="fire" size={14} /> Excellent</> : 
+             displayBuzzScore >= 50 ? <><Icon name="sparkles" size={14} /> Good</> : 
+             displayBuzzScore >= 25 ? <><Icon name="trendingUp" size={14} /> Fair</> : <><Icon name="chart" size={14} /> Growing</>}
           </span>
         )}
       </div>
@@ -294,7 +381,7 @@ Keep it concise and actionable.`;
       {aiInsights && (
         <div className="auto-buzz-ai-insights">
           <div className="ai-insights-header">
-            <h4>🤖 AI-Powered Insights</h4>
+            <h4><Icon name="robot" size={16} /> AI-Powered Insights</h4>
             <span className="ai-insights-badge">Powered by Groq AI</span>
           </div>
           <div className="ai-insights-content">
@@ -307,7 +394,7 @@ Keep it concise and actionable.`;
 
       {analyzing && !aiInsights && (
         <div className="auto-buzz-analyzing">
-          <div className="analyzing-spinner">🤖</div>
+          <div className="analyzing-spinner"><Icon name="robot" size={32} /></div>
           <p>AI is analyzing your buzz metrics and generating insights...</p>
         </div>
       )}
@@ -324,13 +411,13 @@ Keep it concise and actionable.`;
 
       {youtubeUrls?.length === 0 && (
         <div className="auto-buzz-warning">
-          ⚠️ No YouTube URLs configured. Configure video URLs above, then click "Analyze Buzz Score" to begin.
+          <Icon name="warning" size={16} /> No YouTube URLs configured. Configure video URLs above, then click "Analyze Buzz Score" to begin.
         </div>
       )}
 
-      {!analyzing && !aiInsights && buzzScore === 0 && youtubeUrls?.length > 0 && (
+      {!analyzing && !aiInsights && buzzScore === 0 && !hasSnapshots && youtubeUrls?.length > 0 && (
         <div className="auto-buzz-info">
-          💡 Ready to analyze! Click "Analyze Buzz Score" to fetch metrics and get AI-powered insights.
+          <Icon name="lightbulb" size={16} /> Ready to analyze! Click "Analyze Buzz Score" to fetch metrics and get AI-powered insights.
         </div>
       )}
     </div>
