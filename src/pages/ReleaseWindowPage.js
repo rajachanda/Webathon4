@@ -189,7 +189,7 @@ const ReleaseWindowPage = () => {
                     </div>
                   )}
                   <div style={{ marginTop: 12, padding: 12, background: 'rgba(167,139,250,0.1)', borderRadius: 6, fontSize: 12, color: '#a78bfa' }}>
-                    💡 Analysis considers exam schedules, festivals, and events specific to your target audience
+                    <Icon name="lightbulb" size={13} /> Analysis considers exam schedules, festivals, and events specific to your target audience
                   </div>
                 </div>
               </Card>
@@ -240,11 +240,11 @@ const ReleaseWindowPage = () => {
             {/* Heatmap Calendar */}
             {dateAnalysis.length > 0 && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title">📅 Release Date Heatmap</h3>
+                <h3 className="section-title"><Icon name="calendar" size={18} /> Release Date Heatmap</h3>
                 <p className="page-subtitle" style={{ marginTop: 8, marginBottom: 16 }}>
-                  <span style={{ color: '#4ade80', fontWeight: 600 }}>🟢 Green</span> = Best dates (low competition + favorable events) &nbsp;|&nbsp; 
-                  <span style={{ color: '#f59e0b', fontWeight: 600 }}>🟠 Orange</span> = Moderate risk &nbsp;|&nbsp; 
-                  <span style={{ color: '#ef4444', fontWeight: 600 }}>🔴 Red</span> = Avoid (exams/high competition)
+                  <span style={{ color: '#4ade80', fontWeight: 600 }}><span style={{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#4ade80',marginRight:4,verticalAlign:'middle'}}/>Green</span> = Best dates (low competition + favorable events) &nbsp;|&nbsp; 
+                  <span style={{ color: '#f59e0b', fontWeight: 600 }}><span style={{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#f59e0b',marginRight:4,verticalAlign:'middle'}}/>Orange</span> = Moderate risk &nbsp;|&nbsp; 
+                  <span style={{ color: '#ef4444', fontWeight: 600 }}><span style={{display:'inline-block',width:10,height:10,borderRadius:'50%',background:'#ef4444',marginRight:4,verticalAlign:'middle'}}/>Red</span> = Avoid (exams/high competition)
                 </p>
                 <div style={{ padding: 12, background: 'rgba(167,139,250,0.1)', borderRadius: 6, fontSize: 13, color: '#a78bfa', marginBottom: 16 }}>
                   <Icon name="target" size={14} /> Colors reflect impact on <strong>your target audience</strong>. Hover over dates for detailed breakdown.
@@ -259,83 +259,106 @@ const ReleaseWindowPage = () => {
             {/* Top Suggestions */}
             {topSuggestions.length > 0 && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title"><Icon name="robot" size={18} /> AI-Powered Top {topSuggestions.length} Recommendations</h3>
-                <p className="page-subtitle" style={{ marginBottom: 16 }}>
+                <div className="recs-header">
+                  <Icon name="robot" size={20} />
+                  <h3 className="recs-title">AI-Powered Recommendations</h3>
+                  <span className="recs-badge">Top {topSuggestions.length}</span>
+                </div>
+                <p className="recs-desc">
                   Intelligently ranked based on your target audience preferences
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {topSuggestions.map((suggestion, idx) => (
-                    <Card key={suggestion.date} className="suggestion-card" style={{ background: 'rgba(255,255,255,0.05)', padding: 16 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
-                        <div>
-                          <div style={{ fontSize: 18, fontWeight: 600, color: '#fff' }}>
-                            #{idx + 1} — {new Date(suggestion.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
-                          </div>
-                          <div style={{ fontSize: 14, color: '#888', marginTop: 4 }}>
-                            Score: {Math.round(suggestion.scoreNumeric)}/100
-                          </div>
-                        </div>
-                        <TagChip 
-                          label={suggestion.riskLevel === 'low' ? 'Favorable' : suggestion.riskLevel === 'medium' ? 'Medium Risk' : 'High Risk'} 
-                          color={suggestion.riskColor} 
-                        />
-                      </div>
 
-                      {/* AI Reasoning */}
-                      {suggestion.aiReason && (
-                        <div style={{ 
-                          marginBottom: 12, 
-                          padding: 10, 
-                          background: 'rgba(167,139,250,0.1)', 
-                          borderRadius: 6, 
-                          borderLeft: '3px solid #a78bfa' 
-                        }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: '#a78bfa', marginBottom: 4 }}>
-                            <Icon name="robot" size={14} /> AI Strategy:
+                <div className="suggestion-cards">
+                  {topSuggestions.map((suggestion, idx) => {
+                    const rank = idx + 1;
+                    const rankClass = `sug-card--${Math.min(rank, 4)}`;
+                    const score = Math.round(suggestion.scoreNumeric);
+                    const isSelected = project?.confirmed_release_date === suggestion.date;
+                    const riskLabel = suggestion.riskLevel === 'low' ? 'Low Risk' : suggestion.riskLevel === 'medium' ? 'Med Risk' : 'High Risk';
+                    const riskBg = suggestion.riskLevel === 'low' ? 'rgba(74,222,128,0.15)' : suggestion.riskLevel === 'medium' ? 'rgba(251,191,36,0.15)' : 'rgba(248,113,113,0.15)';
+                    const formattedDate = new Date(suggestion.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+                    return (
+                      <div key={suggestion.date} className={`sug-card ${rankClass}`}>
+                        {/* Card top: rank + date + score */}
+                        <div className="sug-card-top">
+                          <div className="sug-rank">
+                            <span className="sug-rank-num">#{rank}</span>
+                            <span className="sug-risk-chip" style={{ background: riskBg, color: suggestion.riskColor || '#fff' }}>
+                              {riskLabel}
+                            </span>
                           </div>
-                          <div style={{ fontSize: 13, color: '#ccc', lineHeight: 1.5 }}>
-                            {suggestion.aiReason}
+                          <div className="sug-main">
+                            <div className="sug-date">{formattedDate}</div>
+                            <div className="sug-score-row">
+                              <span className="sug-score-label">Score</span>
+                              <div className="sug-score-bar">
+                                <div className="sug-score-fill" style={{ width: `${score}%` }} />
+                              </div>
+                              <span className="sug-score-val">{score}</span>
+                            </div>
                           </div>
                         </div>
-                      )}
-                      
-                      {suggestion.pros && suggestion.pros.length > 0 && (
-                        <div style={{ marginBottom: 8 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: '#4ade80', marginBottom: 4 }}><Icon name="check" size={14} /> Pros:</div>
-                          <ul style={{ margin: 0, paddingLeft: 20, color: '#bbb', fontSize: 13 }}>
-                            {suggestion.pros.map((pro, i) => (
-                              <li key={i}>{pro}</li>
-                            ))}
-                          </ul>
+
+                        {/* AI Strategy */}
+                        {suggestion.aiReason && (
+                          <div className="sug-ai-block">
+                            <span className="sug-ai-icon">✦</span>
+                            <div>
+                              <div className="sug-ai-label">AI Strategy</div>
+                              <p className="sug-ai-text">{suggestion.aiReason}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Pros & Cons – two columns */}
+                        {((suggestion.pros && suggestion.pros.length > 0) || (suggestion.cons && suggestion.cons.length > 0)) && (
+                          <div className="sug-pros-cons">
+                            {suggestion.pros && suggestion.pros.length > 0 && (
+                              <div>
+                                <div className="sug-col-label sug-col-label--green">
+                                  <Icon name="check" size={12} /> Pros
+                                </div>
+                                <ul className="sug-item-list">
+                                  {suggestion.pros.map((pro, i) => (
+                                    <li key={i} className="sug-item sug-item--pro">{pro}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            {suggestion.cons && suggestion.cons.length > 0 && (
+                              <div>
+                                <div className="sug-col-label sug-col-label--amber">
+                                  <Icon name="warning" size={12} /> Cons
+                                </div>
+                                <ul className="sug-item-list">
+                                  {suggestion.cons.map((con, i) => (
+                                    <li key={i} className="sug-item sug-item--con">{con}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Footer: buzz delta + select button */}
+                        <div className="sug-footer">
+                          {suggestion.expectedBuzzDelta !== undefined && suggestion.expectedBuzzDelta !== 0 ? (
+                            <span className="sug-buzz-delta">
+                              Expected Buzz: <span>{suggestion.expectedBuzzDelta > 0 ? '+' : ''}{suggestion.expectedBuzzDelta}</span>
+                            </span>
+                          ) : <span />}
+                          <button
+                            className="sug-select-btn"
+                            onClick={() => handleSelectDate(suggestion)}
+                            disabled={isSelected}
+                          >
+                            {isSelected ? <><Icon name="check" size={14} /> Selected</> : 'Select this date'}
+                          </button>
                         </div>
-                      )}
-                      
-                      {suggestion.cons && suggestion.cons.length > 0 && (
-                        <div style={{ marginBottom: 8 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: '#f59e0b', marginBottom: 4 }}><Icon name="warning" size={14} /> Cons:</div>
-                          <ul style={{ margin: 0, paddingLeft: 20, color: '#bbb', fontSize: 13 }}>
-                            {suggestion.cons.map((con, i) => (
-                              <li key={i}>{con}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      
-                      {suggestion.expectedBuzzDelta !== undefined && suggestion.expectedBuzzDelta !== 0 && (
-                        <div style={{ fontSize: 13, color: '#888', marginBottom: 12 }}>
-                          Expected Buzz: {suggestion.expectedBuzzDelta > 0 ? '+' : ''}{suggestion.expectedBuzzDelta}
-                        </div>
-                      )}
-                      
-                      <button 
-                        className="btn-primary-green" 
-                        onClick={() => handleSelectDate(suggestion)}
-                        disabled={project?.confirmed_release_date === suggestion.date}
-                      >
-                        {project?.confirmed_release_date === suggestion.date ? <><Icon name="check" size={14} /> Selected</> : 'Select this date'}
-                      </button>
-                    </Card>
-                  ))}
+                      </div>
+                    );
+                  })}
                 </div>
               </Card>
             )}

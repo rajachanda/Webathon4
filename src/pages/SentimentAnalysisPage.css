@@ -6,7 +6,7 @@
 
 .sentiment-hint {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
+  font-size: 17px;
   margin-bottom: 20px;
 }
 
@@ -38,7 +38,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: #fff;
-  font-size: 14px;
+  font-size: 17px;
   transition: all 0.2s ease;
 }
 
@@ -64,7 +64,7 @@
 
 .url-error {
   color: #ff5050;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 4px;
 }
 
@@ -74,7 +74,7 @@
   border: 1px solid rgba(255, 80, 80, 0.3);
   border-radius: 8px;
   color: #ff5050;
-  font-size: 16px;
+  font-size: 17px;
   cursor: pointer;
   transition: all 0.2s ease;
   min-width: 48px;
@@ -121,7 +121,7 @@
 
 .progress-note {
   color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Sentiment Overview Cards */
@@ -138,7 +138,7 @@
 }
 
 .sentiment-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.5);
@@ -167,7 +167,7 @@
 .sentiment-summary {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 16px;
 }
 
@@ -176,7 +176,7 @@
   align-items: center;
   gap: 12px;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
+  font-size: 14px;
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -209,7 +209,7 @@
 .aspect-text {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Concern Blocks */
@@ -231,7 +231,7 @@
 
 .concern-label {
   display: inline-block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 1px;
   color: #ffa028;
@@ -243,7 +243,7 @@
 
 .concern-title {
   color: #ffa028;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   margin: 8px 0;
 }
@@ -258,7 +258,7 @@
 .concern-strategy {
   padding: 12px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
 }
 
@@ -296,7 +296,7 @@
 
 .report-timestamp {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 13px;
+  font-size: 14px;
   font-style: italic;
 }
 

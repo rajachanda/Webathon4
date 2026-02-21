@@ -8,7 +8,7 @@ import { projectService } from '../services/api.service';
 import './NewProjectOnboarding.css';
 
 const STEPS = [
-  { id: 'title',            label: "What's your film called? 🎬",                    type: 'text',     required: true, placeholder: 'e.g. Rangasthalam 2' },
+  { id: 'title',            label: "What's your film called?",                    type: 'text',     required: true, placeholder: 'e.g. Rangasthalam 2' },
   { id: 'language_region',  label: 'Language & primary region?',                      type: 'select',   required: true,
     options: ['Telugu – AP/TG', 'Tamil – TN', 'Kannada – KA', 'Malayalam – KL', 'Pan South'] },
   { id: 'genre',            label: 'Genre & sub-genre?',                              type: 'genre-subgenre',   required: true,
@@ -157,7 +157,7 @@ const NewProjectOnboarding = () => {
       <Header />
       <div className="onboarding-body">
         <div className="onboarding-heading">
-          <h1 className="page-title">Introduce your film 🎬</h1>
+          <h1 className="page-title">Introduce your film</h1>
           <p className="page-subtitle">Answer 9 quick questions and we'll get started.</p>
         </div>
         <Card className="onboarding-card">

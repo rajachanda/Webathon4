@@ -24,7 +24,7 @@
 }
 
 .sidenav-label {
-    font-size: 10px;
+    font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: rgba(255,255,255,0.3);
@@ -35,9 +35,9 @@
     background: none;
     border: none;
     border-radius: 8px;
-    padding: 9px 12px;
+    padding: 10px 12px;
     color: rgba(255,255,255,0.6);
-    font-size: 13px;
+    font-size: 20px;
     font-family: inherit;
     text-align: left;
     cursor: pointer;
@@ -60,7 +60,7 @@
     background: none;
     border: none;
     color: rgba(255,255,255,0.3);
-    font-size: 12px;
+    font-size: 17px;
     font-family: inherit;
     text-align: left;
     cursor: pointer;
@@ -82,7 +82,7 @@
 
 /* Global utility classes used across pages */
 .page-title {
-    font-size: 26px;
+    font-size: 34px;
     font-weight: 700;
     background: linear-gradient(135deg, #fff 0%, #00ff88 100%);
     -webkit-background-clip: text;
@@ -92,13 +92,13 @@
 }
 
 .page-subtitle {
-    font-size: 14px;
+    font-size: 18px;
     color: rgba(255,255,255,0.45);
     margin: 0 0 28px;
 }
 
 .section-title {
-    font-size: 16px;
+    font-size: 21px;
     font-weight: 600;
     color: #fff;
     margin: 0 0 14px;
@@ -109,8 +109,8 @@
     color: #000;
     border: none;
     border-radius: 10px;
-    padding: 10px 22px;
-    font-size: 14px;
+    padding: 11px 24px;
+    font-size: 17px;
     font-weight: 700;
     cursor: pointer;
     font-family: inherit;
@@ -126,8 +126,8 @@
     background: none;
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 13px;
+    padding: 11px 22px;
+    font-size: 16px;
     color: rgba(255,255,255,0.65);
     cursor: pointer;
     font-family: inherit;
@@ -183,7 +183,7 @@
     border-radius: 10px;
     padding: 12px 24px;
     color: #00ff88;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
     z-index: 9999;
     pointer-events: none;
