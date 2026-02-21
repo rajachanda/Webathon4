@@ -19,7 +19,7 @@
 }
 
 .dashboard-greeting {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 700;
     margin: 0 0 6px;
 }
@@ -32,13 +32,13 @@
 }
 
 .dashboard-tagline {
-    font-size: 15px;
+    font-size: 20px;
     color: rgba(255,255,255,0.4);
     margin: 0 0 24px;
 }
 
 .dashboard-cta {
-    font-size: 15px;
+    font-size: 18px;
     padding: 12px 28px;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .project-card-title {
-    font-size: 17px;
+    font-size: 22px;
     font-weight: 600;
     margin: 0;
     color: #fff;
@@ -80,7 +80,7 @@
 .project-card-meta {
     display: flex;
     gap: 6px;
-    font-size: 12px;
+    font-size: 15px;
     color: rgba(255,255,255,0.4);
     flex-wrap: wrap;
     align-items: center;
@@ -97,8 +97,8 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 11px;
+    padding: 6px 14px;
+    font-size: 14px;
     color: rgba(255,255,255,0.55);
     cursor: pointer;
     font-family: inherit;
@@ -113,7 +113,7 @@
 
 .dashboard-empty, .dashboard-empty-state {
     color: rgba(255,255,255,0.35);
-    font-size: 14px;
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

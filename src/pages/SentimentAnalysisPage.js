@@ -215,7 +215,7 @@ const SentimentAnalysisPage = () => {
                     disabled={analyzing}
                     title="Remove URL"
                   >
-                    ✕
+                    <Icon name="x" size={14} />
                   </button>
                 )}
               </div>
@@ -239,7 +239,7 @@ const SentimentAnalysisPage = () => {
             disabled={analyzing}
             style={{ marginTop: 20 }}
           >
-            {analyzing ? 'Analyzing Comments...' : '✦ Analyze Sentiment'}
+            {analyzing ? 'Analyzing Comments...' : <><Icon name="sparkles" size={14} /> Analyze Sentiment</>}
           </button>
 
           {analyzing && (
@@ -294,15 +294,15 @@ const SentimentAnalysisPage = () => {
               <h3 className="section-title">Key Positive Aspects</h3>
               <div className="positive-aspects">
                 <div className="aspect-item positive-aspect">
-                  <span className="aspect-icon">👍</span>
+                  <span className="aspect-icon"><Icon name="thumbsUp" size={16} /></span>
                   <span className="aspect-text">{displayAnalysis.key_positive_1}</span>
                 </div>
                 <div className="aspect-item positive-aspect">
-                  <span className="aspect-icon">👍</span>
+                  <span className="aspect-icon"><Icon name="thumbsUp" size={16} /></span>
                   <span className="aspect-text">{displayAnalysis.key_positive_2}</span>
                 </div>
                 <div className="aspect-item positive-aspect">
-                  <span className="aspect-icon">👍</span>
+                  <span className="aspect-icon"><Icon name="thumbsUp" size={16} /></span>
                   <span className="aspect-text">{displayAnalysis.key_positive_3}</span>
                 </div>
               </div>

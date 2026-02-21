@@ -3,6 +3,7 @@ import { useAuth } from '../AuthContext';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import Header from '../components/Header';
+import Icon from '../components/Icon';
 import './Profile.css';
 
 const Profile = () => {
@@ -65,25 +66,25 @@ const Profile = () => {
 
   const getRoleIcon = (role) => {
     const roleIcons = {
-      'Producer': '🎬',
-      'Director': '🎥',
-      'Assistant Director': '📋',
-      'Actor/Hero': '🎭',
-      'Actress/Heroine': '👑',
-      'Cinematographer/Cameraman': '📹',
-      'Editor': '✂️',
-      'Music Director': '🎵',
-      'Art Director': '🎨',
-      'Production Manager': '📊',
-      'Scriptwriter/Writer': '✍️',
-      'Sound Designer': '🔊',
-      'VFX Artist': '✨',
-      'Costume Designer': '👗',
-      'Makeup Artist': '💄',
-      'Stunt Coordinator': '🤸',
-      'Casting Director': '🎯'
+      'Producer': 'film',
+      'Director': 'video',
+      'Assistant Director': 'clipboard',
+      'Actor/Hero': 'user',
+      'Actress/Heroine': 'award',
+      'Cinematographer/Cameraman': 'video',
+      'Editor': 'scissors',
+      'Music Director': 'music',
+      'Art Director': 'sparkles',
+      'Production Manager': 'briefcase',
+      'Scriptwriter/Writer': 'edit',
+      'Sound Designer': 'volume',
+      'VFX Artist': 'sparkles',
+      'Costume Designer': 'user',
+      'Makeup Artist': 'user',
+      'Stunt Coordinator': 'activity',
+      'Casting Director': 'target'
     };
-    return roleIcons[role] || '🎬';
+    return roleIcons[role] || 'film';
   };
 
   return (
@@ -107,7 +108,7 @@ const Profile = () => {
 
           <div className="profile-role-section">
             <div className="role-badge">
-              <span className="role-icon-large">{getRoleIcon(userProfile.role)}</span>
+              <span className="role-icon-large"><Icon name={getRoleIcon(userProfile.role)} size={28} /></span>
               <div className="role-info">
                 <p className="role-label">Your Role</p>
                 <h2 className="role-title">{userProfile.role}</h2>

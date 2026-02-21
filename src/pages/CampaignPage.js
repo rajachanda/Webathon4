@@ -452,16 +452,16 @@ const CampaignPage = () => {
         {/* Key insights from sentiment */}
         {sentimentSummary && (
           <Card style={{ marginBottom: 24, background: 'rgba(251, 191, 36, 0.1)', borderLeft: '3px solid #fbbf24' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#fbbf24', marginBottom: 12 }}>
-              <Icon name="lightbulb" size={14} /> Campaign Focus Areas (Based on Sentiment)
+            <h4 style={{ fontSize: 18, fontWeight: 600, color: '#fbbf24', marginBottom: 12 }}>
+              <Icon name="lightbulb" size={16} /> Campaign Focus Areas (Based on Sentiment)
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {sentimentSummary.keyPositives && sentimentSummary.keyPositives.length > 0 && (
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: '#4ade80', marginBottom: 6 }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#4ade80', marginBottom: 6 }}>
                     Amplify These:
                   </div>
-                  <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#bbb' }}>
+                  <ul style={{ margin: 0, paddingLeft: 18, fontSize: 15, color: '#bbb' }}>
                     {sentimentSummary.keyPositives.slice(0, 2).map((pos, idx) => (
                       <li key={idx}>{pos}</li>
                     ))}
@@ -470,10 +470,10 @@ const CampaignPage = () => {
               )}
               {sentimentSummary.keyConcerns && sentimentSummary.keyConcerns.length > 0 && (
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: '#f87171', marginBottom: 6 }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: '#f87171', marginBottom: 6 }}>
                     Address These:
                   </div>
-                  <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: '#bbb' }}>
+                  <ul style={{ margin: 0, paddingLeft: 18, fontSize: 15, color: '#bbb' }}>
                     {sentimentSummary.keyConcerns.slice(0, 2).map((concern, idx) => (
                       <li key={idx}>{concern.factor}: {concern.recommendedAction}</li>
                     ))}
@@ -486,11 +486,11 @@ const CampaignPage = () => {
 
         {/* Poster Analysis Section */}
         <Card style={{ marginBottom: 24, background: 'rgba(139, 92, 246, 0.1)', borderLeft: '3px solid #8b5cf6' }}>
-          <h4 style={{ fontSize: 16, fontWeight: 600, color: '#a78bfa', marginBottom: 16 }}>
+          <h4 style={{ fontSize: 20, fontWeight: 600, color: '#a78bfa', marginBottom: 16 }}>
             🎨 Poster Analysis (3-Second Rule)
           </h4>
           
-          <p style={{ fontSize: 13, color: '#aaa', marginBottom: 16 }}>
+          <p style={{ fontSize: 16, color: '#aaa', marginBottom: 16 }}>
             Upload your movie poster to analyze its stopping power using AI trained on 26+ posters.
           </p>
 
@@ -512,7 +512,7 @@ const CampaignPage = () => {
                 color: '#fff',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: 600,
                 transition: 'transform 0.2s',
               }}
@@ -522,7 +522,7 @@ const CampaignPage = () => {
               📤 Upload Poster Image
             </label>
             {uploadedImage && (
-              <span style={{ marginLeft: 12, fontSize: 13, color: '#4ade80' }}>
+              <span style={{ marginLeft: 12, fontSize: 15, color: '#4ade80' }}>
                 <Icon name="check" size={14} /> {uploadedImage.name}
               </span>
             )}
@@ -647,10 +647,10 @@ const CampaignPage = () => {
         {/* Influencer Recommendations Section */}
         {influencers.length > 0 && (
           <Card style={{ marginBottom: 24, background: 'rgba(34, 197, 94, 0.1)', borderLeft: '3px solid #22c55e' }}>
-            <h4 style={{ fontSize: 16, fontWeight: 600, color: '#22c55e', marginBottom: 8 }}>
+            <h4 style={{ fontSize: 20, fontWeight: 600, color: '#22c55e', marginBottom: 8 }}>
               🎤 Recommended Influencers for Promotion
             </h4>
-            <p style={{ fontSize: 13, color: '#aaa', marginBottom: 16 }}>
+            <p style={{ fontSize: 16, color: '#aaa', marginBottom: 16 }}>
               Based on your film's genre, language, and target audience. Collaborate for wider reach.
             </p>
             
@@ -677,12 +677,12 @@ const CampaignPage = () => {
                   {/* Header with match score */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                     <div style={{ flex: 1 }}>
-                      <h5 style={{ fontSize: 14, fontWeight: 600, color: '#fff', margin: '0 0 4px 0' }}>
+                      <h5 style={{ fontSize: 18, fontWeight: 600, color: '#fff', margin: '0 0 4px 0' }}>
                         {influencer.name}
                       </h5>
                       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
                         <span style={{
-                          fontSize: 11,
+                          fontSize: 13,
                           padding: '2px 8px',
                           borderRadius: '4px',
                           background: 'rgba(34, 197, 94, 0.2)',
@@ -692,7 +692,7 @@ const CampaignPage = () => {
                           {influencer.market}
                         </span>
                         <span style={{
-                          fontSize: 11,
+                          fontSize: 13,
                           padding: '2px 8px',
                           borderRadius: '4px',
                           background: 'rgba(59, 130, 246, 0.2)',
@@ -704,7 +704,7 @@ const CampaignPage = () => {
                       </div>
                     </div>
                     <div style={{
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: 700,
                       color: influencer.matchScore >= 70 ? '#22c55e' : influencer.matchScore >= 50 ? '#fbbf24' : '#888',
                       textAlign: 'right',
@@ -716,14 +716,14 @@ const CampaignPage = () => {
                   
                   {/* Genres */}
                   <div style={{ marginBottom: 8 }}>
-                    <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>Genres:</div>
+                    <div style={{ fontSize: 14, color: '#888', marginBottom: 4 }}>Genres:</div>
                     <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
                       {influencer.genres.slice(0, 3).map((genre, i) => (
                         <span
                           key={i}
                           style={{
-                            fontSize: 10,
-                            padding: '2px 6px',
+                            fontSize: 13,
+                            padding: '2px 8px',
                             borderRadius: '3px',
                             background: 'rgba(255, 255, 255, 0.1)',
                             color: '#ccc'
@@ -738,8 +738,8 @@ const CampaignPage = () => {
                   {/* Match reasons */}
                   {influencer.matchReasons.length > 0 && (
                     <div style={{ marginTop: 8 }}>
-                      <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>Why this match:</div>
-                      <ul style={{ margin: 0, paddingLeft: 16, fontSize: 11, color: '#aaa', lineHeight: 1.5 }}>
+                      <div style={{ fontSize: 14, color: '#888', marginBottom: 4 }}>Why this match:</div>
+                      <ul style={{ margin: 0, paddingLeft: 16, fontSize: 14, color: '#aaa', lineHeight: 1.6 }}>
                         {influencer.matchReasons.slice(0, 2).map((reason, i) => (
                           <li key={i}>{reason}</li>
                         ))}
@@ -749,7 +749,7 @@ const CampaignPage = () => {
                   
                   {/* Description (if available) */}
                   {influencer.description && (
-                    <p style={{ fontSize: 11, color: '#999', margin: '8px 0 0 0', lineHeight: 1.4, fontStyle: 'italic' }}>
+                    <p style={{ fontSize: 13, color: '#999', margin: '8px 0 0 0', lineHeight: 1.4, fontStyle: 'italic' }}>
                       "{influencer.description.substring(0, 80)}{influencer.description.length > 80 ? '...' : ''}"
                     </p>
                   )}
@@ -774,7 +774,7 @@ const CampaignPage = () => {
               title={!persona ? 'Please lock a persona first' : ''}
               style={{ opacity: (generating || !persona) ? 0.5 : 1 }}
             >
-              {generating ? 'Generating…' : blueprint ? '↻ Regenerate Blueprint' : '✦ Generate Campaign Blueprint'}
+              {generating ? 'Generating…' : blueprint ? <><Icon name="refresh" size={14} /> Regenerate Blueprint</> : <><Icon name="sparkles" size={14} /> Generate Campaign Blueprint</>}
             </button>
             
             {generationError && (
@@ -787,7 +787,7 @@ const CampaignPage = () => {
                   opacity: (generating || !persona) ? 0.5 : 1
                 }}
               >
-                ↻ Retry
+                <><Icon name="refresh" size={14} /> Retry</>
               </button>
             )}
           </div>
@@ -811,38 +811,40 @@ const CampaignPage = () => {
             {channels.length > 0 && (
               <Card style={{ marginBottom: 20 }}>
                 <h3 className="section-title">Focus Channels</h3>
-                <p style={{ fontSize: 13, color: '#888', marginBottom: 16 }}>
+                <p className="fc-subtitle">
                   Recommended channels for each target audience cluster.
                 </p>
-                <div style={{ display: 'grid', gap: 12 }}>
+                <div className="fc-grid">
                   {channels.map((c, i) => {
-                    // Handle both old format (string) and new format (object)
                     if (typeof c === 'string') {
                       return <TagChip key={i} label={c} color="green" />;
                     }
+                    const platformIcons = {
+                      'Instagram': '📸', 'Instagram Reels': '🎬', 'YouTube': '▶️',
+                      'Facebook': '👥', 'Twitter': '🐦', 'X': '🐦',
+                      'TikTok': '🎵', 'WhatsApp': '💬', 'Telegram': '📨',
+                      'Snapchat': '👻', 'LinkedIn': '💼', 'Reddit': '🤖',
+                      'OTT': '📺', 'Theatres': '🎭', 'Local Events': '📍',
+                      'Theatrical Promotions': '🎬',
+                    };
+                    const icon = platformIcons[c.channel] || '📢';
                     return (
-                      <div key={i} style={{
-                        padding: '12px',
-                        background: 'rgba(74, 222, 128, 0.1)',
-                        borderRadius: '8px',
-                        borderLeft: '3px solid #4ade80'
-                      }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                      <div key={i} className="fc-card">
+                        <div className="fc-card-header">
+                          <div className="fc-platform-row">
+                            <div className="fc-platform-icon">{icon}</div>
+                            <span className="fc-platform-name">{c.channel || 'Channel'}</span>
+                          </div>
                           {c.clusterCode && (
-                            <TagChip 
-                              label={getClusterLabel(c.clusterCode)} 
-                              color={getClusterColor(c.clusterCode)} 
-                              size="sm" 
+                            <TagChip
+                              label={getClusterLabel(c.clusterCode)}
+                              color={getClusterColor(c.clusterCode)}
+                              size="sm"
                             />
                           )}
-                          <span style={{ fontSize: 14, fontWeight: 600, color: '#4ade80' }}>
-                            {c.channel || 'Unknown Channel'}
-                          </span>
                         </div>
                         {c.rationale && (
-                          <p style={{ fontSize: 13, color: '#aaa', margin: 0, lineHeight: 1.4 }}>
-                            {c.rationale}
-                          </p>
+                          <p className="fc-rationale">{c.rationale}</p>
                         )}
                       </div>
                     );
@@ -853,54 +855,44 @@ const CampaignPage = () => {
 
             <Card>
               <h3 className="section-title">Next 14 Days Actions</h3>
-              <p style={{ fontSize: 13, color: '#888', marginBottom: 16 }}>
+              <p className="tl-subtitle">
                 Tactical day-by-day plan leading to release. Check off as you complete.
               </p>
               {actions.length > 0 ? (
-                <div className="campaign-actions-list">
+                <div className="tl-list">
                   {actions
                     .sort((a, b) => (a.dayOffset || 0) - (b.dayOffset || 0))
                     .map((action, idx) => {
                       const actionId = `day_${action.dayOffset}_${idx}`;
-                      const dayLabel = action.dayOffset === 0 ? 'Release Day' : 
-                                      action.dayOffset > 0 ? `Day +${action.dayOffset}` : 
+                      const done = !!checklist[actionId];
+                      const dayLabel = action.dayOffset === 0 ? 'Release Day' :
+                                      action.dayOffset > 0 ? `Day +${action.dayOffset}` :
                                       `Day ${action.dayOffset}`;
+                      const tier = action.dayOffset < -7 ? 'early'
+                                 : action.dayOffset < -3 ? 'mid'
+                                 : action.dayOffset < 0  ? 'near'
+                                 : 'release';
                       return (
-                        <label 
-                          key={actionId} 
-                          className={`campaign-action ${checklist[actionId] ? 'campaign-action--done' : ''}`}
-                          style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px', marginBottom: 8 }}
+                        <label
+                          key={actionId}
+                          className={`tl-item${done ? ' tl-item--done' : ''}`}
                         >
+                          <span className={`tl-dot tl-dot--${tier}`} />
                           <input
                             type="checkbox"
-                            checked={!!checklist[actionId]}
+                            className="tl-check"
+                            checked={done}
                             onChange={() => toggleCheck(actionId)}
-                            style={{ marginTop: 4, flexShrink: 0 }}
                           />
-                          <div style={{ flex: 1 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                              <span style={{ 
-                                fontSize: 11, 
-                                fontWeight: 600, 
-                                color: action.dayOffset < -7 ? '#8b5cf6' : action.dayOffset < 0 ? '#fbbf24' : '#4ade80',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                background: action.dayOffset < -7 ? 'rgba(139, 92, 246, 0.2)' : action.dayOffset < 0 ? 'rgba(251, 191, 36, 0.2)' : 'rgba(74, 222, 128, 0.2)'
-                              }}>
-                                {dayLabel}
-                              </span>
-                              <span style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>
-                                {action.title}
-                              </span>
+                          <div className="tl-content">
+                            <div className="tl-header">
+                              <span className={`tl-day-badge tl-day-badge--${tier}`}>{dayLabel}</span>
+                              <span className="tl-title">{action.title}</span>
                             </div>
-                            <p style={{ fontSize: 13, color: '#aaa', margin: '4px 0', lineHeight: 1.4 }}>
-                              {action.description}
-                            </p>
-                            <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
+                            <p className="tl-desc">{action.description}</p>
+                            <div className="tl-tags">
                               {action.channel && (
-                                <span style={{ fontSize: 11, color: '#888', padding: '2px 8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}>
-                                  📢 {action.channel}
-                                </span>
+                                <span className="tl-channel-chip">📢 {action.channel}</span>
                               )}
                               {action.clusterTargets?.map((cluster, i) => (
                                 <TagChip key={i} label={getClusterLabel(cluster)} color={getClusterColor(cluster)} size="sm" />
@@ -912,13 +904,13 @@ const CampaignPage = () => {
                     })}
                 </div>
               ) : (
-                <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 13 }}>No actions defined yet.</p>
+                <p className="tl-empty">No actions defined yet.</p>
               )}
             </Card>
           </>
         ) : (
           <Card className="campaign-empty-state">
-            <div className="ces-icon">📋</div>
+            <div className="ces-icon"><Icon name="clipboard" size={32} /></div>
             <p>No blueprint yet. Generate one to see your 14-day action plan.</p>
           </Card>
         )}
