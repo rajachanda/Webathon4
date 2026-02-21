@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import Icon from '../components/Icon';
 import './RoleSelection.css';
 
 const RoleSelection = () => {
@@ -114,7 +115,7 @@ const RoleSelection = () => {
       <div className="role-selection-container">
         <div className="role-selection-card">
           <div className="role-selection-header">
-            <h1>Welcome to CinYstore! 🎬</h1>
+            <h1>Welcome to CinYstore! <Icon name="film" size={24} /></h1>
             <p className="welcome-message">
               Hi <strong>{user.user_metadata?.full_name || user.email}</strong>!
             </p>

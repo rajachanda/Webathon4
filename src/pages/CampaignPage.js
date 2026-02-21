@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import TagChip from '../components/TagChip';
+import Icon from '../components/Icon';
 import { projectService } from '../services/api.service';
 import { getSentimentSummary } from '../services/sentiment.service';
 import { getInfluencerRecommendations } from '../services/influencer.service';
@@ -119,7 +120,7 @@ const CampaignPage = () => {
     try {
       const bp = await projectService.generateCampaignBlueprint(projectId);
       setBlueprint(bp);
-      showToast('✓ Campaign blueprint generated!');
+      showToast(<><Icon name="check" size={14} /> Campaign blueprint generated!</>);
     } catch (e) {
       console.error(e);
       const errorMsg = e.message || 'Campaign generation failed';
@@ -177,7 +178,7 @@ const CampaignPage = () => {
       
       const result = await response.json();
       setAnalysisResult(result);
-      showToast('✓ Poster analysis complete!');
+      showToast(<><Icon name="check" size={14} /> Poster analysis complete!</>);
     } catch (error) {
       console.error('Analysis error:', error);
       showToast(`Analysis failed: ${error.message}`);
@@ -367,7 +368,7 @@ const CampaignPage = () => {
               </div>
               {sentimentSummary.keyConcerns && sentimentSummary.keyConcerns.length > 0 && (
                 <div style={{ fontSize: 11, color: '#f59e0b', marginTop: 8 }}>
-                  ⚠ {sentimentSummary.keyConcerns[0].factor}
+                  <Icon name="warning" size={12} /> {sentimentSummary.keyConcerns[0].factor}
                 </div>
               )}
             </Card>
@@ -397,7 +398,7 @@ const CampaignPage = () => {
         {!persona && (
           <Card style={{ marginBottom: 16, background: 'rgba(239, 68, 68, 0.1)', borderLeft: '3px solid #ef4444' }}>
             <p style={{ fontSize: 13, color: '#ef4444', margin: 0 }}>
-              ⚠ <strong>Persona Required:</strong> Lock your persona first to generate an accurate campaign.
+              <Icon name="warning" size={14} /> <strong>Persona Required:</strong> Lock your persona first to generate an accurate campaign.
               <button
                 onClick={() => navigate(`/projects/${projectId}/persona`)}
                 style={{
@@ -420,7 +421,7 @@ const CampaignPage = () => {
         {!latestBuzz && (
           <Card style={{ marginBottom: 16, background: 'rgba(251, 191, 36, 0.1)', borderLeft: '3px solid #fbbf24' }}>
             <p style={{ fontSize: 13, color: '#fbbf24', margin: 0 }}>
-              ⚠ <strong>No Buzz Data:</strong> Campaign will be generated without current buzz insights.
+              <Icon name="warning" size={14} /> <strong>No Buzz Data:</strong> Campaign will be generated without current buzz insights.
             </p>
           </Card>
         )}
@@ -428,7 +429,7 @@ const CampaignPage = () => {
         {!sentimentSummary && persona && (
           <Card style={{ marginBottom: 16, background: 'rgba(251, 191, 36, 0.1)', borderLeft: '3px solid #fbbf24' }}>
             <p style={{ fontSize: 13, color: '#fbbf24', margin: 0 }}>
-              ⚠ <strong>No Sentiment Analysis:</strong> Campaign won't include comment-based audience insights.
+              <Icon name="warning" size={14} /> <strong>No Sentiment Analysis:</strong> Campaign won't include comment-based audience insights.
               <button
                 onClick={() => navigate(`/projects/${projectId}/sentiment`)}
                 style={{
@@ -452,7 +453,7 @@ const CampaignPage = () => {
         {sentimentSummary && (
           <Card style={{ marginBottom: 24, background: 'rgba(251, 191, 36, 0.1)', borderLeft: '3px solid #fbbf24' }}>
             <h4 style={{ fontSize: 14, fontWeight: 600, color: '#fbbf24', marginBottom: 12 }}>
-              💡 Campaign Focus Areas (Based on Sentiment)
+              <Icon name="lightbulb" size={14} /> Campaign Focus Areas (Based on Sentiment)
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               {sentimentSummary.keyPositives && sentimentSummary.keyPositives.length > 0 && (
@@ -522,7 +523,7 @@ const CampaignPage = () => {
             </label>
             {uploadedImage && (
               <span style={{ marginLeft: 12, fontSize: 13, color: '#4ade80' }}>
-                ✓ {uploadedImage.name}
+                <Icon name="check" size={14} /> {uploadedImage.name}
               </span>
             )}
           </div>
@@ -635,7 +636,7 @@ const CampaignPage = () => {
                   borderLeft: '3px solid #fbbf24'
                 }}>
                   <p style={{ fontSize: 12, color: '#fbbf24', margin: 0, lineHeight: 1.5 }}>
-                    ⚠ <strong>Poster might be hurting conversions.</strong> Consider tweaking before heavy spends on ads.
+                    <Icon name="warning" size={14} /> <strong>Poster might be hurting conversions.</strong> Consider tweaking before heavy spends on ads.
                   </p>
                 </div>
               )}
@@ -789,19 +790,11 @@ const CampaignPage = () => {
                 ↻ Retry
               </button>
             )}
-            
-            <button 
-              className="btn-primary-green" 
-              onClick={() => navigate(`/projects/${projectId}/sentiment`)}
-              style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
-            >
-              📊 Sentiment Analysis
-            </button>
           </div>
           
           {generationError && (
             <p style={{ fontSize: 12, color: '#ef4444', marginTop: 8 }}>
-              ⚠ {generationError}
+              <Icon name="warning" size={14} /> {generationError}
             </p>
           )}
         </div>

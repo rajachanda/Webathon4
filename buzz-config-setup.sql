@@ -40,8 +40,22 @@ CREATE TABLE IF NOT EXISTS public.buzz_snapshots (
   search_growth_norm DECIMAL(5,2) NOT NULL DEFAULT 0,
   engagement_rate_norm DECIMAL(5,2) NOT NULL DEFAULT 0,
   metadata JSONB DEFAULT '{}',
+  ai_insights TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Add ai_insights column if it doesn't exist (for existing tables)
+DO $$ 
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'buzz_snapshots' 
+    AND column_name = 'ai_insights'
+  ) THEN
+    ALTER TABLE public.buzz_snapshots ADD COLUMN ai_insights TEXT;
+  END IF;
+END $$;
 
 -- Create index for faster lookups
 CREATE INDEX IF NOT EXISTS idx_buzz_config_project_id ON public.buzz_config(project_id);
@@ -130,6 +144,7 @@ COMMENT ON COLUMN public.buzz_snapshots.sentiment_score_norm IS 'Normalized sent
 COMMENT ON COLUMN public.buzz_snapshots.search_growth_norm IS 'Normalized search growth metric (0-1)';
 COMMENT ON COLUMN public.buzz_snapshots.engagement_rate_norm IS 'Normalized engagement rate metric (0-1)';
 COMMENT ON COLUMN public.buzz_snapshots.metadata IS 'Additional calculation metadata (JSON)';
+COMMENT ON COLUMN public.buzz_snapshots.ai_insights IS 'AI-generated insights from Groq analysis';
 
 -- ========================================
 -- COMPLETED!

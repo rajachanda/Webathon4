@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import Icon from './Icon';
 import { supabase } from '../supabaseClient';
 import './BuzzConfiguration.css';
 
@@ -140,13 +141,13 @@ const BuzzConfiguration = ({ projectId, onConfigUpdate, initialConfig = null }) 
   return (
     <div className="buzz-config">
       <div className="buzz-config-header">
-        <h3>📊 Buzz Metrics Configuration</h3>
+        <h3><Icon name="chart" size={18} /> Buzz Metrics Configuration</h3>
         <p className="buzz-config-description">
           Configure YouTube videos for automatic buzz score calculation. Model: YouTube (60%) + Google Trends (40%).
         </p>
         {autoPopulated && (
           <div style={{ marginTop: 8, padding: 8, background: 'rgba(0, 255, 136, 0.15)', borderRadius: 6, fontSize: '0.85rem', color: '#00ff88' }}>
-            ✨ Auto-populated from search! Review and save below.
+            <Icon name="sparkles" size={14} /> Auto-populated from search! Review and save below.
           </div>
         )}
       </div>
@@ -159,7 +160,7 @@ const BuzzConfiguration = ({ projectId, onConfigUpdate, initialConfig = null }) 
 
       {success && (
         <div className="buzz-config-success">
-          ✓ Configuration saved successfully!
+          <Icon name="check" size={14} /> Configuration saved successfully!
         </div>
       )}
 
@@ -223,12 +224,12 @@ const BuzzConfiguration = ({ projectId, onConfigUpdate, initialConfig = null }) 
           onClick={handleSave}
           disabled={saving || loading}
         >
-          {saving ? 'Saving...' : '💾 Save Configuration'}
+          {saving ? 'Saving...' : <><Icon name="save" size={14} /> Save Configuration</>}
         </button>
       </div>
 
       <div className="buzz-config-info">
-        <strong>ℹ️ How it works:</strong>
+        <strong><Icon name="info" size={14} /> How it works:</strong>
         <ul>
           <li>YouTube URLs are analyzed for views, likes, comments, watch time, and retention</li>
           <li>Sentiment analysis is fetched from your previous sentiment reports</li>

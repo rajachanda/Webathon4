@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import CalendarStrip from '../components/CalendarStrip';
 import HeatmapCalendar from '../components/HeatmapCalendar';
 import TagChip from '../components/TagChip';
+import Icon from '../components/Icon';
 import { projectService } from '../services/api.service';
 import { analyzeReleaseWindow, saveReleaseWindowSuggestions } from '../services/releaseAnalysis.service';
 import { supabase } from '../supabaseClient';
@@ -125,7 +126,7 @@ const ReleaseWindowPage = () => {
       
       if (error) throw error;
       
-      showToast(`✓ Release date confirmed: ${new Date(dateItem.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`);
+      showToast(<><Icon name="check" size={14} /> Release date confirmed: {new Date(dateItem.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</>);
       
       // Update local project state
       setProject(prev => ({ ...prev, confirmed_release_date: dateItem.date }));
@@ -169,7 +170,7 @@ const ReleaseWindowPage = () => {
             {/* Target Audience Card */}
             {persona && (persona.target_core_clusters?.length > 0 || persona.target_secondary_clusters?.length > 0) && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title">🎯 Target Audience</h3>
+                <h3 className="section-title"><Icon name="target" size={18} /> Target Audience</h3>
                 <div style={{ marginTop: 12 }}>
                   {persona.target_core_clusters && persona.target_core_clusters.length > 0 && (
                     <div style={{ marginBottom: 12 }}>
@@ -246,7 +247,7 @@ const ReleaseWindowPage = () => {
                   <span style={{ color: '#ef4444', fontWeight: 600 }}>🔴 Red</span> = Avoid (exams/high competition)
                 </p>
                 <div style={{ padding: 12, background: 'rgba(167,139,250,0.1)', borderRadius: 6, fontSize: 13, color: '#a78bfa', marginBottom: 16 }}>
-                  🎯 Colors reflect impact on <strong>your target audience</strong>. Hover over dates for detailed breakdown.
+                  <Icon name="target" size={14} /> Colors reflect impact on <strong>your target audience</strong>. Hover over dates for detailed breakdown.
                 </div>
                 <HeatmapCalendar 
                   dateAnalysis={dateAnalysis} 
@@ -258,7 +259,7 @@ const ReleaseWindowPage = () => {
             {/* Top Suggestions */}
             {topSuggestions.length > 0 && (
               <Card style={{ marginTop: 20 }}>
-                <h3 className="section-title">🤖 AI-Powered Top {topSuggestions.length} Recommendations</h3>
+                <h3 className="section-title"><Icon name="robot" size={18} /> AI-Powered Top {topSuggestions.length} Recommendations</h3>
                 <p className="page-subtitle" style={{ marginBottom: 16 }}>
                   Intelligently ranked based on your target audience preferences
                 </p>
@@ -290,7 +291,7 @@ const ReleaseWindowPage = () => {
                           borderLeft: '3px solid #a78bfa' 
                         }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: '#a78bfa', marginBottom: 4 }}>
-                            🤖 AI Strategy:
+                            <Icon name="robot" size={14} /> AI Strategy:
                           </div>
                           <div style={{ fontSize: 13, color: '#ccc', lineHeight: 1.5 }}>
                             {suggestion.aiReason}
@@ -300,7 +301,7 @@ const ReleaseWindowPage = () => {
                       
                       {suggestion.pros && suggestion.pros.length > 0 && (
                         <div style={{ marginBottom: 8 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: '#4ade80', marginBottom: 4 }}>✓ Pros:</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: '#4ade80', marginBottom: 4 }}><Icon name="check" size={14} /> Pros:</div>
                           <ul style={{ margin: 0, paddingLeft: 20, color: '#bbb', fontSize: 13 }}>
                             {suggestion.pros.map((pro, i) => (
                               <li key={i}>{pro}</li>
@@ -311,7 +312,7 @@ const ReleaseWindowPage = () => {
                       
                       {suggestion.cons && suggestion.cons.length > 0 && (
                         <div style={{ marginBottom: 8 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: '#f59e0b', marginBottom: 4 }}>⚠ Cons:</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: '#f59e0b', marginBottom: 4 }}><Icon name="warning" size={14} /> Cons:</div>
                           <ul style={{ margin: 0, paddingLeft: 20, color: '#bbb', fontSize: 13 }}>
                             {suggestion.cons.map((con, i) => (
                               <li key={i}>{con}</li>
@@ -331,7 +332,7 @@ const ReleaseWindowPage = () => {
                         onClick={() => handleSelectDate(suggestion)}
                         disabled={project?.confirmed_release_date === suggestion.date}
                       >
-                        {project?.confirmed_release_date === suggestion.date ? '✓ Selected' : 'Select this date'}
+                        {project?.confirmed_release_date === suggestion.date ? <><Icon name="check" size={14} /> Selected</> : 'Select this date'}
                       </button>
                     </Card>
                   ))}

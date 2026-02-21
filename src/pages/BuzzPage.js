@@ -6,6 +6,7 @@ import GaugeMeter from '../components/GaugeMeter';
 import SparklineChart from '../components/SparklineChart';
 import BuzzConfiguration from '../components/BuzzConfiguration';
 import AutoBuzzMetrics from '../components/AutoBuzzMetrics';
+import Icon from '../components/Icon';
 import { projectService } from '../services/api.service';
 import { searchFilmVideos } from '../services/youtube-search.service';
 import { supabase } from '../supabaseClient';
@@ -76,7 +77,7 @@ const BuzzPage = () => {
               
               // Auto-save initial config
               await saveConfigToDatabase(newConfig);
-              showToast(`✓ Pre-populated ${urls.length} video(s) from onboarding`);
+              showToast(<><Icon name="check" size={14} /> Pre-populated {urls.length} video(s) from onboarding</>);
             }
           } else if (projectData?.title) {
             // Fallback: Auto-populate film name and trigger auto-search
@@ -102,6 +103,15 @@ const BuzzPage = () => {
     setConfig(newConfig);
   };
 
+  const reloadSnapshots = async () => {
+    try {
+      const data = await projectService.getBuzzSnapshots(projectId);
+      setSnapshots(data || []);
+    } catch (e) {
+      console.error('Failed to reload snapshots:', e);
+    }
+  };
+
   const handleAutoSearchAndConfigure = async (silent = false) => {
     if (!project?.title) {
       if (!silent) showToast('Movie name not found. Please update project details.');
@@ -110,7 +120,7 @@ const BuzzPage = () => {
 
     setAutoSearching(true);
     try {
-      if (!silent) showToast(`🔍 Searching YouTube for "${project.title}"...`);
+      if (!silent) showToast(<><Icon name="search" size={14} /> Searching YouTube for "{project.title}"...</>);
       
       // Auto-search YouTube for top videos
       const videoUrls = await searchFilmVideos(project.title, 5);
@@ -131,16 +141,16 @@ const BuzzPage = () => {
       
       if (!silent) {
         if (videoUrls.length > 0) {
-          showToast(`✅ Found ${videoUrls.length} YouTube videos!`);
+          showToast(<><Icon name="checkCircle" size={14} /> Found {videoUrls.length} YouTube videos!</>);
         } else {
-          showToast(`⚠️ No YouTube videos found. You can add URLs manually.`);
+          showToast(<><Icon name="warning" size={14} /> No YouTube videos found. You can add URLs manually.</>);
         }
       }
       
     } catch (error) {
       console.error('Auto-search error:', error);
       if (!silent) {
-        showToast(`⚠️ ${error.message || 'Search failed. Please try manually.'}`);
+        showToast(<><Icon name="warning" size={14} /> {error.message || 'Search failed. Please try manually.'}</>);
       }
     } finally {
       setAutoSearching(false);
@@ -206,10 +216,10 @@ const BuzzPage = () => {
             {latest ? (
               <>
                 <GaugeMeter score={latest.buzz_score} />
-                <p className="buzz-date">Last updated: {latest.date}</p>
+                <p className="buzz-date">Last updated: {latest.created_at ? new Date(latest.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Just now'}</p>
                 {trend !== null && (
                   <p className={`buzz-trend ${parseFloat(trend) >= 0 ? 'buzz-trend--up' : 'buzz-trend--down'}`}>
-                    {parseFloat(trend) >= 0 ? '▲' : '▼'} {Math.abs(trend)}% vs last snapshot
+                    <Icon name={parseFloat(trend) >= 0 ? "arrowUp" : "arrowDown"} size={12} /> {Math.abs(trend)}% vs last snapshot
                   </p>
                 )}
                 {buzzScores.length > 1 && (
@@ -228,7 +238,7 @@ const BuzzPage = () => {
 
           {/* Quick Auto-Search Button */}
           <Card>
-            <h3 className="section-title">🚀 Quick Start</h3>
+            <h3 className="section-title"><Icon name="rocket" size={18} /> Quick Start</h3>
             <p className="buzz-form-hint">
               Automatically find YouTube videos for your film
             </p>
@@ -238,7 +248,7 @@ const BuzzPage = () => {
                 onClick={() => handleAutoSearchAndConfigure(false)}
                 disabled={autoSearching || !project?.title}
               >
-                {autoSearching ? '🔍 Searching...' : '✨ Auto-Find Content'}
+                {autoSearching ? <><Icon name="search" size={14} /> Searching...</> : <><Icon name="sparkles" size={14} /> Auto-Find Content</>}
               </button>
               {project?.title && (
                 <p style={{ marginTop: 12, fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>
@@ -249,12 +259,12 @@ const BuzzPage = () => {
             {config.youtubeUrls?.length > 0 && (
               <div style={{ marginTop: 16, padding: 12, background: 'rgba(0, 255, 136, 0.1)', borderRadius: 8, border: '1px solid rgba(0, 255, 136, 0.3)' }}>
                 <p style={{ fontSize: '0.85rem', color: '#00ff88', margin: 0 }}>
-                  ✓ Found {config.youtubeUrls.length} YouTube video{config.youtubeUrls.length > 1 ? 's' : ''}
+                  <Icon name="check" size={14} /> Found {config.youtubeUrls.length} YouTube video{config.youtubeUrls.length > 1 ? 's' : ''}
                 </p>
               </div>
             )}
             <p className="buzz-api-note" style={{ marginTop: 16 }}>
-              💡 Auto-searches YouTube for "{project?.title}" videos. Google Trends data auto-generated based on film characteristics.
+              <Icon name="lightbulb" size={14} /> Auto-searches YouTube for "{project?.title}" videos. Google Trends data auto-generated based on film characteristics.
             </p>
           </Card>
         </div>
@@ -275,6 +285,8 @@ const BuzzPage = () => {
             youtubeUrls={config.youtubeUrls}
             instagramHandle={config.instagramHandle}
             filmName={config.filmName || project?.title}
+            onSnapshotSaved={reloadSnapshots}
+            hasSnapshots={snapshots.length > 0}
           />
         </div>
 
@@ -288,7 +300,7 @@ const BuzzPage = () => {
               </div>
               {[...snapshots].reverse().map((s, i) => (
                 <div key={s.id || i} className="bht-row">
-                  <span>{s.date}</span>
+                  <span>{s.created_at ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-'}</span>
                   <span className="bht-score">{s.buzz_score}</span>
                   <span>{s.watch_time_norm?.toFixed(2)}</span>
                   <span>{s.share_rate_norm?.toFixed(2)}</span>

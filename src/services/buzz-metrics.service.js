@@ -229,6 +229,7 @@ export const saveBuzzSnapshot = async (projectId, metricsData) => {
       engagement_rate_norm: metricsData.normalizedMetrics.engagement_rate_norm,
       buzz_score: metricsData.buzzScore,
       metadata: metricsData.metadata,
+      ai_insights: metricsData.aiInsights || null,
       created_at: new Date().toISOString(),
     };
 
