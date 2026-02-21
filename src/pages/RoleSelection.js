@@ -131,7 +131,7 @@ const RoleSelection = () => {
                 className={`role-card ${selectedRole === role ? 'selected' : ''}`}
                 onClick={() => setSelectedRole(role)}
               >
-                <div className="role-icon">🎭</div>
+                <div className="role-icon"><Icon name="film" size={28} /></div>
                 <div className="role-name">{role}</div>
               </div>
             ))}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '../components/Card';
+import Icon from '../components/Icon';
 import { projectService } from '../services/api.service';
 import { getQuestionsForRole, getRoleLabel } from '../config/teamRoleQuestions';
 import './TeamPovFormPage.css';
@@ -95,7 +96,7 @@ const TeamPovFormPage = () => {
       </div>
       <div className="team-pov-body">
         <Card className="team-pov-card">
-          <div className="thanks-icon">⚠️</div>
+          <div className="thanks-icon"><Icon name="warning" size={40} /></div>
           <h2>Invalid link</h2>
           <p>{error}</p>
         </Card>
@@ -116,7 +117,7 @@ const TeamPovFormPage = () => {
 
         {submitted ? (
           <Card className="team-pov-thanks">
-            <div className="thanks-icon">🎬</div>
+            <div className="thanks-icon"><Icon name="film" size={40} /></div>
             <h2>Thank you!</h2>
             <p>Your perspective has been submitted. The producer will use these insights to shape the film's persona.</p>
           </Card>

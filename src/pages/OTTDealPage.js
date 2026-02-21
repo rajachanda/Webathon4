@@ -19,7 +19,6 @@ import { useParams } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
 import Card from '../components/Card';
 import './OTTDealPage.css';
-import axios from 'axios';
 
 const OTTDealPage = () => {
   const { projectId } = useParams();
@@ -58,10 +57,10 @@ const OTTDealPage = () => {
 
   const loadPlatforms = async () => {
     try {
-      const response = await axios.get('/api/ott-assistant/platforms');
-      if (response.data.success) {
-        // Transform platforms for dropdown (use simplified names)
-        const platformList = response.data.platforms.map(p => ({
+      const res = await fetch('/api/ott-assistant/platforms');
+      const response = await res.json();
+      if (response.success) {
+        const platformList = response.platforms.map(p => ({
           name: p.name,
           deal_types: p.deal_types || ['fixed'],
           details: p
@@ -156,16 +155,21 @@ const OTTDealPage = () => {
         calendarEvents: calendarEvents
       };
 
-      const response = await axios.post('/api/ott-assistant/evaluate', payload);
+      const res = await fetch('/api/ott-assistant/evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const response = await res.json();
 
-      if (response.data.success) {
-        setResult(response.data.data);
+      if (response.success) {
+        setResult(response.data);
       } else {
         setError('Evaluation failed');
       }
     } catch (err) {
       console.error('Evaluation error:', err);
-      setError(err.response?.data?.message || 'Failed to evaluate OTT deal');
+      setError(err.message || 'Failed to evaluate OTT deal');
     } finally {
       setLoading(false);
     }
@@ -173,9 +177,10 @@ const OTTDealPage = () => {
 
   const loadExample = async () => {
     try {
-      const response = await axios.get('/api/ott-assistant/examples');
-      if (response.data.success && response.data.examples.length > 0) {
-        const example = response.data.examples[0];
+      const res = await fetch('/api/ott-assistant/examples');
+      const response = await res.json();
+      if (response.success && response.examples.length > 0) {
+        const example = response.examples[0];
         setProducerInputs(example.payload.producerInputs);
         setPlatformSignals(example.payload.platformSignals);
         setOffers(example.payload.offers.map((offer, idx) => ({ ...offer, id: Date.now() + idx })));

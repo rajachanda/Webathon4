@@ -17,7 +17,7 @@
 }
 
 .team-pov-brand {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     background: linear-gradient(135deg, #fff, #00ff88);
     -webkit-background-clip: text;
@@ -27,7 +27,7 @@
 }
 
 .team-pov-tagline {
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(255,255,255,0.4);
     margin: 0;
 }
@@ -39,7 +39,7 @@
     background: rgba(0,255,136,0.12);
     border: 1px solid rgba(0,255,136,0.25);
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #00ff88;
 }
@@ -56,7 +56,7 @@
     border-radius: 8px;
     padding: 10px 14px;
     color: #ff5050;
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 16px;
 }
 
@@ -68,7 +68,7 @@
 .thanks-icon { font-size: 48px; margin-bottom: 16px; }
 
 .team-pov-thanks h2 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     color: #00ff88;
     margin: 0 0 12px;
@@ -76,7 +76,7 @@
 
 .team-pov-thanks p {
     color: rgba(255,255,255,0.5);
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
     margin: 0;
 }
@@ -84,13 +84,13 @@
 .team-pov-card { display: flex; flex-direction: column; gap: 0; }
 
 .team-pov-form-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     margin: 0 0 6px;
 }
 
 .team-pov-form-subtitle {
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(255,255,255,0.4);
     margin: 0 0 24px;
 }
@@ -103,7 +103,7 @@
 }
 
 .tpov-field label {
-    font-size: 12px;
+    font-size: 13px;
     color: rgba(255,255,255,0.5);
     font-weight: 500;
 }
@@ -114,7 +114,7 @@
     border-radius: 8px;
     padding: 9px 12px;
     color: #fff;
-    font-size: 13px;
+    font-size: 14px;
     font-family: inherit;
     outline: none;
     resize: none;
@@ -132,7 +132,7 @@
     border-radius: 8px;
     padding: 9px 12px;
     color: #fff;
-    font-size: 13px;
+    font-size: 14px;
     font-family: inherit;
     outline: none;
     box-sizing: border-box;
@@ -160,7 +160,7 @@
     align-items: center;
     gap: 10px;
     padding: 18px 0 10px;
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(255,255,255,0.5);
     font-style: italic;
 }

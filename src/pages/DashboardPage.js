@@ -43,7 +43,7 @@ const DashboardPage = () => {
           <h1 className="dashboard-greeting">
             Welcome back, <span className="gradient-text">{name}</span>
           </h1>
-          <p className="dashboard-tagline">Paora Filmy hai Boss.. 🎬</p>
+          <p className="dashboard-tagline">Paora Filmy hai Boss..</p>
           <button
             className="btn-primary-green dashboard-cta"
             onClick={() => navigate('/projects/new')}
