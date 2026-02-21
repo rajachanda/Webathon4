@@ -17,10 +17,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProjectLayout from '../components/ProjectLayout';
-import Card from '../components/Card';
 import './OTTDealPage.css';
-import axios from 'axios';
 import { projectService } from '../services/api.service';
+import { getSentimentSummary } from '../services/sentiment.service';
 
 const OTTDealPage = () => {
   const { projectId } = useParams();
@@ -59,94 +58,158 @@ const OTTDealPage = () => {
     loadProjectData();
   }, [projectId]);
 
-  // Load existing project data to pre-populate form
+  // Load existing project data to pre-populate form AND auto-trigger evaluation
   const loadProjectData = async () => {
     try {
-      // Fetch project, persona, and buzz data in parallel
-      const [project, persona, buzzSnapshots] = await Promise.all([
+      setLoading(true);
+      console.log('🔍 Fetching comprehensive project data...');
+
+      // Fetch ALL project data in parallel
+      const [project, persona, buzzSnapshots, releaseWindows, sentimentData] = await Promise.all([
         projectService.getProject(projectId),
         projectService.getProjectPersona(projectId).catch(() => null),
         projectService.getBuzzSnapshots(projectId).catch(() => []),
+        projectService.getReleaseWindows(projectId).catch(() => []),
+        getSentimentSummary(projectId).catch(() => null),
       ]);
 
-      // Pre-populate producer inputs from project metadata
-      if (project?.project_metadata) {
-        const metadata = project.project_metadata;
-        const newProducerInputs = { ...producerInputs };
+      console.log('📊 Loaded data:', { 
+        project: !!project, 
+        persona: !!persona, 
+        buzzCount: buzzSnapshots?.length || 0,
+        windowsCount: releaseWindows?.length || 0,
+        sentiment: !!sentimentData 
+      });
 
-        // Map genre
-        if (metadata.genre) {
-          newProducerInputs.filmGenre = metadata.genre;
-          if (metadata.subgenre) {
-            newProducerInputs.filmGenre += ` - ${metadata.subgenre}`;
-          }
+      const metadata = project?.project_metadata || {};
+      const newProducerInputs = { ...producerInputs };
+      const newPlatformSignals = { ...platformSignals };
+
+      // === AUTO-POPULATE FROM ONBOARDING DATA ===
+      
+      // Genre from onboarding
+      if (metadata.genre) {
+        newProducerInputs.filmGenre = metadata.genre;
+        if (metadata.subgenre) {
+          newProducerInputs.filmGenre += ` - ${metadata.subgenre}`;
         }
-
-        // Map budget (convert from crores to lakhs if needed)
-        if (metadata.budget) {
-          // Assuming budget is stored in crores or lakhs
-          const budgetValue = parseFloat(metadata.budget);
-          // If budget seems to be in crores (< 100), convert to lakhs
-          newProducerInputs.filmBudget = budgetValue < 100 ? (budgetValue * 100).toString() : budgetValue.toString();
-        }
-
-        // Map target audience from persona if available
-        if (persona?.film_market_persona) {
-          const personaData = persona.film_market_persona;
-          if (personaData.primary_audience) {
-            newProducerInputs.targetAudience = personaData.primary_audience;
-          } else if (personaData.target_clusters && personaData.target_clusters.length > 0) {
-            // Build audience description from clusters
-            newProducerInputs.targetAudience = personaData.target_clusters.slice(0, 2).join(', ');
-          }
-        }
-
-        setProducerInputs(newProducerInputs);
       }
 
-      // Pre-populate platform signals from buzz snapshots
+      // Budget from onboarding (convert budget band to estimated amount in lakhs)
+      if (metadata.budget_band) {
+        const budgetMap = {
+          'micro': 50,        // 50 lakhs
+          'small': 300,       // 3 crores
+          'mid': 1500,        // 15 crores
+          'medium': 1500,
+          'large': 5000       // 50 crores
+        };
+        const estimatedBudget = budgetMap[metadata.budget_band.toLowerCase()] || 300;
+        newProducerInputs.filmBudget = estimatedBudget.toString();
+      }
+
+      // Auto-set confidence based on platform strategy
+      if (metadata.platform_strategy) {
+        const confidenceMap = {
+          'theatrical-first': 'high',     // High confidence in theatrical
+          'ott-first': 'medium',          // Medium confidence
+          'direct-ott': 'low'             // Low confidence in theatrical
+        };
+        newProducerInputs.confidence = confidenceMap[metadata.platform_strategy] || 'medium';
+      }
+
+      // === AUTO-POPULATE FROM PERSONA ===
+      if (persona?.film_market_persona) {
+        const personaData = persona.film_market_persona;
+        
+        // Target audience
+        if (personaData.primary_audience) {
+          newProducerInputs.targetAudience = personaData.primary_audience;
+        } else if (personaData.target_clusters?.length > 0) {
+          newProducerInputs.targetAudience = personaData.target_clusters.slice(0, 2).join(', ');
+        }
+      }
+
+      // === AUTO-POPULATE FROM BUZZ SCORES ===
       if (buzzSnapshots && buzzSnapshots.length > 0) {
-        // Get latest buzz snapshot
         const latestBuzz = buzzSnapshots.sort((a, b) => 
           new Date(b.created_at) - new Date(a.created_at)
         )[0];
 
-        const newPlatformSignals = { ...platformSignals };
-
-        // Map buzz score (0-100)
-        if (latestBuzz.buzz_score !== undefined && latestBuzz.buzz_score !== null) {
+        // Buzz score (0-100)
+        if (latestBuzz.buzz_score !== undefined) {
           newPlatformSignals.buzz = Math.round(latestBuzz.buzz_score);
         }
 
-        // Map sentiment score (0-1)
-        if (latestBuzz.sentiment_score_norm !== undefined && latestBuzz.sentiment_score_norm !== null) {
-          newPlatformSignals.sentiment = latestBuzz.sentiment_score_norm;
-        }
-
-        // Map trailer views and retention from metadata if available
-        if (latestBuzz.metadata) {
-          const metadata = latestBuzz.metadata;
+        // Trailer views and retention from YouTube data
+        if (latestBuzz.metadata?.youtubeMetrics) {
+          const ytMetrics = latestBuzz.metadata.youtubeMetrics;
           
-          // Try to get view count from YouTube metrics
-          if (metadata.youtubeMetrics?.view_count) {
-            newPlatformSignals.trailerViews = metadata.youtubeMetrics.view_count;
+          if (ytMetrics.view_count) {
+            newPlatformSignals.trailerViews = ytMetrics.view_count;
           }
 
-          // Try to calculate retention from watch time and duration
-          if (metadata.youtubeMetrics?.avg_watch_time && metadata.youtubeMetrics?.video_duration) {
-            const retention = (metadata.youtubeMetrics.avg_watch_time / metadata.youtubeMetrics.video_duration) * 100;
+          // Calculate retention from engagement
+          if (ytMetrics.engagement_rate) {
+            newPlatformSignals.trailerRetention = Math.round(ytMetrics.engagement_rate * 100);
+          } else if (ytMetrics.avg_watch_time && ytMetrics.video_duration) {
+            const retention = (ytMetrics.avg_watch_time / ytMetrics.video_duration) * 100;
             newPlatformSignals.trailerRetention = Math.round(retention);
           }
         }
+      }
 
-        setPlatformSignals(newPlatformSignals);
+      // === AUTO-POPULATE FROM SENTIMENT ANALYSIS ===
+      if (sentimentData) {
+        // Convert positive sentiment percentage to 0-1 scale
+        const sentimentScore = sentimentData.positivePercent / 100;
+        newPlatformSignals.sentiment = sentimentScore;
+
+        console.log('😊 Sentiment data:', {
+          positive: `${sentimentData.positivePercent}%`,
+          sentiment: sentimentScore,
+          totalComments: sentimentData.totalComments
+        });
+      }
+
+      setProducerInputs(newProducerInputs);
+      setPlatformSignals(newPlatformSignals);
+
+      // === AUTO-POPULATE RELEASE WINDOWS FOR CALENDAR EVENTS ===
+      if (releaseWindows && releaseWindows.length > 0) {
+        const events = releaseWindows.map(w => ({
+          event: w.window_label || 'Release Window',
+          start_date: w.start_date,
+          end_date: w.end_date,
+          type: w.intensity_label || 'Recommended'
+        }));
+        setCalendarEvents(events);
+        console.log('📅 Release windows:', events.length);
       }
 
       setDataLoaded(true);
-      console.log('✅ Auto-populated OTT Deal form from existing project data');
+      
+      console.log('✅ Auto-populated ALL data:', {
+        genre: newProducerInputs.filmGenre,
+        budget: `₹${newProducerInputs.filmBudget}L`,
+        audience: newProducerInputs.targetAudience,
+        confidence: newProducerInputs.confidence,
+        buzz: newPlatformSignals.buzz,
+        sentiment: `${(newPlatformSignals.sentiment * 100).toFixed(0)}%`,
+        trailerViews: newPlatformSignals.trailerViews
+      });
+
+      // === AUTO-TRIGGER EVALUATION ===
+      // Wait a bit for UI to update, then automatically evaluate
+      setTimeout(() => {
+        autoEvaluate(newProducerInputs, newPlatformSignals, releaseWindows);
+      }, 500);
+
     } catch (err) {
-      console.error('Failed to load project data for auto-population:', err);
-      setDataLoaded(true); // Still mark as loaded even if error
+      console.error('❌ Failed to load project data:', err);
+      setError('Failed to load project data. Please refresh the page.');
+      setDataLoaded(true);
+      setLoading(false);
     }
   };
 
@@ -196,6 +259,66 @@ const OTTDealPage = () => {
       ]);
     } catch (err) {
       console.error('Failed to load calendar events:', err);
+    }
+  };
+
+  // Auto-evaluate OTT deal with fetched data
+  const autoEvaluate = async (inputs, signals, windows) => {
+    try {
+      console.log('🤖 Auto-evaluating OTT deal with fetched data...');
+
+      // Build sample offers from available platforms (for evaluation context)
+      const sampleOffers = platforms.slice(0, 3).map((plat, idx) => ({
+        platform: plat.name,
+        offer_type: plat.deal_types[0] || 'fixed',
+        fixed_amount: idx === 0 ? parseFloat(inputs.filmBudget) * 1.2 : undefined,
+        mg_amount: idx === 1 ? parseFloat(inputs.filmBudget) * 0.8 : undefined,
+        revenue_share_percentage: idx === 1 ? 30 : undefined
+      }));
+
+      // Prepare payload with all auto-fetched data
+      const payload = {
+        producerInputs: {
+          ...inputs,
+          filmBudget: parseFloat(inputs.filmBudget) || 0
+        },
+        platformSignals: {
+          sentiment: parseFloat(signals.sentiment),
+          buzz: parseFloat(signals.buzz),
+          trailerViews: parseInt(signals.trailerViews) || 0,
+          trailerRetention: parseFloat(signals.trailerRetention)
+        },
+        offers: sampleOffers,
+        calendarEvents: windows?.length > 0 ? windows.map(w => ({
+          event: w.window_label || 'Release Window',
+          start_date: w.start_date,
+          end_date: w.end_date,
+          type: w.intensity_label || 'Recommended'
+        })) : calendarEvents
+      };
+
+      console.log('📤 Sending auto-evaluation payload:', payload);
+
+      const res = await fetch('/api/ott-assistant/evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      const response = await res.json();
+
+      if (response.success) {
+        setResult(response.data);
+        console.log('✅ Auto-evaluation complete!', response.data);
+      } else {
+        console.warn('⚠️ Auto-evaluation failed:', response);
+        setError('Auto-evaluation failed. You can manually trigger evaluation.');
+      }
+    } catch (err) {
+      console.error('❌ Auto-evaluation error:', err);
+      setError('Auto-evaluation failed. You can manually trigger evaluation.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -300,20 +423,342 @@ const OTTDealPage = () => {
     return '#ef4444'; // Red
   };
 
+  // Dynamically suggest THE BEST OTT platform based on film characteristics
+  const getSuggestedPlatforms = (inputs, signals) => {
+    const genre = (inputs.filmGenre || '').toLowerCase();
+    const budget = parseFloat(inputs.filmBudget) || 0;
+    const buzz = parseFloat(signals.buzz) || 0;
+    const sentiment = parseFloat(signals.sentiment) || 0;
+    const views = parseInt(signals.trailerViews) || 0;
+    const audience = (inputs.targetAudience || '').toLowerCase();
+    
+    // Get budget category
+    let budgetCategory = 'mid budget';
+    if (budget < 200) budgetCategory = 'micro budget';
+    else if (budget < 500) budgetCategory = 'small budget';
+    else if (budget < 1500) budgetCategory = 'mid budget';
+    else budgetCategory = 'high budget';
+
+    console.log('🎯 Platform Selection:', { genre, budgetCategory, buzz, sentiment, views, audience });
+
+    // Score each platform based on fit
+    const platformScores = [];
+
+    // Regional platforms get priority if audience matches
+    if (
+      audience.includes('telugu') || 
+      audience.includes('ap') || 
+      audience.includes('tg') ||
+      audience.includes('andhra') ||
+      audience.includes('telangana')
+    ) {
+      return [{
+        icon: '💚',
+        name: 'Aha',
+        reason: `Perfect fit for Telugu-speaking audiences. As a dedicated Telugu OTT platform, Aha understands the regional nuances and has a proven track record with ${genre ? genre + ' content' : 'South Indian films'}. Their ${budgetCategory} range aligns well with your project, and they've built strong viewer loyalty in Andhra Pradesh and Telangana markets.`
+      }];
+    }
+
+    if (
+      audience.includes('tamil') || 
+      audience.includes('tn') ||
+      audience.includes('tamilnadu')
+    ) {
+      return [{
+        icon: '🟠',
+        name: 'Sun NXT',
+        reason: `Ideal choice for Tamil content. Sun NXT dominates the Tamil OTT space with deep penetration in Tamil Nadu. Their expertise in ${genre ? genre + ' films' : 'regional cinema'} and established distribution network makes them the go-to platform for Tamil-speaking audiences. Your ${budgetCategory} production fits their acquisition strategy perfectly.`
+      }];
+    }
+
+    // Netflix scoring
+    let netflixScore = 0;
+    let netflixReason = '';
+    if (genre.includes('thriller') || genre.includes('drama') || genre.includes('horror')) netflixScore += 30;
+    if (buzz >= 70) { netflixScore += 25; netflixReason = 'exceptional pre-release buzz'; }
+    else if (buzz >= 60) { netflixScore += 15; netflixReason = 'strong audience anticipation'; }
+    if (sentiment >= 0.7) { netflixScore += 20; netflixReason = netflixReason ? netflixReason + ' and highly positive audience sentiment' : 'overwhelmingly positive fan sentiment'; }
+    else if (sentiment >= 0.6) { netflixScore += 10; }
+    if (budget >= 1000) { netflixScore += 15; netflixReason = netflixReason ? netflixReason + ' with premium production values' : 'premium production quality'; }
+    if (views >= 500000) { netflixScore += 20; netflixReason = netflixReason ? netflixReason + ' and viral trailer performance' : 'massive trailer traction'; }
+    else if (views >= 200000) { netflixScore += 10; }
+
+    if (!netflixReason && netflixScore > 0) {
+      netflixReason = genre.includes('thriller') ? 'gripping thriller appeal' : 
+                      genre.includes('drama') ? 'compelling dramatic narrative' : 
+                      genre.includes('horror') ? 'intense horror elements' : 'quality content';
+    }
+
+    platformScores.push({
+      score: netflixScore,
+      platform: {
+        icon: '🔴',
+        name: 'Netflix India',
+        reason: `Netflix is your best bet given the ${netflixReason || 'strong content quality'}. As a global platform with significant Indian investment, Netflix excels at promoting ${genre ? genre + ' content' : 'compelling narratives'} to both domestic and international audiences. Your ${budgetCategory} positioning aligns with their acquisition strategy for South Indian cinema, and their algorithm-driven discovery will help your film reach beyond traditional boundaries.`
+      }
+    });
+
+    // Prime Video scoring
+    let primeScore = 0;
+    let primeReason = '';
+    if (genre.includes('comedy') || genre.includes('family') || genre.includes('romance') || genre.includes('drama')) primeScore += 25;
+    if (buzz >= 60) { primeScore += 20; primeReason = 'strong pre-release momentum'; }
+    else if (buzz >= 50) { primeScore += 15; primeReason = 'growing audience interest'; }
+    else if (buzz >= 40) { primeScore += 10; }
+    if (budget >= 300 && budget <= 1000) { primeScore += 20; primeReason = primeReason ? primeReason + ' and ideal budget fit' : 'perfect budget alignment'; }
+    if (views >= 200000) { primeScore += 15; primeReason = primeReason ? primeReason + ' with impressive trailer reach' : 'excellent trailer performance'; }
+    else if (views >= 100000) { primeScore += 10; }
+    
+    if (!primeReason && primeScore > 0) {
+      primeReason = 'diverse content library and strong regional focus';
+    }
+
+    platformScores.push({
+      score: primeScore,
+      platform: {
+        icon: '🔵',
+        name: 'Amazon Prime Video',
+        reason: `Amazon Prime Video emerges as the ideal platform due to ${primeReason}. Prime has aggressively expanded its South Indian catalog and values ${genre ? genre + ' films' : 'quality regional content'}. Your ${budgetCategory} production fits their sweet spot for acquisitions. With Amazon's massive subscriber base and cross-promotion through their ecosystem, your film will get substantial visibility among family audiences and regional cinema enthusiasts.`
+      }
+    });
+
+    // Hotstar scoring  
+    let hotstarScore = 0;
+    let hotstarReason = '';
+    if (genre.includes('family') || genre.includes('social') || genre.includes('action') || genre.includes('fantasy')) hotstarScore += 25;
+    if (buzz >= 70) { hotstarScore += 25; hotstarReason = 'massive viral potential'; }
+    else if (buzz >= 60) { hotstarScore += 20; hotstarReason = 'strong buzz momentum'; }
+    else if (buzz >= 50) { hotstarScore += 10; }
+    if (views >= 300000) { hotstarScore += 20; hotstarReason = hotstarReason ? hotstarReason + ' and proven mass appeal' : 'exceptional mass market appeal'; }
+    else if (views >= 150000) { hotstarScore += 15; }
+    if (sentiment >= 0.65) { hotstarScore += 15; }
+
+    if (!hotstarReason && hotstarScore > 0) {
+      hotstarReason = genre.includes('family') ? 'family-friendly appeal' : 
+                      genre.includes('social') ? 'socially relevant narrative' : 
+                      genre.includes('action') ? 'mass action appeal' : 'broad audience reach';
+    }
+
+    platformScores.push({
+      score: hotstarScore,
+      platform: {
+        icon: '⭐',
+        name: 'Disney+ Hotstar',
+        reason: `Disney+ Hotstar stands out as your optimal choice given the ${hotstarReason}. With the largest subscriber base in India and expertise in ${genre ? genre + ' entertainment' : 'mass entertainment'}, Hotstar can amplify your film's reach exponentially. Your ${budgetCategory} range aligns perfectly with their content strategy, and their proven track record of breaking regional films into mainstream consciousness makes them ideal for maximizing your theatrical-to-OTT transition.`
+      }
+    });
+
+    // Zee5 scoring
+    let zee5Score = 0;
+    let zee5Reason = '';
+    if (genre.includes('social') || genre.includes('drama') || genre.includes('romance') || genre.includes('comedy')) zee5Score += 25;
+    if (budget < 800) { zee5Score += 20; zee5Reason = 'perfect budget fit for regional content'; }
+    if (buzz >= 50) { zee5Score += 15; }
+    if (sentiment >= 0.5) { zee5Score += 10; }
+
+    if (!zee5Reason && zee5Score > 0) {
+      zee5Reason = 'strong regional content focus and authentic storytelling';
+    }
+
+    platformScores.push({
+      score: zee5Score,
+      platform: {
+        icon: '🟣',
+        name: 'Zee5',
+        reason: `Zee5 is your best match considering ${zee5Reason}. As a platform deeply rooted in Indian regional content, Zee5 understands the pulse of ${genre ? genre + ' cinema' : 'regional audiences'}. Your ${budgetCategory} production aligns excellently with their acquisition model. They offer better revenue sharing terms for regional films and have built a loyal subscriber base that actively seeks authentic South Indian storytelling.`
+      }
+    });
+
+    // Sony LIV scoring
+    let sonyScore = 0;
+    let sonyReason = '';
+    if (genre.includes('action') || genre.includes('thriller') || genre.includes('sports')) sonyScore += 25;
+    if (buzz >= 55) { sonyScore += 20; sonyReason = 'strong mass appeal'; }
+    if (budget >= 400 && budget <= 1200) { sonyScore += 15; }
+
+    if (!sonyReason && sonyScore > 0) {
+      sonyReason = 'mass entertainment positioning';
+    }
+
+    platformScores.push({
+      score: sonyScore,
+      platform: {
+        icon: '🔶',
+        name: 'Sony LIV',
+        reason: `Sony LIV represents your optimal platform given ${sonyReason}. Sony's expertise in ${genre ? genre + ' content' : 'mass entertainment'} and cross-promotion opportunities with their sports events create unique visibility. Your ${budgetCategory} film fits their content acquisition strategy, and their growing subscriber base actively seeks engaging regional content with mass appeal.`
+      }
+    });
+
+    // Sort by score and return the top platform
+    platformScores.sort((a, b) => b.score - a.score);
+    
+    const winner = platformScores[0];
+    console.log('✅ Top Platform:', winner.platform.name, 'Score:', winner.score);
+    
+    // If all scores are very low, return default
+    if (winner.score < 15) {
+      return [{
+        icon: '🔵',
+        name: 'Amazon Prime Video',
+        reason: `Amazon Prime Video is recommended as your best platform choice. Prime has the most diverse content library and actively seeks ${genre ? genre + ' films' : 'quality regional cinema'} across all budget ranges. Your ${budgetCategory} production fits their inclusive acquisition strategy. With their massive subscriber base and commitment to South Indian content, Prime offers the right balance of reach, revenue potential, and audience engagement for your film.`
+      }];
+    }
+
+    return [winner.platform];
+  };
+
   return (
     <ProjectLayout>
       <div className="ott-deal-page">
         <div className="page-header">
-          <h1 className="page-title">🎬 OTT Deal Assistant</h1>
-          <p className="page-subtitle">Evaluate monetization options and get AI-powered recommendations</p>
-          <button className="btn-example" onClick={loadExample}>
-            📋 Load Example
-          </button>
+          <h1 className="page-title">🎬 OTT Deal Recommendation</h1>
+          <p className="page-subtitle">AI-powered platform recommendation based on your film's complete data</p>
         </div>
 
       <div className="ott-deal-content">
-        {/* Input Form */}
-        <div className="input-section">
+        {/* Loading State */}
+        {loading && !result && (
+          <div className="loading-state" style={{
+            textAlign: 'center',
+            padding: '60px 20px',
+            color: 'rgba(255,255,255,0.6)'
+          }}>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🤖</div>
+            <h3>Analyzing Your Film...</h3>
+            <p>Fetching data from onboarding, persona, buzz scores, sentiment analysis, and release windows...</p>
+          </div>
+        )}
+
+        {/* Auto-Fetched Data Summary */}
+        {dataLoaded && !loading && (
+          <div className="data-summary-section">
+            <h2>📊 Film Intelligence Summary</h2>
+            <div style={{ 
+              fontSize: '13px', 
+              color: 'rgba(0, 255, 136, 0.7)', 
+              marginBottom: '20px',
+              padding: '10px 14px',
+              background: 'rgba(0, 255, 136, 0.08)',
+              borderRadius: '8px',
+              border: '1px solid rgba(0, 255, 136, 0.2)'
+            }}>
+              ✓ All data automatically fetched from your project. AI analyzing for best OTT match.
+            </div>
+
+            <div className="data-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '16px',
+              marginBottom: '24px'
+            }}>
+              {/* Film Details */}
+              <div className="data-card" style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.08)'
+              }}>
+                <div style={{ fontSize: '24px', marginBottom: '8px' }}>🎬</div>
+                <h4 style={{ margin: '0 0 12px', color: '#fff', fontSize: '15px' }}>Film Details</h4>
+                <div style={{ fontSize: '13px', lineHeight: '1.8', color: 'rgba(255,255,255,0.7)' }}>
+                  <div><strong>Genre:</strong> {producerInputs.filmGenre || 'Not set'}</div>
+                  <div><strong>Scale:</strong> {
+                    parseFloat(producerInputs.filmBudget) < 200 ? 'Micro budget production' :
+                    parseFloat(producerInputs.filmBudget) < 500 ? 'Small budget film' :
+                    parseFloat(producerInputs.filmBudget) < 1500 ? 'Mid budget production' :
+                    'High budget film'
+                  }</div>
+                  <div><strong>Confidence:</strong> {(producerInputs.confidence || 'medium').toUpperCase()}</div>
+                </div>
+              </div>
+
+              {/* Audience */}
+              <div className="data-card" style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.08)'
+              }}>
+                <div style={{ fontSize: '24px', marginBottom: '8px' }}>👥</div>
+                <h4 style={{ margin: '0 0 12px', color: '#fff', fontSize: '15px' }}>Target Audience</h4>
+                <div style={{ fontSize: '13px', lineHeight: '1.8', color: 'rgba(255,255,255,0.7)' }}>
+                  {producerInputs.targetAudience || 'General audience'}
+                </div>
+              </div>
+
+              {/* Buzz Score */}
+              <div className="data-card" style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.08)'
+              }}>
+                <div style={{ fontSize: '24px', marginBottom: '8px' }}>📈</div>
+                <h4 style={{ margin: '0 0 12px', color: '#fff', fontSize: '15px' }}>Market Buzz</h4>
+                <div style={{ fontSize: '13px', lineHeight: '1.8', color: 'rgba(255,255,255,0.7)' }}>
+                  <div><strong>Level:</strong> {
+                    platformSignals.buzz >= 70 ? 'Exceptional buzz' :
+                    platformSignals.buzz >= 55 ? 'Strong momentum' :
+                    platformSignals.buzz >= 40 ? 'Moderate interest' :
+                    'Building awareness'
+                  }</div>
+                  <div><strong>Trailer:</strong> {
+                    platformSignals.trailerViews >= 500000 ? 'Viral performance' :
+                    platformSignals.trailerViews >= 200000 ? 'Strong reach' :
+                    platformSignals.trailerViews >= 100000 ? 'Good traction' :
+                    platformSignals.trailerViews > 0 ? 'Growing views' :
+                    'Early stage'
+                  }</div>
+                  <div><strong>Engagement:</strong> {
+                    platformSignals.trailerRetention >= 70 ? 'Highly engaging' :
+                    platformSignals.trailerRetention >= 50 ? 'Good retention' :
+                    'Building interest'
+                  }</div>
+                </div>
+              </div>
+
+              {/* Sentiment */}
+              <div className="data-card" style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.08)'
+              }}>
+                <div style={{ fontSize: '24px', marginBottom: '8px' }}>
+                  {platformSignals.sentiment >= 0.7 ? '😊' : platformSignals.sentiment >= 0.5 ? '😐' : '😟'}
+                </div>
+                <h4 style={{ margin: '0 0 12px', color: '#fff', fontSize: '15px' }}>Audience Sentiment</h4>
+                <div style={{ fontSize: '13px', lineHeight: '1.8', color: 'rgba(255,255,255,0.7)' }}>
+                  <div><strong>Overall:</strong> {
+                    platformSignals.sentiment >= 0.75 ? 'Overwhelmingly positive' :
+                    platformSignals.sentiment >= 0.65 ? 'Highly positive' :
+                    platformSignals.sentiment >= 0.55 ? 'Positive sentiment' :
+                    platformSignals.sentiment >= 0.45 ? 'Mixed feedback' :
+                    'Needs attention'
+                  }</div>
+                  <div style={{ marginTop: '8px' }}>
+                    <div style={{ 
+                      height: '6px', 
+                      background: 'rgba(255,255,255,0.1)', 
+                      borderRadius: '3px',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{ 
+                        height: '100%', 
+                        width: `${platformSignals.sentiment * 100}%`,
+                        background: platformSignals.sentiment >= 0.7 ? '#10b981' : platformSignals.sentiment >= 0.5 ? '#f59e0b' : '#ef4444',
+                        transition: 'width 0.3s'
+                      }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Manual Input Form - Hidden by default, show only if needed */}
+        <div className="input-section" style={{ display: 'none' }}>
           <h2>Step 1: Film & Producer Details</h2>
           {dataLoaded && (producerInputs.filmGenre || producerInputs.filmBudget || producerInputs.targetAudience) && (
             <div style={{ 
@@ -442,6 +887,8 @@ const OTTDealPage = () => {
             />
           </div>
 
+          {/* Step 3 - Hidden since we auto-evaluate */}
+          <div style={{ display: 'none' }}>
           <h2>Step 3: OTT Platform Offers</h2>
           
           <div className="offers-list">
@@ -529,6 +976,8 @@ const OTTDealPage = () => {
           >
             {loading ? 'Evaluating...' : '🔍 Evaluate Options'}
           </button>
+          </div>
+          {/* End hidden section */}
 
           {error && (
             <div className="error-message">
@@ -537,10 +986,93 @@ const OTTDealPage = () => {
           )}
         </div>
 
+        {/* Single Best OTT Platform Recommendation */}
+        {(dataLoaded || loading) && (
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 200, 255, 0.06) 100%)',
+            border: '2px solid rgba(0, 255, 136, 0.3)',
+            borderRadius: '16px',
+            padding: '32px',
+            marginBottom: '32px',
+            opacity: dataLoaded ? 1 : 0.6,
+            boxShadow: '0 8px 32px rgba(0, 255, 136, 0.1)'
+          }}>
+            <h2 style={{ 
+              marginTop: 0, 
+              marginBottom: '24px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px',
+              fontSize: '24px',
+              fontWeight: '700'
+            }}>
+              <span style={{ fontSize: '32px' }}>🎯</span>
+              Best OTT Platform for Your Film
+              {loading && !dataLoaded && <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginLeft: 'auto', fontWeight: '400' }}>Analyzing...</span>}
+            </h2>
+            
+            {getSuggestedPlatforms(producerInputs, platformSignals).map((platform, idx) => (
+              <div key={idx} style={{
+                background: 'rgba(255,255,255,0.03)',
+                padding: '28px',
+                borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.12)',
+                transition: 'all 0.3s'
+              }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '16px', 
+                  marginBottom: '20px',
+                  paddingBottom: '20px',
+                  borderBottom: '1px solid rgba(255,255,255,0.08)'
+                }}>
+                  <div style={{ 
+                    fontSize: '56px', 
+                    lineHeight: 1,
+                    filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))'
+                  }}>
+                    {platform.icon}
+                  </div>
+                  <div>
+                    <div style={{ 
+                      fontWeight: '700', 
+                      fontSize: '28px',
+                      color: '#fff',
+                      marginBottom: '4px',
+                      letterSpacing: '-0.5px'
+                    }}>
+                      {platform.name}
+                    </div>
+                    <div style={{ 
+                      fontSize: '13px', 
+                      color: 'rgba(0, 255, 136, 0.8)',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Recommended Platform
+                    </div>
+                  </div>
+                </div>
+                
+                <div style={{ 
+                  fontSize: '15px', 
+                  lineHeight: '1.8',
+                  color: 'rgba(255,255,255,0.85)',
+                  textAlign: 'justify'
+                }}>
+                  {platform.reason}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Results Section */}
-        {result && (
+        {result && result.recommendation && (
           <div className="results-section">
-            <h2>AI Recommendation</h2>
+            <h2>🤖 AI Monetization Strategy</h2>
 
             <div 
               className="recommendation-card"
@@ -579,87 +1111,99 @@ const OTTDealPage = () => {
               </div>
             </div>
 
-            <h2>Revenue Projections</h2>
+            {result.revenue_projections && (
+              <>
+                <h2>Revenue Projections</h2>
 
-            <div className="scenario-toggle">
-              <button 
-                className={scenarioView === 'low' ? 'active' : ''}
-                onClick={() => setScenarioView('low')}
-              >
-                Low Scenario
-              </button>
-              <button 
-                className={scenarioView === 'medium' ? 'active' : ''}
-                onClick={() => setScenarioView('medium')}
-              >
-                Medium Scenario
-              </button>
-              <button 
-                className={scenarioView === 'high' ? 'active' : ''}
-                onClick={() => setScenarioView('high')}
-              >
-                High Scenario
-              </button>
-            </div>
-
-            <div className="revenue-table">
-              <div className="revenue-row">
-                <div className="option-label">Option A (Direct Sale)</div>
-                <div className="revenue-amount">
-                  ₹{(result.revenue_projections.option_a[scenarioView] / 100000).toFixed(2)} Lakhs
+                <div className="scenario-toggle">
+                  <button 
+                    className={scenarioView === 'low' ? 'active' : ''}
+                    onClick={() => setScenarioView('low')}
+                  >
+                    Low Scenario
+                  </button>
+                  <button 
+                    className={scenarioView === 'medium' ? 'active' : ''}
+                    onClick={() => setScenarioView('medium')}
+                  >
+                    Medium Scenario
+                  </button>
+                  <button 
+                    className={scenarioView === 'high' ? 'active' : ''}
+                    onClick={() => setScenarioView('high')}
+                  >
+                    High Scenario
+                  </button>
                 </div>
-              </div>
-              <div className="revenue-row">
-                <div className="option-label">Option B (Post-Release)</div>
-                <div className="revenue-amount">
-                  ₹{(result.revenue_projections.option_b[scenarioView] / 100000).toFixed(2)} Lakhs
+
+                <div className="revenue-table">
+                  <div className="revenue-row">
+                    <div className="option-label">Option A (Direct Sale)</div>
+                    <div className="revenue-amount">
+                      ₹{(result.revenue_projections.option_a[scenarioView] / 100000).toFixed(2)} Lakhs
+                    </div>
+                  </div>
+                  <div className="revenue-row">
+                    <div className="option-label">Option B (Post-Release)</div>
+                    <div className="revenue-amount">
+                      ₹{(result.revenue_projections.option_b[scenarioView] / 100000).toFixed(2)} Lakhs
+                    </div>
+                  </div>
+                  <div className="revenue-row">
+                    <div className="option-label">Option C (MG + RevShare)</div>
+                    <div className="revenue-amount">
+                      ₹{(result.revenue_projections.option_c[scenarioView] / 100000).toFixed(2)} Lakhs
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="revenue-row">
-                <div className="option-label">Option C (MG + RevShare)</div>
-                <div className="revenue-amount">
-                  ₹{(result.revenue_projections.option_c[scenarioView] / 100000).toFixed(2)} Lakhs
+              </>
+            )}
+
+            {result.release_strategy && result.release_strategy.suggested_release_window && (
+              <>
+                <h2>Release Strategy</h2>
+
+                <div className="release-strategy-card">
+                  <p><strong>Suggested Release Window:</strong></p>
+                  <p>
+                    {new Date(result.release_strategy.suggested_release_window.start_date).toLocaleDateString()} 
+                    {' → '}
+                    {new Date(result.release_strategy.suggested_release_window.end_date).toLocaleDateString()}
+                  </p>
+                  <p className="strategy-reasoning">{result.release_strategy.suggested_release_window.reasoning}</p>
+
+                  {result.release_strategy.relevant_calendar_events && result.release_strategy.relevant_calendar_events.length > 0 && (
+                    <div className="calendar-events">
+                      <h4>Relevant Events</h4>
+                      <ul>
+                        {result.release_strategy.relevant_calendar_events.map((event, idx) => (
+                          <li key={idx}>
+                            <strong>{event.event}</strong> ({event.type})
+                            <br />
+                            {new Date(event.start_date).toLocaleDateString()} - {new Date(event.end_date).toLocaleDateString()}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </div>
+              </>
+            )}
 
-            <h2>Release Strategy</h2>
+            {result.campaign_plan && result.campaign_plan.actions && (
+              <>
+                <h2>Campaign Plan</h2>
 
-            <div className="release-strategy-card">
-              <p><strong>Suggested Release Window:</strong></p>
-              <p>
-                {new Date(result.release_strategy.suggested_release_window.start_date).toLocaleDateString()} 
-                {' → '}
-                {new Date(result.release_strategy.suggested_release_window.end_date).toLocaleDateString()}
-              </p>
-              <p className="strategy-reasoning">{result.release_strategy.suggested_release_window.reasoning}</p>
-
-              {result.release_strategy.relevant_calendar_events.length > 0 && (
-                <div className="calendar-events">
-                  <h4>Relevant Events</h4>
-                  <ul>
-                    {result.release_strategy.relevant_calendar_events.map((event, idx) => (
-                      <li key={idx}>
-                        <strong>{event.event}</strong> ({event.type})
-                        <br />
-                        {new Date(event.start_date).toLocaleDateString()} - {new Date(event.end_date).toLocaleDateString()}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="campaign-actions">
+                  {result.campaign_plan.actions.map((action, idx) => (
+                    <div key={idx} className="action-item">
+                      <span className="action-number">{idx + 1}</span>
+                      <span className="action-text">{action}</span>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </div>
-
-            <h2>Campaign Plan</h2>
-
-            <div className="campaign-actions">
-              {result.campaign_plan.actions.map((action, idx) => (
-                <div key={idx} className="action-item">
-                  <span className="action-number">{idx + 1}</span>
-                  <span className="action-text">{action}</span>
-                </div>
-              ))}
-            </div>
+              </>
+            )}
           </div>
         )}
       </div>

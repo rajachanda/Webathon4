@@ -7,7 +7,6 @@ import {
   getCompetitionMovies,
   getHighBuzzCompetition 
 } from '../services/competition.service';
-import Header from '../components/Header';
 import {
   FiUploadCloud,
   FiCalendar,
